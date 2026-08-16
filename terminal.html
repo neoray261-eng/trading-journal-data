@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nehorai Alpha Terminal 🦁</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#050505;background-image:linear-gradient(rgba(0,242,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,242,255,0.04) 1px,transparent 1px);background-size:28px 28px;padding:1rem;direction:rtl;font-family:'Rajdhani',sans-serif;min-height:100vh;color:#fff}
+.logo{text-align:center;font-size:1.6rem;font-weight:700;color:#00f2ff;letter-spacing:3px;text-transform:uppercase;padding-bottom:0.75rem;border-bottom:1px solid rgba(0,242,255,0.2);margin-bottom:0.75rem}
+.quote-box{background:rgba(0,242,255,0.03);border-right:3px solid rgba(0,242,255,0.4);border-radius:0 8px 8px 0;padding:0.6rem 1rem;margin-bottom:0.75rem;min-height:44px;display:flex;align-items:center}
+.quote-txt{color:#e8e8e8;font-size:1rem;font-weight:500;letter-spacing:0.3px;transition:opacity 0.5s;font-style:italic}
+.quote-txt.fade{opacity:0}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:0.75rem}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:8px}
+.panel{background:rgba(0,242,255,0.04);border:1px solid rgba(0,242,255,0.15);border-radius:8px;padding:0.75rem}
+.lbl{font-size:11px;color:#00f2ff;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;opacity:0.7}
+input[type=number],select,input[type=text]{width:100%;font-size:14px;font-family:'Rajdhani',sans-serif;font-weight:500;background:#0a0a0a;color:#fff;border:1px solid rgba(0,242,255,0.2);border-radius:4px;padding:4px 6px}
+input:focus,select:focus{outline:none;border-color:#00f2ff}
+select option{background:#0a0a0a}
+input[type=range]{width:100%;margin:6px 0;accent-color:#00f2ff}
+.sec{font-size:12px;color:#00f2ff;letter-spacing:2px;text-transform:uppercase;margin:0.75rem 0 0.4rem;opacity:0.6;display:flex;align-items:center;gap:6px}
+.sec::before,.sec::after{content:'';flex:1;height:1px;background:rgba(0,242,255,0.15)}
+.qty-box{background:rgba(0,242,255,0.05);border:2px solid rgba(0,242,255,0.3);border-radius:12px;padding:1.25rem;text-align:center}
+.qty-num{font-size:4rem;font-weight:700;color:#00f2ff;line-height:1;font-family:'Share Tech Mono',monospace;text-shadow:0 0 20px rgba(0,242,255,0.5)}
+.qty-lbl{font-size:11px;color:#00f2ff;opacity:0.5;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.metric-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:14px}
+.metric-row:last-child{border-bottom:none}
+.metric-k{color:rgba(255,255,255,0.4);font-size:12px;letter-spacing:1px}
+.metric-v{color:#fff;font-weight:700;font-family:'Share Tech Mono',monospace}
+.metric-sub{color:rgba(255,255,255,0.3);font-size:11px;font-family:'Share Tech Mono',monospace}
+.rr-bar{height:20px;border-radius:6px;overflow:hidden;display:flex;border:1px solid rgba(255,255,255,0.1);margin-top:8px}
+.rr-r{background:#ff4b4b;height:100%;transition:width 0.4s}
+.rr-g{background:#00ff00;height:100%;transition:width 0.4s}
+.rr-labels{display:flex;justify-content:space-between;font-size:10px;margin-top:3px;opacity:0.4;color:#fff}
+.chk{display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.7);padding:8px 12px;border:1px solid rgba(255,255,255,0.08);border-radius:6px;background:rgba(255,255,255,0.02);cursor:pointer;margin-bottom:6px;transition:border-color 0.2s}
+.chk:hover{border-color:rgba(0,242,255,0.3)}
+.chk input{width:16px;height:16px;accent-color:#00f2ff;cursor:pointer}
+.chk.done{border-color:rgba(0,255,0,0.3);color:#fff}
+.rad{display:flex;gap:6px}
+.rb{flex:1;padding:6px;border:1px solid rgba(0,242,255,0.2);border-radius:4px;text-align:center;cursor:pointer;font-size:13px;color:rgba(0,242,255,0.5);background:transparent;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;transition:all 0.2s}
+.rb.on{border-color:#00f2ff;background:rgba(0,242,255,0.1);color:#00f2ff}
+.warn{background:rgba(255,75,75,0.1);color:#ff4b4b;border:1px solid rgba(255,75,75,0.3);border-radius:6px;padding:8px 12px;font-size:13px;margin-bottom:0.5rem;letter-spacing:1px}
+.act{padding:1rem 1.25rem;border-radius:10px;text-align:center;font-size:1.3rem;font-weight:700;margin-top:0.75rem;letter-spacing:2px;transition:all 0.3s}
+.act-wait{background:#1a1a1a;color:#555;border:1px solid #333}
+.act-bad{background:rgba(255,75,75,0.15);color:#ff4b4b;border:1px solid #ff4b4b}
+.act-ok{background:rgba(0,242,255,0.1);color:#00f2ff;border:2px solid #00f2ff;animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,242,255,0.4)}70%{box-shadow:0 0 0 12px rgba(0,242,255,0)}100%{box-shadow:0 0 0 0 rgba(0,242,255,0)}}
+.btn-add{width:100%;margin-top:8px;padding:10px;font-size:1rem;font-weight:700;font-family:'Rajdhani',sans-serif;letter-spacing:2px;background:rgba(0,242,255,0.1);color:#00f2ff;border:1px solid #00f2ff;border-radius:8px;cursor:pointer;transition:all 0.2s}
+.btn-add:hover{background:rgba(0,242,255,0.2)}
+.tv-link{display:flex;align-items:center;gap:8px}
+.tv-link input{flex:1}
+.tv-btn{padding:5px 10px;background:rgba(0,242,255,0.1);color:#00f2ff;border:1px solid rgba(0,242,255,0.3);border-radius:4px;font-size:12px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;white-space:nowrap;text-decoration:none;display:inline-block}
+.tv-btn:hover{background:rgba(0,242,255,0.2)}
+.divider{border:none;border-top:1px solid rgba(0,242,255,0.1);margin:0.75rem 0}
+.jtbl{width:100%;border-collapse:collapse;font-size:11px;font-family:'Share Tech Mono',monospace;min-width:600px}
+.jtbl th{text-align:right;color:#00f2ff;padding:6px 6px;border-bottom:1px solid rgba(0,242,255,0.2);font-size:10px;letter-spacing:1px;font-family:'Rajdhani',sans-serif;font-weight:700;white-space:nowrap}
+.jtbl td{padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.04);color:rgba(255,255,255,0.8);vertical-align:middle}
+.jtbl tr.row-win td{background:rgba(0,255,0,0.06);border-bottom:1px solid rgba(0,255,0,0.1);color:#b8ffb8}
+.jtbl tr.row-loss td{background:rgba(255,75,75,0.07);border-bottom:1px solid rgba(255,75,75,0.1);color:#ffb8b8}
+.jtbl select{font-size:10px;padding:2px 3px;background:#0a0a0a;color:#fff;border:1px solid rgba(0,242,255,0.2);border-radius:3px;font-family:'Share Tech Mono',monospace}
+.tsv{width:100%;height:70px;font-size:11px;font-family:'Share Tech Mono',monospace;background:#0a0a0a;border:1px solid rgba(0,242,255,0.15);border-radius:4px;padding:6px;color:#00f2ff;resize:none}
+.btn-clr{background:rgba(255,75,75,0.1);color:#ff4b4b;border:1px solid rgba(255,75,75,0.3);border-radius:4px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px}
+.stats-txt{font-size:12px;color:rgba(255,255,255,0.3);font-family:'Share Tech Mono',monospace}
+.rr-big{font-size:2rem;font-weight:700;font-family:'Share Tech Mono',monospace}
+.rr-green{color:#00ff00;text-shadow:0 0 10px rgba(0,255,0,0.4)}
+.rr-red{color:#ff4b4b;text-shadow:0 0 10px rgba(255,75,75,0.4)}
+@media(max-width:600px){.g4{grid-template-columns:repeat(2,1fr)}.qty-num{font-size:3rem}}
+</style>
+</head>
+<body>
+<div style="max-width:900px;margin:0 auto">
+<div class="logo">🦁 Nehorai Alpha Terminal</div>
+
+<div class="quote-box">
+  <div class="quote-txt" id="quoteEl">טוען ציטוט...</div>
+</div>
+
+<div class="g4">
+  <div class="panel"><div class="lbl">שער דולר ₪</div><input type="number" id="usd" value="3.70" step="0.01" oninput="calc()"></div>
+  <div class="panel"><div class="lbl">גודל תיק $</div><input type="number" id="acc" value="25000" step="500" oninput="calc()"></div>
+  <div class="panel"><div class="lbl">סיכון $ — <span id="rLbl" style="color:#00f2ff;font-family:'Share Tech Mono',monospace">100</span></div><input type="range" id="rSlider" min="0" max="150" value="100" step="1" oninput="document.getElementById('rLbl').textContent=this.value;calc()"></div>
+  <div class="panel"><div class="lbl">עסקאות היום</div><input type="number" id="tday" value="0" min="0" max="20" oninput="calc()"></div>
+</div>
+
+<div id="owarn" class="warn" style="display:none">⚠️ משמעת יתר! הסיכון נחתך ב-50% אוטומטית.</div>
+
+<div class="sec">נתוני העסקה</div>
+<div class="g2">
+  <div class="panel"><div class="lbl">נכס</div><select id="asset" onchange="calc()"><option value="MNQ|2">MNQ — מיקרו נאסדק</option><option value="MES|5">MES — מיקרו S&P</option><option value="NQ|20">NQ — נאסדק גדול</option><option value="ES|50">ES — S&P גדול</option><option value="MGC|1">MGC — מיקרו זהב</option><option value="GC|10">GC — זהב גדול</option></select></div>
+  <div class="panel"><div class="lbl">כיוון</div><div class="rad"><div class="rb on" id="dirL" onclick="setDir('LONG')">🟢 LONG</div><div class="rb" id="dirS" onclick="setDir('SHORT')">🔴 SHORT</div></div></div>
+</div>
+<div class="g2">
+  <div class="panel"><div class="lbl">מצב מנטלי</div><div class="rad"><div class="rb on" id="rf" onclick="setM('f')">מפוקס</div><div class="rb" id="rfo" onclick="setM('fo')">FOMO ⚡</div></div></div>
+  <div class="panel"><div class="lbl">מחיר כניסה</div><input type="number" id="entryPx" step="0.25" placeholder="למשל 30150" oninput="calc()"></div>
+</div>
+<div class="g2">
+  <div class="panel"><div class="lbl">סטופ (נקודות)</div><input type="number" id="sl" value="10" step="0.25" min="0.25" oninput="calc()"></div>
+  <div class="panel"><div class="lbl">יעד (נקודות)</div><input type="number" id="tp" value="30" step="0.25" min="0" oninput="calc()"></div>
+</div>
+<div class="panel" style="margin-bottom:8px">
+  <div class="lbl">קישור TradingView</div>
+  <div class="tv-link" style="margin-top:4px">
+    <input type="text" id="tvUrl" placeholder="הדבק קישור לצ'ארט...">
+    <a class="tv-btn" href="#" target="_blank" onclick="return openTV()">📈 פתח</a>
+  </div>
+</div>
+<div class="panel" style="margin-bottom:0.75rem"><div class="lbl">סיבה לעסקה</div><input type="text" id="reason" placeholder="למשל: FVG + אזור נזילות" style="margin-top:4px"></div>
+
+<div class="panel" style="margin-bottom:0.75rem;border-color:rgba(197,148,232,0.3)">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap">
+    <div class="lbl" style="margin:0;color:#c594e8">🔗 סנכרון ליומן המרכזי</div>
+    <span style="font-size:11px;font-family:'Share Tech Mono',monospace" id="patStatus">לא מחובר</span>
+  </div>
+  <div style="display:flex;gap:6px;margin-top:6px">
+    <input type="password" id="patInput" placeholder="הדבק Personal Access Token" style="flex:1">
+    <button class="tv-btn" onclick="savePat()" style="border-color:rgba(197,148,232,0.4);color:#c594e8">💾 שמור</button>
+    <button class="tv-btn" onclick="clearPat()" style="border-color:rgba(255,75,75,0.3);color:#ff4b4b" title="נתק">✕</button>
+  </div>
+  <div style="font-size:10px;opacity:0.55;margin-top:4px">
+    <a href="https://github.com/settings/tokens/new?scopes=repo&description=Trading+Journal+Manual" target="_blank" style="color:#c594e8">↗ צור token חד-פעמי</a>
+    · scope: repo · נשמר רק אצלך בדפדפן
+  </div>
+</div>
+
+<div class="sec">צ'ק ליסט</div>
+<label class="chk" id="chk1"><input type="checkbox" id="c1" onchange="updateChk();calc()"> זיהיתי אישור ברור בגרף</label>
+<label class="chk" id="chk2"><input type="checkbox" id="c2" onchange="updateChk();calc()"> סטופ במקום הגיוני</label>
+<label class="chk" id="chk3"><input type="checkbox" id="c3" onchange="updateChk();calc()"> פועל לפי תוכנית (לא דחף)</label>
+
+<hr class="divider">
+
+<div class="g2">
+  <div class="qty-box">
+    <div class="qty-lbl">חוזים לפתיחה</div>
+    <div class="qty-num" id="qN">1</div>
+    <div style="font-size:11px;color:rgba(0,242,255,0.4);letter-spacing:2px;margin-top:4px" id="qSym">MNQ</div>
+  </div>
+  <div class="panel">
+    <div class="metric-row"><span class="metric-k">סיכון $</span><span class="metric-v" id="rUsd">$100</span></div>
+    <div class="metric-row"><span class="metric-k">סיכון ₪</span><span class="metric-sub" id="rNis">₪370</span></div>
+    <div class="metric-row"><span class="metric-k">% תיק</span><span class="metric-v" id="rPct">0.40%</span></div>
+    <div class="metric-row"><span class="metric-k">יעד $</span><span class="metric-v" id="tUsd">$300</span></div>
+    <div class="metric-row"><span class="metric-k">יעד ₪</span><span class="metric-sub" id="tNis">₪1,110</span></div>
+    <div class="metric-row"><span class="metric-k">תיק אחרי SL</span><span class="metric-sub" id="accAfter">$24,900</span></div>
+  </div>
+</div>
+
+<div class="panel" style="margin-top:8px">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <span class="lbl">יחס R:R</span>
+    <span class="rr-big rr-red" id="rrLbl">1:3.00</span>
+  </div>
+  <div class="rr-bar"><div class="rr-r" id="rrR" style="width:25%"></div><div class="rr-g" id="rrG" style="width:75%"></div></div>
+  <div class="rr-labels"><span>סיכון</span><span>רווח</span></div>
+</div>
+
+<div class="act act-wait" id="actBox">⏳ המתן... אשר את הצ'ק ליסט לאישור הפעולה</div>
+<button class="btn-add" id="addBtn" style="display:none" onclick="addT()">🚀 הוסף טרייד ליומן היומי המרוכז</button>
+
+<div id="jSec" style="display:none;margin-top:0.75rem">
+  <hr class="divider">
+  <div class="sec">📜 יומן עסקאות מרוכז להיום</div>
+  <div style="overflow-x:auto">
+    <table class="jtbl">
+      <thead><tr><th>תאריך</th><th>גודל תיק</th><th>סימבול</th><th>סיכון/סיכוי</th><th>סטטוס</th><th>קישור</th><th>כמות חוזים</th><th>סיבה</th><th>תיק לאחר עסקה</th></tr></thead>
+      <tbody id="jBody"></tbody>
+    </table>
+  </div>
+  <div style="margin-top:0.75rem"><div class="lbl" style="margin-bottom:4px">✂️ העתקה לגוגל שיטס</div><textarea class="tsv" id="tsvA" readonly></textarea></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+    <span class="stats-txt" id="stats"></span>
+    <button class="btn-clr" onclick="clearJ()">🗑️ נקה יומן והתחל יום חדש</button>
+  </div>
+</div>
+</div>
+
+<script>
+var mental='f',dir='LONG',trades=[];
+
+// ── Journal sync configuration ─────────────────────────────
+var JOURNAL_REPO = 'neoray261-eng/trading-journal-data';
+var JOURNAL_WORKFLOW = 'append_signal.yml';
+
+function _pat(){ return localStorage.getItem('journal_pat') || ''; }
+function updatePatStatus(){
+  var el=document.getElementById('patStatus');
+  if(!el)return;
+  if(_pat()){el.textContent='✓ מחובר';el.style.color='#00ff00';}
+  else{el.textContent='לא מחובר';el.style.color='rgba(255,255,255,0.4)';}
+}
+function savePat(){
+  var v=document.getElementById('patInput').value.trim();
+  if(!v){alert('הדבק token');return;}
+  localStorage.setItem('journal_pat',v);
+  document.getElementById('patInput').value='';
+  updatePatStatus();
+  alert('נשמר. הטוקן נשאר אצלך בדפדפן בלבד.');
+}
+function clearPat(){
+  if(!confirm('לנתק מהיומן?'))return;
+  localStorage.removeItem('journal_pat');
+  updatePatStatus();
+}
+async function dispatchJournal(bot,subject,body){
+  var pat=_pat();
+  if(!pat){console.warn('[journal] no PAT — skipping dispatch');return false;}
+  try{
+    var r=await fetch('https://api.github.com/repos/'+JOURNAL_REPO+'/actions/workflows/'+JOURNAL_WORKFLOW+'/dispatches',{
+      method:'POST',
+      headers:{
+        'Accept':'application/vnd.github+json',
+        'Authorization':'Bearer '+pat,
+        'X-GitHub-Api-Version':'2022-11-28',
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify({ref:'main',inputs:{bot:bot,subject:subject,body:body}})
+    });
+    if(!r.ok){
+      var msg='GitHub '+r.status+': '+(await r.text()).slice(0,150);
+      console.error('[journal]',msg);
+      alert('שליחה ליומן נכשלה — '+msg);
+      return false;
+    }
+    console.log('[journal] dispatched OK');
+    return true;
+  }catch(e){
+    console.error('[journal]',e);
+    alert('שליחה ליומן נכשלה — '+e.message);
+    return false;
+  }
+}
+
+// ── Trade persistence in localStorage ──────────────────────
+function saveTrades(){try{localStorage.setItem('daily_trades',JSON.stringify(trades));}catch(e){}}
+function loadTrades(){try{var s=localStorage.getItem('daily_trades');if(s)trades=JSON.parse(s)||[];}catch(e){trades=[];}}
+var quotes=["סבלנות היא הרווח הגדול ביותר.","היצמד לתוכנית, התוצאה תגיע.","ניהול סיכונים הוא חבל ההצלה שלך.","הגרף לא משקר, הרגש כן.","כל הפסד הוא שכר לימוד.","תתרכז בתהליך, לא בכסף.","אל תרדוף, תן לשוק לבוא אליך.","משמעת היא ההבדל בין מהמר לסוחר.","אל תסחור מתוך נקמה.","תהיה כמו צלף - תחכה לרגע המתאים.","השוק מעביר כסף מחסרי סבלנות לסבלניים.","טרייד טוב הוא טרייד לפי התוכנית.","אם אין טרייד - אל תמציא אחד.","השוק תמיד צודק, אל תתווכח איתו.","ביטחון עצמי מגיע ממשמעת.","ההזדמויות הכי טובות מגיעות בשקט.","אל תיתן ליום אדום להרוס חודש ירוק.","שמור על ראש שקט.","היכולת לא לסחור היא גם מסחר.","סבלנות בטרייד, מהירות בתיעוד.","אל תסתכל על הכסף בטרייד.","המטרה היא להרוויח, לא להיות צודק.","תשמור על התיק, הוא ישמור עליך.","השוק לא חייב לך כלום.","משמעת היא לעשות מה שכואב.","חכה לאישור, אל תנחש.","אל תתן ל-FOMO לנהל אותך.","סוחר מקצועי חושב בהסתברויות.","תכבד את הכסף שלך.","כל יום הוא דף חדש בגרף.","השוק הוא מראה - הוא משקף את המשמעת שלך.","אל תחפש להיות צודק, תחפש להיות עקבי.","הכסף האמיתי נעשה בהמתנה, לא בפעולה.","סוחר אלפא לא מפחד מהפסד, הוא מפחד מסטייה מהתוכנית."];
+var qIdx=Math.floor(Math.random()*quotes.length);
+document.getElementById('quoteEl').textContent=quotes[qIdx];
+function nextQuote(){var el=document.getElementById('quoteEl');el.classList.add('fade');setTimeout(function(){qIdx=(qIdx+1)%quotes.length;el.textContent=quotes[qIdx];el.classList.remove('fade');},500);}
+setInterval(nextQuote,5000);
+function setM(m){mental=m;document.getElementById('rf').className='rb'+(m==='f'?' on':'');document.getElementById('rfo').className='rb'+(m==='fo'?' on':'');calc();}
+function setDir(d){dir=d;document.getElementById('dirL').className='rb'+(d==='LONG'?' on':'');document.getElementById('dirS').className='rb'+(d==='SHORT'?' on':'');calc();}
+function updateChk(){['c1','c2','c3'].forEach(function(id,i){document.getElementById('chk'+(i+1)).className='chk'+(document.getElementById(id).checked?' done':'');});}
+function openTV(){var u=document.getElementById('tvUrl').value.trim();if(!u)return false;if(!/^https?:\/\//.test(u))u='https://'+u;window.open(u,'_blank');return false;}
+function calc(){
+  var usd=parseFloat(document.getElementById('usd').value)||3.7;
+  var acc=parseFloat(document.getElementById('acc').value)||25000;
+  var baseR=parseFloat(document.getElementById('rSlider').value)||100;
+  var tday=parseInt(document.getElementById('tday').value)||0;
+  var av=document.getElementById('asset').value.split('|');
+  var sym=av[0],vp=parseFloat(av[1]);
+  var sl=parseFloat(document.getElementById('sl').value)||10;
+  var tp=parseFloat(document.getElementById('tp').value)||30;
+  var c1=document.getElementById('c1').checked,c2=document.getElementById('c2').checked,c3=document.getElementById('c3').checked;
+  var allCh=c1&&c2&&c3;
+  var risk=baseR;
+  var ot=tday>=3;
+  document.getElementById('owarn').style.display=ot?'block':'none';
+  if(ot)risk*=0.5;
+  if(mental==='fo')risk*=0.5;
+  var qty=Math.max(1,Math.floor(risk/(sl*vp)));
+  var aRisk=qty*sl*vp,tpUsd=qty*tp*vp,rr=sl>0?tp/sl:0;
+  var accAfterSL=acc-aRisk;
+  document.getElementById('qN').textContent=qty;
+  document.getElementById('qSym').textContent=sym;
+  document.getElementById('rUsd').textContent='$'+aRisk.toFixed(0);
+  document.getElementById('rNis').textContent='₪'+(aRisk*usd).toFixed(0);
+  document.getElementById('rPct').textContent=((aRisk/acc)*100).toFixed(2)+'%';
+  document.getElementById('tUsd').textContent='$'+tpUsd.toFixed(0);
+  document.getElementById('tNis').textContent='₪'+(tpUsd*usd).toFixed(0);
+  document.getElementById('accAfter').textContent='$'+accAfterSL.toFixed(0);
+  var rrEl=document.getElementById('rrLbl');
+  rrEl.textContent='1:'+rr.toFixed(2);
+  rrEl.className='rr-big '+(rr>=2?'rr-green':'rr-red');
+  var tot=1+rr;
+  document.getElementById('rrR').style.width=((1/tot)*100).toFixed(1)+'%';
+  document.getElementById('rrG').style.width=((rr/tot)*100).toFixed(1)+'%';
+  var ab=document.getElementById('actBox'),btn=document.getElementById('addBtn');
+  if(!allCh){ab.className='act act-wait';ab.textContent='⏳ המתן... אשר את הצ\'ק ליסט לאישור הפעולה';btn.style.display='none';}
+  else if(rr<1.5){ab.className='act act-bad';ab.textContent='🛑 יחס R:R גרוע ('+rr.toFixed(2)+') - לא להיכנס!';btn.style.display='none';}
+  else{ab.className='act act-ok';ab.textContent='✅ פעולה: פתח '+qty+' חוזי '+sym;btn.style.display='block';}
+  var entry=parseFloat(document.getElementById('entryPx').value)||0;
+  var stopPx=null, tgtPx=null;
+  if(entry>0 && sl>0){
+    stopPx = dir==='LONG' ? entry-sl : entry+sl;
+    tgtPx  = dir==='LONG' ? entry+tp : entry-tp;
+  }
+  window._s={qty,sym,rr,aRisk,tpUsd,usd,acc,accAfterSL,dir,entry,stopPx,tgtPx,sl,tp};
+}
+function addT(){
+  var s=window._s;
+  var reason=document.getElementById('reason').value||'—';
+  var tvUrl=document.getElementById('tvUrl').value.trim();
+  var date=new Date().toLocaleDateString('he-IL');
+  var ts=Date.now();
+  var trade={
+    id:'m'+ts,ts,date,acc:'$'+s.acc.toFixed(0),sym:s.sym,dir:s.dir,
+    entry:s.entry||null,stopPx:s.stopPx,tgtPx:s.tgtPx,
+    rrNum:s.rr,rr:'1:'+s.rr.toFixed(2),status:'Open',tvUrl,
+    qty:s.qty,reason,risk:s.aRisk,accAfter:'$'+s.accAfterSL.toFixed(0)
+  };
+  trades.push(trade);
+  saveTrades();
+
+  // Dispatch to central journal (async — don't block UI)
+  var entryStr = s.entry ? s.entry.toFixed(2) : '—';
+  var subject = '[MANUAL] MANUAL '+s.sym+' '+s.dir+' @ '+entryStr;
+  var bodyLines = [
+    'כיוון: '+s.dir,
+    'כניסה: '+entryStr,
+    'סטופ: '+(s.stopPx!=null?s.stopPx.toFixed(2):'—'),
+    'יעד: '+(s.tgtPx!=null?s.tgtPx.toFixed(2):'—'),
+    'חוזים: '+s.qty,
+    'R:R = 1:'+s.rr.toFixed(2),
+    'סיכון: $'+s.aRisk.toFixed(0),
+    'סיבה: '+reason,
+    tvUrl?'צ׳ארט: '+tvUrl:''
+  ].filter(Boolean).join('\n');
+  dispatchJournal('MANUAL',subject,bodyLines).then(function(ok){
+    if(ok){var el=document.getElementById('addBtn');if(el){var old=el.textContent;el.textContent='✅ נשלח ליומן';setTimeout(function(){el.textContent=old;},1800);}}
+  });
+
+  document.getElementById('c1').checked=false;document.getElementById('c2').checked=false;document.getElementById('c3').checked=false;
+  ['c1','c2','c3'].forEach(function(id,i){document.getElementById('chk'+(i+1)).className='chk';});
+  document.getElementById('reason').value='';document.getElementById('tvUrl').value='';
+  renderJ();calc();
+}
+function renderJ(){
+  if(!trades.length){document.getElementById('jSec').style.display='none';return;}
+  document.getElementById('jSec').style.display='block';
+  document.getElementById('jBody').innerHTML=trades.map(function(t,i){
+    var rowClass=t.status==='Win'?'row-win':t.status==='Loss'?'row-loss':'';
+    var symColor=t.status==='Win'?'#00ff00':t.status==='Loss'?'#ff4b4b':'#00f2ff';
+    var lnk=t.tvUrl?'<a href="'+t.tvUrl+'" target="_blank" style="color:inherit;text-decoration:none;opacity:0.8">📈 פתח</a>':'<span style="opacity:0.3">—</span>';
+    var opts=['Open','Win','Loss'].map(function(s){return '<option'+(t.status===s?' selected':'')+'>'+s+'</option>';}).join('');
+    return '<tr class="'+rowClass+'"><td>'+t.date+'</td><td style="opacity:0.7">'+t.acc+'</td><td style="color:'+symColor+';font-weight:700">'+t.sym+'</td><td>'+t.rr+'</td><td><select onchange="updS('+i+',this.value)" style="font-size:10px;padding:2px 3px;background:#0a0a0a;color:#fff;border:1px solid rgba(0,242,255,0.2);border-radius:3px">'+opts+'</select></td><td>'+lnk+'</td><td style="text-align:center">'+t.qty+'</td><td style="max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;opacity:0.5" title="'+t.reason+'">'+t.reason+'</td><td style="opacity:0.7">'+t.accAfter+'</td></tr>';
+  }).join('');
+  var wins=trades.filter(function(t){return t.status==='Win';}).length;
+  var losses=trades.filter(function(t){return t.status==='Loss';}).length;
+  var closed=wins+losses;
+  var wr=closed>0?((wins/closed)*100).toFixed(0)+'%':'—';
+  document.getElementById('stats').innerHTML=trades.length+' עסקאות | <span style="color:#00ff00">'+wins+' Win</span> | <span style="color:#ff4b4b">'+losses+' Loss</span> | Win Rate: '+wr;
+  document.getElementById('tsvA').value=trades.map(function(t){return [t.date,t.acc,t.sym,t.rr,t.status,t.tvUrl||'',t.qty,t.reason,t.accAfter].join('\t');}).join('\n');
+}
+function updS(i,v){
+  var t=trades[i],old=t.status;
+  t.status=v;
+  saveTrades();
+  renderJ();
+  if(v===old)return;
+  if(v==='Win' || v==='Loss'){
+    var event = v==='Win' ? 'target_hit' : 'stop_hit';
+    var hitPx = v==='Win' ? (t.tgtPx!=null?t.tgtPx.toFixed(2):'—') : (t.stopPx!=null?t.stopPx.toFixed(2):'—');
+    var subject = '[MANUAL-AUTO] MANUAL '+t.sym+' '+(t.dir||'')+' '+(v==='Win'?'TARGET HIT':'STOP HIT')+' @ '+hitPx;
+    var body = [
+      'עסקה ידנית נסגרה',
+      'כניסה: '+(t.entry!=null?t.entry.toFixed(2):'—'),
+      'סטופ: '+(t.stopPx!=null?t.stopPx.toFixed(2):'—'),
+      'יעד: '+(t.tgtPx!=null?t.tgtPx.toFixed(2):'—'),
+      'תוצאה: '+hitPx,
+      'חוזים: '+t.qty,
+      'R:R = '+t.rr,
+      'סיכון: $'+(t.risk?t.risk.toFixed(0):'—')
+    ].join('\n');
+    dispatchJournal('MANUAL',subject,body);
+  }
+}
+function clearJ(){
+  if(!confirm('לנקות את כל העסקאות של היום?'))return;
+  trades=[];saveTrades();renderJ();
+}
+loadTrades();updatePatStatus();renderJ();calc();
+</script>
+</body>
+</html>
