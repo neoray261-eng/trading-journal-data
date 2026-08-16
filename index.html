@@ -876,6 +876,48 @@
   ::-webkit-scrollbar-thumb { background: var(--rule-strong); border-radius: 5px; border: 2px solid var(--panel); }
   ::-webkit-scrollbar-thumb:hover { background: color-mix(in oklab, var(--rule-strong) 70%, var(--fg-dim)); }
 
+  /* Killzone breakdown table */
+  .kz-tbl {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    direction: rtl;
+  }
+  .kz-tbl th, .kz-tbl td {
+    padding: 8px 10px;
+    text-align: right;
+    border-bottom: 1px solid var(--rule);
+  }
+  .kz-tbl th {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--fg-mute);
+  }
+  .kz-tbl td.num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    text-align: left;
+    direction: ltr;
+    unicode-bidi: plaintext;
+  }
+  .kz-tbl tr.blocked td { opacity: 0.9; }
+  .kz-tbl tr.blocked td:first-child::before { content: '❌ '; }
+  .kz-tbl tr.allowed td:first-child::before { content: '✅ '; }
+  .kz-verdict {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    font-family: var(--font-sans);
+  }
+  .kz-verdict.confirms  { background: var(--long-dim);  color: var(--long);  }
+  .kz-verdict.refutes   { background: var(--short-dim); color: var(--short); }
+  .kz-verdict.pending   { background: var(--panel-lift); color: var(--fg-mute); border: 1px solid var(--rule); }
+  .kz-verdict.marginal  { background: color-mix(in oklab, var(--accent) 15%, transparent); color: var(--accent); border: 1px solid color-mix(in oklab, var(--accent) 30%, transparent); }
+
   /* Screenshot column + modal */
   .shot-icon {
     display: inline-flex;
@@ -998,6 +1040,18 @@
     <div class="hour-legend">
       <span><span class="sw" style="background: var(--long)"></span>זכיות</span>
       <span><span class="sw" style="background: var(--short)"></span>הפסדים</span>
+    </div>
+  </section>
+
+  <!-- ── ROW 4b: KILLZONE BREAKDOWN (validation of backtest filter) ─── -->
+  <section class="panel" style="margin-top: var(--sp-4)" id="kz-panel">
+    <div class="panel-title">
+      <h3>אימות סינון Killzones — SMT (24/7 mode)</h3>
+      <span class="subtle" id="kz-summary">—</span>
+    </div>
+    <div id="kz-table"></div>
+    <div style="margin-top:var(--sp-3);padding-top:var(--sp-3);border-top:1px solid var(--rule);font-size:11px;color:var(--fg-mute);line-height:1.6">
+      💡 <b>הבקטסט על 60 יום:</b> חסם את LONDON-KZ (14% WR, −$188) ו-OFF-KZ (0/5, −$324). כרגע SMT רץ 24/7 ואוסף נתונים חיים לוודא את זה. אם אחרי 50-100 עסקאות ה-Killzones הרעים באמת מפסידים בפועל → נחזיר את הסינון בביטחון עם ראיות. אם דווקא הם רווחיים בפועל → הבקטסט היה overfit ונשאיר 24/7.
     </div>
   </section>
 
@@ -1138,13 +1192,23 @@
       const contracts = 2 + Math.floor(rand() * 4);
       const risk = Math.min(100, stopDist * contracts * (symbol === 'NQ' ? 5 : 0.5));
 
+      // Assign killzone based on UTC hour (matching real SMT logic)
+      const hUtc = ts.getUTCHours();
+      let killzone;
+      if (hUtc >= 23 || hUtc < 4)      killzone = 'ASIA-KZ';       // NY 19-24
+      else if (hUtc >= 13 && hUtc < 20) killzone = 'RTH';          // NY 09:30-16
+      else if (hUtc >= 11 && hUtc < 13) killzone = 'NY-KZ';        // NY 07-09
+      else if (hUtc >= 6  && hUtc < 9)  killzone = 'LONDON-KZ';    // NY 02-05
+      else                              killzone = 'OFF-KZ';
+
       const sig = {
         timestamp: ts.toISOString().replace(/\.\d{3}Z$/, 'Z'),
         bot, event: 'dry_run_signal', symbol, direction,
         entry_price: entry, stop_price: stop, target_price: target,
         contracts, rr: +rr.toFixed(2), risk_usd: +risk.toFixed(2),
+        killzone: bot === 'SMT' ? killzone : null,
         subject: `[DEMO] ${bot} ${symbol} ${direction} @ ${entry}`,
-        body: `[דוגמה]\nכיוון: ${direction}\nכניסה: ${entry}\nסטופ: ${stop}\nיעד: ${target.toFixed(2)}\nחוזים: ${contracts}\nR:R = 1:${rr.toFixed(2)}\nסיכון: $${risk.toFixed(2)}`,
+        body: `[דוגמה]\nכיוון: ${direction}\nכניסה: ${entry}\nסטופ: ${stop}\nיעד: ${target.toFixed(2)}\nחוזים: ${contracts}\nR:R = 1:${rr.toFixed(2)}\nסיכון: $${risk.toFixed(2)}${bot === 'SMT' ? `\nKillzone=${killzone}` : ''}`,
       };
       out.push(sig);
 
@@ -1851,6 +1915,96 @@
       : '';
   }
 
+  // ── KILLZONE BREAKDOWN ──────────────────────────────────────
+  // The 60-day backtest baseline for each SMT killzone.
+  const KZ_BASELINE = {
+    'ASIA-KZ':   { wr: 0.53, verdict_range: [0.45, 1.0], note: 'רווחי בבקטסט' },
+    'RTH':       { wr: 0.54, verdict_range: [0.45, 1.0], note: 'רווחי בבקטסט' },
+    'NY-KZ':     { wr: 0.25, verdict_range: [0.35, 1.0], note: 'מדגם קטן — לא ברור' },
+    'LONDON-KZ': { wr: 0.14, verdict_range: [0.40, 1.0], note: 'הפסדי בבקטסט' },
+    'OFF-KZ':    { wr: 0.00, verdict_range: [0.40, 1.0], note: 'הפסדי בבקטסט' },
+  };
+  const KZ_ORDER = ['ASIA-KZ', 'RTH', 'NY-KZ', 'LONDON-KZ', 'OFF-KZ'];
+  const KZ_BLOCKED = new Set(['LONDON-KZ', 'OFF-KZ']);
+
+  function renderKillzones(trades) {
+    const smtTrades = trades.filter(t => t.signal.bot === 'SMT');
+    const byKZ = new Map();
+    KZ_ORDER.forEach(k => byKZ.set(k, { wins: 0, losses: 0, r: 0, count: 0 }));
+    let anyKzData = false;
+
+    for (const t of smtTrades) {
+      const kz = t.signal.killzone;
+      if (!kz || !byKZ.has(kz)) continue;
+      anyKzData = true;
+      if (!t.resolved || t.r == null) continue;
+      const b = byKZ.get(kz);
+      b.count++; b.r += t.r;
+      if (t.r > 0) b.wins++; else b.losses++;
+    }
+
+    if (!anyKzData) {
+      document.getElementById('kz-table').innerHTML =
+        `<div style="padding:20px;text-align:center;color:var(--fg-mute);font-size:12px">
+          אין עדיין איתותים עם תיוג killzone. הבוט המעודכן יתחיל לתייג את הכל החל מהאיתות הבא.
+        </div>`;
+      document.getElementById('kz-summary').textContent = 'ממתין לנתונים';
+      return;
+    }
+
+    let html = `<table class="kz-tbl">
+      <thead><tr>
+        <th>Killzone</th>
+        <th>שעות NY</th>
+        <th class="num">Win Rate בפועל</th>
+        <th class="num">יעד (בקטסט)</th>
+        <th class="num">סך R</th>
+        <th class="num">עסקאות</th>
+        <th>מסקנה</th>
+      </tr></thead><tbody>`;
+
+    const KZ_HOURS = { 'ASIA-KZ': '19-24', 'RTH': '09:30-16', 'NY-KZ': '07-09', 'LONDON-KZ': '02-05', 'OFF-KZ': 'מתות' };
+    const MIN_KZ_SAMPLE = 10;
+
+    for (const kz of KZ_ORDER) {
+      const b = byKZ.get(kz);
+      const isBlocked = KZ_BLOCKED.has(kz);
+      const wr = b.count ? b.wins / b.count : null;
+      const baseline = KZ_BASELINE[kz];
+
+      let verdict = '', vClass = 'pending';
+      if (b.count < MIN_KZ_SAMPLE) {
+        verdict = `ממתין (${b.count}/${MIN_KZ_SAMPLE})`;
+        vClass = 'pending';
+      } else if (isBlocked) {
+        if (wr > 0.45) { verdict = '⚠️ סותר בקטסט'; vClass = 'refutes'; }
+        else if (wr > 0.30) { verdict = '⚡ גבולי'; vClass = 'marginal'; }
+        else { verdict = '✓ מאשר חסימה'; vClass = 'confirms'; }
+      } else {
+        if (wr >= baseline.wr * 0.8) { verdict = '✓ עומד ביעד'; vClass = 'confirms'; }
+        else if (wr >= baseline.wr * 0.6) { verdict = '⚡ תת-ביצוע'; vClass = 'marginal'; }
+        else { verdict = '⚠️ סותר בקטסט'; vClass = 'refutes'; }
+      }
+
+      html += `<tr class="${isBlocked ? 'blocked' : 'allowed'}">
+        <td>${kz}</td>
+        <td style="color:var(--fg-mute)">${KZ_HOURS[kz]}</td>
+        <td class="num">${wr != null ? Math.round(wr * 100) + '%' : '—'}</td>
+        <td class="num" style="color:var(--fg-mute)">${Math.round(baseline.wr * 100)}%</td>
+        <td class="num" style="color:${b.r > 0 ? 'var(--long)' : b.r < 0 ? 'var(--short)' : 'var(--fg-mute)'}">${b.count ? (b.r > 0 ? '+' : '') + fmt.format(b.r) + 'R' : '—'}</td>
+        <td class="num">${fmt0.format(b.count)}</td>
+        <td><span class="kz-verdict ${vClass}">${verdict}</span></td>
+      </tr>`;
+    }
+    html += '</tbody></table>';
+    document.getElementById('kz-table').innerHTML = html;
+
+    const total = KZ_ORDER.reduce((s, k) => s + byKZ.get(k).count, 0);
+    const blockedCount = ['LONDON-KZ', 'OFF-KZ'].reduce((s, k) => s + byKZ.get(k).count, 0);
+    document.getElementById('kz-summary').textContent =
+      `${total} עסקאות מתויגות · ${blockedCount} בשעות "רעות"`;
+  }
+
   function render() {
     const trades = computeTrades();
     renderKPIs(trades);
@@ -1860,6 +2014,7 @@
     renderBotCard('bot-card-qt',     'QT',     'qt',     trades);
     renderBotCard('bot-card-manual', 'MANUAL', 'manual', trades);
     renderHourChart(trades);
+    renderKillzones(trades);
     renderRows();
     renderStatus();
   }

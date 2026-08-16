@@ -85,6 +85,10 @@ jobs:
           contracts    = _num(r"[Cc]ontracts[:\s]+(\d+)", body) or _num(r"חוזים[:\s]+(\d+)", body)
           rr           = _num(r"R:R\s*=?\s*1[:=]?(\d+\.?\d*)", body)
           risk_usd     = _num(r"[Rr]isk[^$]*\$([\d,.]+)", body) or _num(r"סיכון[^$]*\$([\d,.]+)", body)
+          # Killzone tag — appears as "Killzone=ASIA-KZ" or similar; None if absent
+          import re as _re
+          kz_match = _re.search(r"[Kk]illzone[=:]\s*([A-Za-z0-9-]+)", body) or _re.search(r"[Kk]illzone[=:]\s*([A-Za-z0-9-]+)", subject)
+          killzone = kz_match.group(1) if kz_match else None
 
           # Event type — accept English OR Hebrew phrasing independently
           event = "signal"
@@ -108,6 +112,7 @@ jobs:
               "contracts":    int(contracts) if contracts else None,
               "rr":           rr,
               "risk_usd":     risk_usd,
+              "killzone":     killzone,
               "subject":      subject,
               "body":         body,
           }
