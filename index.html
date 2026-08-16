@@ -1150,15 +1150,21 @@
 
       // 85% chance the trade has resolved (skewed toward wins with real R:R)
       if (rand() < 0.85 && daysAgo > 0) {
-        const isWin = rand() < 0.52;  // ~52% WR baseline
+        // Bot-specific baseline WR — matches BACKTEST_WR so demo shows realistic backtest match
+        const baseWr = bot === 'SMT' ? 0.51 : bot === 'QT' ? 0.44 : 0.48;
+        // Add ±15% noise per trade for realistic variance
+        const isWin = rand() < (baseWr + (rand() - 0.5) * 0.3);
         const outTs = new Date(ts.getTime() + (30 + Math.floor(rand() * 180)) * 60000);
+        // Realistic slippage: 0.3-2.5pt on MNQ, sometimes worse on losses
+        const slip = Math.round((0.3 + rand() * (isWin ? 1.5 : 2.5)) * 100) / 100;
         out.push({
           timestamp: outTs.toISOString().replace(/\.\d{3}Z$/, 'Z'),
           bot, event: isWin ? 'target_hit' : 'stop_hit', symbol, direction,
           entry_price: entry, stop_price: stop, target_price: target,
           contracts, rr: sig.rr, risk_usd: sig.risk_usd,
+          slippage_pts: slip,
           subject: `[DEMO-AUTO] ${bot} ${symbol} ${direction} ${isWin ? 'TARGET HIT' : 'STOP HIT'} @ ${isWin ? target.toFixed(2) : stop}`,
-          body: `[דוגמה] resolved paper trade\nentry: ${entry}\n${isWin ? 'target' : 'stop'} hit`,
+          body: `[דוגמה] resolved paper trade\nentry: ${entry}\nslippage_pts: ${slip}\n${isWin ? 'target' : 'stop'} hit`,
         });
       }
     }
@@ -1190,6 +1196,16 @@
     }
   }
 
+  // ── BACKTEST BASELINES (from validated multi-year backtests) ──
+  // Used to compute "Backtest Match %" — actual live WR / expected backtest WR.
+  // Anything ≥80% after ~50 trades = strategy validating in live.
+  const BACKTEST_WR = {
+    SMT:    0.513,  // 2,542 trades, user-hours, $50 risk, 3yr NQ backtest
+    QT:     0.45,   // Nadav's Quarterly Theory, 1:5 R:R, ~40-50% typical
+    MANUAL: null,   // no baseline for manual trades
+  };
+  const MIN_SAMPLE_FOR_MATCH = 15;  // trades needed before showing the KPI
+
   // ── COMPUTE OUTCOMES ────────────────────────────────────────
   // Build a list of resolved trades from source signals paired with outcome events.
   function computeTrades() {
@@ -1217,6 +1233,10 @@
       const r = outcomeKind === 'win'  ? (s.rr || 2) :
                 outcomeKind === 'loss' ? -1 : null;
 
+      // Slippage — check outcome event first (from check_outcomes.yml), then fall back to source signal
+      const slip = (outcome && outcome.slippage_pts != null) ? outcome.slippage_pts :
+                   (s.slippage_pts != null) ? s.slippage_pts : null;
+
       trades.push({
         signal: s,
         ts,
@@ -1224,6 +1244,7 @@
         outcomeTime: outcome ? parseTS(outcome.timestamp).getTime() : null,
         r,
         resolved: isResolved,
+        slippage: slip,
       });
     }
     return trades.sort((a, b) => a.ts - b.ts);
@@ -1259,6 +1280,31 @@
       else break;
     }
 
+    // Backtest match — weighted average of (actual_wr / expected_wr) across bots with baselines
+    let matchPct = null, matchHint = 'צריך ' + MIN_SAMPLE_FOR_MATCH + '+ עסקאות';
+    {
+      const contribs = [];
+      for (const [botName, expWr] of Object.entries(BACKTEST_WR)) {
+        if (expWr == null) continue;
+        const botTrades = resolved.filter(t => t.signal.bot === botName);
+        if (botTrades.length < 5) continue;
+        const botWr = botTrades.filter(t => t.r > 0).length / botTrades.length;
+        contribs.push({ bot: botName, count: botTrades.length, actual: botWr, expected: expWr });
+      }
+      const totalCount = contribs.reduce((s, c) => s + c.count, 0);
+      if (totalCount >= MIN_SAMPLE_FOR_MATCH && contribs.length) {
+        const weighted = contribs.reduce((s, c) => s + (c.actual / c.expected) * c.count, 0) / totalCount;
+        matchPct = weighted;
+        matchHint = contribs.map(c =>
+          `${c.bot}: ${Math.round(c.actual*100)}%/${Math.round(c.expected*100)}%`
+        ).join(' · ');
+      }
+    }
+
+    // Average slippage across resolved trades that have data
+    const withSlip = resolved.filter(t => t.slippage != null);
+    const avgSlip = withSlip.length ? withSlip.reduce((s, t) => s + t.slippage, 0) / withSlip.length : null;
+
     const items = [
       {
         label: 'סה"כ איתותים',
@@ -1270,6 +1316,15 @@
         value: winRate != null ? `${Math.round(winRate * 100)}%` : '—',
         hint: `${fmt0.format(wins.length)}W / ${fmt0.format(losses.length)}L`,
         cls: winRate == null ? '' : winRate >= 0.5 ? 'pos good' : 'neg bad',
+      },
+      {
+        label: 'התאמה לבקטסט',
+        value: matchPct != null ? Math.round(matchPct * 100) + '%' : '—',
+        hint: matchHint,
+        cls: matchPct == null ? '' :
+             matchPct >= 0.80 ? 'pos good' :
+             matchPct >= 0.60 ? 'acc accent' :
+             'neg bad',
       },
       {
         label: 'מקדם רווח (PF)',
@@ -1288,6 +1343,12 @@
         value: resolved.length ? '−' + fmt.format(maxDD) + 'R' : '—',
         hint: 'שיא לתחתית',
         cls: maxDD > 0 ? 'neg' : '',
+      },
+      {
+        label: 'סליפאג׳ ממוצע',
+        value: avgSlip != null ? fmt.format(avgSlip) + 'pt' : '—',
+        hint: withSlip.length ? `${withSlip.length} עסקאות נמדדו` : 'ימולא ע״י הצ׳קר',
+        cls: avgSlip == null ? '' : avgSlip < 0.5 ? 'pos' : avgSlip < 2 ? '' : 'neg',
       },
       {
         label: 'רצף נוכחי',
@@ -1518,6 +1579,18 @@
     // Avg R per trade
     const avgR = resolved.length ? totalR / resolved.length : null;
 
+    // Backtest match for this bot
+    const expWr = BACKTEST_WR[botName];
+    const matchPct = (expWr != null && resolved.length >= 5) ? (winRate / expWr) : null;
+    const matchColor = matchPct == null ? 'var(--fg-mute)' :
+                       matchPct >= 0.80 ? 'var(--long)' :
+                       matchPct >= 0.60 ? 'var(--accent)' :
+                       'var(--short)';
+
+    // Avg slippage for this bot
+    const botSlip = resolved.filter(t => t.slippage != null);
+    const avgSlip = botSlip.length ? botSlip.reduce((s, t) => s + t.slippage, 0) / botSlip.length : null;
+
     const winPct  = resolved.length ? (wins.length / resolved.length) * 100 : 0;
     const lossPct = resolved.length ? (losses.length / resolved.length) * 100 : 0;
 
@@ -1559,6 +1632,21 @@
       <div class="bot-progress-label">
         <span class="l">${fmt0.format(Math.round(winPct))}% זכיות</span>
         <span class="s">${fmt0.format(Math.round(lossPct))}% הפסדים</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;gap:var(--sp-3);margin-top:var(--sp-3);padding-top:var(--sp-3);border-top:1px solid var(--rule);font-size:11px;font-family:var(--font-mono);direction:ltr">
+        <span style="color:var(--fg-mute)">
+          התאמה לבקטסט:
+          <span style="color:${matchColor};font-weight:600;margin-inline-start:4px">
+            ${matchPct != null ? Math.round(matchPct * 100) + '%' : (expWr == null ? 'N/A' : '—')}
+          </span>
+          ${expWr != null ? `<span style="opacity:0.5">(יעד ${Math.round(expWr*100)}%)</span>` : ''}
+        </span>
+        <span style="color:var(--fg-mute)">
+          סליפאג׳:
+          <span style="color:${avgSlip == null ? 'var(--fg-mute)' : avgSlip < 1 ? 'var(--long)' : avgSlip < 2 ? 'var(--fg)' : 'var(--short)'};font-weight:600;margin-inline-start:4px">
+            ${avgSlip != null ? fmt.format(avgSlip) + 'pt' : '—'}
+          </span>
+        </span>
       </div>
     `;
   }

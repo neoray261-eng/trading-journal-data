@@ -126,7 +126,7 @@ jobs:
               target = s["target_price"]
               is_long = s["direction"] == "LONG"
 
-              outcome = None; hit_ts = None; hit_price = None
+              outcome = None; hit_ts = None; hit_price = None; bar_extreme = None
               for (t, h, l) in bars:
                   if is_long:
                       hit_target = h >= target
@@ -136,17 +136,29 @@ jobs:
                       hit_stop   = h >= stop
                   if hit_target and hit_stop:
                       # both in same 1-min bar — conservative: stop first
-                      outcome = "stop"; hit_ts = t; hit_price = stop; break
+                      outcome = "stop"; hit_ts = t; hit_price = stop
+                      bar_extreme = l if is_long else h
+                      break
                   if hit_stop:
-                      outcome = "stop"; hit_ts = t; hit_price = stop; break
+                      outcome = "stop"; hit_ts = t; hit_price = stop
+                      bar_extreme = l if is_long else h
+                      break
                   if hit_target:
-                      outcome = "target"; hit_ts = t; hit_price = target; break
+                      outcome = "target"; hit_ts = t; hit_price = target
+                      bar_extreme = h if is_long else l
+                      break
 
               if outcome:
+                  # Slippage = how far past the trigger the bar actually went.
+                  # For stop: worse fill than planned (positive = pain).
+                  # For target: bar overshot target (positive = target was reached easily).
+                  slip_pts = abs(bar_extreme - hit_price) if bar_extreme is not None else 0.0
                   s["resolved"] = True
                   s["outcome"] = outcome
                   s["outcome_time"] = datetime.datetime.fromtimestamp(hit_ts, tz=datetime.timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
                   s["outcome_price"] = hit_price
+                  s["bar_extreme"] = bar_extreme
+                  s["slippage_pts"] = round(slip_pts, 2)
                   new_events.append({
                       "timestamp": s["outcome_time"],
                       "bot": s["bot"],
@@ -159,10 +171,15 @@ jobs:
                       "contracts": s.get("contracts"),
                       "rr": s.get("rr"),
                       "risk_usd": s.get("risk_usd"),
+                      "bar_extreme": bar_extreme,
+                      "slippage_pts": round(slip_pts, 2),
                       "subject": f"[AUTO] {s['bot']} {s['symbol']} {s['direction']} {'TARGET HIT' if outcome=='target' else 'STOP HIT'} @ {hit_price}",
-                      "body": f"resolved paper trade\nentry: {entry}\nstop: {stop}\ntarget: {target}\nhit: {hit_price} at {s['outcome_time']}\nsource signal: {s['timestamp']}",
+                      "body": (f"resolved paper trade\nentry: {entry}\nstop: {stop}\ntarget: {target}\n"
+                               f"hit: {hit_price} at {s['outcome_time']}\n"
+                               f"bar_extreme: {bar_extreme}\nslippage_pts: {round(slip_pts,2)}\n"
+                               f"source signal: {s['timestamp']}"),
                   })
-                  print(f"resolved {s['bot']} {s['symbol']} {s['direction']} @ {s['timestamp']} → {outcome} @ {hit_price}")
+                  print(f"resolved {s['bot']} {s['symbol']} {s['direction']} @ {s['timestamp']} → {outcome} @ {hit_price} slip={slip_pts:.2f}pt")
 
           signals.extend(new_events)
           # Sort by timestamp so new events land in place
