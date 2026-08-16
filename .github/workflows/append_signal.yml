@@ -19,6 +19,12 @@ on:
         required: true
         type: string
 
+# Serialize all writers to signals.json — SMT and QT bots may fire at the
+# same second and would otherwise race on git push, dropping a signal.
+concurrency:
+  group: journal-writer
+  cancel-in-progress: false
+
 jobs:
   append:
     runs-on: ubuntu-latest
@@ -114,10 +120,24 @@ jobs:
           print(f"appended: bot={bot} event={event} symbol={symbol} direction={direction}")
           PY
 
-      - name: Commit & push
+      - name: Commit & push (with retry)
         run: |
           git config user.name  "signal-bot"
           git config user.email "signal-bot@users.noreply.github.com"
           git add signals.json
-          git diff --cached --quiet || git commit -m "append: ${{ github.event.inputs.bot }} ${{ github.event.inputs.subject }}"
-          git push
+          if git diff --cached --quiet; then
+            echo "nothing to commit"
+            exit 0
+          fi
+          git commit -m "append: ${{ github.event.inputs.bot }} ${{ github.event.inputs.subject }}"
+          # Retry push up to 3 times with pull --rebase in case something raced us
+          for i in 1 2 3; do
+            if git push; then
+              echo "push OK on attempt $i"
+              exit 0
+            fi
+            echo "push attempt $i failed — pulling with rebase and retrying"
+            git pull --rebase --autostash origin main
+          done
+          echo "push failed after 3 attempts"
+          exit 1
