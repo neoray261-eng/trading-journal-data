@@ -1,17 +1,1 @@
-[
-  {
-    "timestamp": "2026-08-16T10:55:37Z",
-    "bot": "TEST",
-    "event": "dry_run_signal",
-    "symbol": "MNQ",
-    "direction": "LONG",
-    "entry_price": 29850.25,
-    "stop_price": 29835.0,
-    "target_price": 29892.5,
-    "contracts": 3,
-    "rr": 2.8,
-    "risk_usd": 45.75,
-    "subject": "[DRY-RUN] SMT MNQ LONG @ 29850.25",
-    "body": "בדיקת חיבור מהלוח החדש\nכיוון: LONG\nכניסה: 29850.25\nסטופ: 29835.00\nיעד: 29892.50\nחוזים: 3\nR:R = 1:2.8\nסיכון: $45.75"
-  }
-]
+[]
