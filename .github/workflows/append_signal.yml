@@ -68,8 +68,10 @@ jobs:
               try: return float(m.group(1).replace(",", ""))
               except: return default
 
-          stop_price   = _num(r"[Ss]top[:\s]+([\d,.]+)", body) or _num(r"stop[:=]?\s*([\d,.]+)", body)
-          target_price = _num(r"[Tt]arget[^:]*[:\s]+([\d,.]+)", body) or _num(r"יעד[^:]*[:\s]+([\d,.]+)", body)
+          stop_price   = (_num(r"סטופ[^:]*[:\s]+([\d,.]+)", body)
+                          or _num(r"[Ss]top[^:]*[:\s]+([\d,.]+)", body))
+          target_price = (_num(r"יעד[^:]*[:\s]+([\d,.]+)", body)
+                          or _num(r"[Tt]arget[^:]*[:\s]+([\d,.]+)", body))
           contracts    = _num(r"[Cc]ontracts[:\s]+(\d+)", body) or _num(r"חוזים[:\s]+(\d+)", body)
           rr           = _num(r"R:R\s*=?\s*1[:=]?(\d+\.?\d*)", body)
           risk_usd     = _num(r"[Rr]isk[^$]*\$([\d,.]+)", body) or _num(r"סיכון[^$]*\$([\d,.]+)", body)
