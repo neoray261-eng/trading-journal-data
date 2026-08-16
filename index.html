@@ -866,7 +866,83 @@
   .chip.bot-smt    { background: var(--accent-dim); color: var(--accent); border: 1px solid color-mix(in oklab, var(--accent) 30%, transparent); }
   .chip.bot-qt     { background: var(--info-dim);   color: var(--info); border: 1px solid color-mix(in oklab, var(--info) 30%, transparent); }
   .chip.bot-manual { background: var(--manual-dim); color: var(--manual); border: 1px solid color-mix(in oklab, var(--manual) 30%, transparent); }
+  .chip.bot-smt-tv { background: rgba(94, 189, 204, 0.14); color: #5EBDCC; border: 1px solid rgba(94, 189, 204, 0.35); }
   .chip.bot-test   { background: var(--panel-lift); color: var(--fg-dim); border: 1px solid var(--rule); }
+
+  /* TV hidden section — collapsible drawer at bottom */
+  details.tv-drawer {
+    margin-top: var(--sp-4);
+    background: var(--panel);
+    border: 1px solid color-mix(in oklab, #5EBDCC 20%, var(--rule));
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  details.tv-drawer > summary {
+    padding: var(--sp-4) var(--sp-5);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    font-size: 13px;
+    color: var(--fg);
+    font-weight: 500;
+    list-style: none;
+    transition: background 120ms;
+  }
+  details.tv-drawer > summary::-webkit-details-marker { display: none; }
+  details.tv-drawer > summary::before {
+    content: '▶';
+    color: #5EBDCC;
+    font-size: 10px;
+    transition: transform 120ms;
+    display: inline-block;
+  }
+  details.tv-drawer[open] > summary::before { transform: rotate(90deg); }
+  details.tv-drawer > summary:hover { background: var(--panel-lift); }
+  details.tv-drawer > summary .tv-stats {
+    display: flex;
+    gap: var(--sp-4);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    color: var(--fg-dim);
+    margin-inline-start: auto;
+    direction: ltr;
+  }
+  details.tv-drawer > .tv-body {
+    padding: 0 var(--sp-5) var(--sp-5);
+    border-top: 1px solid var(--rule);
+    padding-top: var(--sp-4);
+  }
+  .tv-mini-kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: var(--sp-3);
+    margin-bottom: var(--sp-4);
+  }
+  .tv-mini {
+    background: var(--panel-lift);
+    padding: var(--sp-3);
+    border-radius: var(--radius);
+  }
+  .tv-mini-label { font-size: 10px; color: var(--fg-mute); margin-bottom: 4px; letter-spacing: 0.04em; }
+  .tv-mini-val {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-variant-numeric: tabular-nums;
+    direction: ltr;
+    text-align: right;
+    unicode-bidi: plaintext;
+  }
+  .tv-desc {
+    font-size: 11px;
+    color: var(--fg-mute);
+    margin-top: var(--sp-3);
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--rule);
+    line-height: 1.6;
+  }
   .chip.dir-long  { background: var(--long-dim);  color: var(--long); }
   .chip.dir-short { background: var(--short-dim); color: var(--short); }
 
@@ -1190,6 +1266,41 @@
     </div>
   </section>
 
+  <!-- ── Hidden TV drawer (Pine v12 parallel signals) ──────── -->
+  <details class="tv-drawer" id="tv-drawer">
+    <summary>
+      <span>🔬 עסקאות מהאינדיקטור TradingView (SMT-TV)</span>
+      <span class="tv-stats" id="tv-summary">—</span>
+    </summary>
+    <div class="tv-body">
+      <div class="tv-mini-kpis" id="tv-kpis"></div>
+      <div class="table-scroll" style="max-height:40vh">
+        <table id="tv-table">
+          <thead>
+            <tr>
+              <th>זמן</th>
+              <th>אירוע</th>
+              <th>סימבול</th>
+              <th>כיוון</th>
+              <th class="sortable" data-sort="entry_price">כניסה</th>
+              <th>סטופ</th>
+              <th>יעד</th>
+              <th>יחס</th>
+              <th>חוזים</th>
+              <th>סיכון</th>
+              <th>Killzone</th>
+            </tr>
+          </thead>
+          <tbody id="tv-rows"></tbody>
+        </table>
+      </div>
+      <div class="tv-desc">
+        מקור: אינדיקטור <b>SMT MTF v12</b> ב-TradingView (Pine). לוגיקת כניסה שונה מהבוט SMT — במקום IFVG + wick 50%, מחכה עד 10 ברי 1m לנר ריברסל פשוט, יעד קבוע 1:2 R:R.
+        רץ במקביל לבוט הראשי על אותה תשתית, ללא מיילים (רק כאן).
+      </div>
+    </div>
+  </details>
+
   <footer>
     <span class="l">נתונים: <a href="https://github.com/neoray261-eng/trading-journal-data" target="_blank" rel="noopener">trading-journal-data</a> · מתעדכן כל 60 שניות</span>
     <span class="r">© יומן מסחר אישי · SMT + QT · מצב הערכה</span>
@@ -1337,14 +1448,23 @@
   };
   const MIN_SAMPLE_FOR_MATCH = 15;  // trades needed before showing the KPI
 
+  // Bot names to HIDE from the main dashboard (KPIs, cards, tables, charts).
+  // SMT-TV is the parallel Pine v12 signal source — user wants it in a
+  // separate hidden drawer at the bottom, not mixed into the main analytics.
+  const HIDDEN_BOTS = new Set(['SMT-TV']);
+
   // ── COMPUTE OUTCOMES ────────────────────────────────────────
   // Build a list of resolved trades from source signals paired with outcome events.
-  function computeTrades() {
+  // Optional `includeHiddenBots=true` to include SMT-TV (used by the drawer).
+  function computeTrades(includeHiddenBots = false) {
     const trades = [];
-    const outcomes = state.signals.filter(s =>
+    const source = includeHiddenBots
+      ? state.signals
+      : state.signals.filter(s => !HIDDEN_BOTS.has(s.bot));
+    const outcomes = source.filter(s =>
       s.event === 'target_hit' || s.event === 'stop_hit');
 
-    for (const s of state.signals) {
+    for (const s of source) {
       if (s.event !== 'signal' && s.event !== 'dry_run_signal') continue;
       const ts = parseTS(s.timestamp).getTime();
       // Find matching outcome event
@@ -1889,6 +2009,7 @@
 
     const ql = q.trim().toLowerCase();
     let rows = state.signals.filter(s => {
+      if (HIDDEN_BOTS.has(s.bot)) return false;  // SMT-TV lives in its own drawer
       if (bot !== 'all' && s.bot !== bot) return false;
       if (event !== 'all' && s.event !== event && !(event === 'signal' && s.event === 'dry_run_signal')) return false;
       if (cutoff && parseTS(s.timestamp).getTime() < cutoff) return false;
@@ -2123,6 +2244,71 @@
       `${total} עסקאות מתויגות · ${blockedCount} בשעות "רעות"`;
   }
 
+  // ── TV DRAWER (hidden bot section at the bottom) ────────────
+  function renderTVDrawer() {
+    // Isolate just SMT-TV trades from raw signals (bypass HIDDEN_BOTS filter)
+    const allTrades = computeTrades(true);
+    const tv = allTrades.filter(t => t.signal.bot === 'SMT-TV');
+    const resolved = tv.filter(t => t.resolved && t.r != null);
+    const wins   = resolved.filter(t => t.r > 0);
+    const losses = resolved.filter(t => t.r < 0);
+    const totalR = resolved.reduce((s, t) => s + t.r, 0);
+    const wr = resolved.length ? wins.length / resolved.length : null;
+
+    // Summary strip in the summary tag
+    const totalRStr = resolved.length ? (totalR > 0 ? '+' : '') + fmt.format(totalR) + 'R' : '—';
+    document.getElementById('tv-summary').textContent =
+      `${fmt0.format(tv.length)} עסקאות · ${fmt0.format(resolved.length)} סגורות · ${totalRStr}`;
+
+    // Mini KPIs
+    const kpisEl = document.getElementById('tv-kpis');
+    const wrStr    = wr != null ? Math.round(wr * 100) + '%' : '—';
+    const wrColor  = wr == null ? '' : wr >= 0.45 ? 'var(--long)' : 'var(--short)';
+    const rColor   = totalR > 0 ? 'var(--long)' : totalR < 0 ? 'var(--short)' : '';
+    const gw       = wins.reduce((s, t) => s + t.r, 0);
+    const gl       = Math.abs(losses.reduce((s, t) => s + t.r, 0));
+    const pf       = gl > 0 ? gw / gl : (gw > 0 ? Infinity : null);
+    const pfStr    = pf == null ? '—' : pf === Infinity ? '∞' : fmt.format(pf);
+    kpisEl.innerHTML = `
+      <div class="tv-mini"><div class="tv-mini-label">סה"כ</div><div class="tv-mini-val">${fmt0.format(tv.length)}</div></div>
+      <div class="tv-mini"><div class="tv-mini-label">סגורות</div><div class="tv-mini-val">${fmt0.format(resolved.length)}</div></div>
+      <div class="tv-mini"><div class="tv-mini-label">אחוז זכיות</div><div class="tv-mini-val" style="color:${wrColor}">${wrStr}</div></div>
+      <div class="tv-mini"><div class="tv-mini-label">מקדם רווח</div><div class="tv-mini-val">${pfStr}</div></div>
+      <div class="tv-mini"><div class="tv-mini-label">סך R</div><div class="tv-mini-val" style="color:${rColor}">${totalRStr}</div></div>
+    `;
+
+    // Rows — compact table
+    const rowsEl = document.getElementById('tv-rows');
+    if (tv.length === 0) {
+      rowsEl.innerHTML = '<tr><td colspan="11"><div class="state"><h3>עדיין אין איתותים מ-SMT-TV</h3><p>הבוט התחיל לתייג ברגע ש-Railway פרס את הקוד המעודכן. הרשומה הראשונה תגיע ברגע שהאינדיקטור יזהה SMT + ריברסל 1m.</p></div></td></tr>';
+      return;
+    }
+    // Newest first
+    const sorted = [...tv].sort((a, b) => b.ts - a.ts);
+    let html = '';
+    for (const t of sorted) {
+      const s = t.signal;
+      const dirClass = s.direction === 'LONG' ? 'dir-long' : s.direction === 'SHORT' ? 'dir-short' : '';
+      const dirLabel = DIR_HE[s.direction] || s.direction || '';
+      const evtLabel = t.outcome === 'win' ? 'זכייה' : t.outcome === 'loss' ? 'הפסד' : 'איתות';
+      const evtClass = t.outcome === 'win' ? 'evt-target_hit' : t.outcome === 'loss' ? 'evt-stop_hit' : 'evt-signal';
+      html += `<tr>
+        <td class="time">${timeCell(s.timestamp)}</td>
+        <td>${chip(evtClass, evtLabel)}</td>
+        <td class="num">${esc(s.symbol || '—')}</td>
+        <td>${s.direction ? chip(dirClass, dirLabel) : ''}</td>
+        <td class="num">${s.entry_price != null ? fmt.format(s.entry_price) : '—'}</td>
+        <td class="num">${s.stop_price != null ? fmt.format(s.stop_price) : '—'}</td>
+        <td class="num">${s.target_price != null ? fmt.format(s.target_price) : '—'}</td>
+        <td class="num">${s.rr != null ? '1:' + fmt.format(s.rr) : '—'}</td>
+        <td class="num">${s.contracts != null ? fmt0.format(s.contracts) : '—'}</td>
+        <td class="num">${s.risk_usd != null ? '$' + fmt0.format(s.risk_usd) : '—'}</td>
+        <td class="num" style="color:var(--fg-mute)">${esc(s.killzone || '—')}</td>
+      </tr>`;
+    }
+    rowsEl.innerHTML = html;
+  }
+
   function render() {
     const trades = computeTrades();
     renderKPIs(trades);
@@ -2134,6 +2320,7 @@
     renderHourChart(trades);
     renderKillzones(trades);
     renderRows();
+    renderTVDrawer();
     renderStatus();
   }
 
