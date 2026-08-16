@@ -108,6 +108,18 @@ jobs:
                   print(f"parse failed {yahoo_sym}: {e}")
                   return []
 
+          # ── Deep analytics: MFE/MAE/duration per resolved trade ──
+          # Stored separately in analytics/trades_deep.json — invisible to the
+          # main dashboard but always available for post-trade analysis.
+          deep_entries = []
+          deep_path = "analytics/trades_deep.json"
+          os.makedirs("analytics", exist_ok=True)
+          try:
+              with open(deep_path) as f:
+                  deep_existing = json.load(f)
+          except Exception:
+              deep_existing = []
+
           new_events = []
           for i in to_check:
               s = signals[i]
@@ -127,11 +139,20 @@ jobs:
               is_long = s["direction"] == "LONG"
 
               outcome = None; hit_ts = None; hit_price = None; bar_extreme = None
+              # MFE (max favorable) / MAE (max adverse) — track extremes while walking bars
+              mfe_extreme = None; mfe_ts = None
+              mae_extreme = None; mae_ts = None
               for (t, h, l) in bars:
+                  # Update MFE / MAE trackers BEFORE checking crossings — reflects
+                  # what the price did during the trade, up to and including the hit bar
                   if is_long:
+                      if mfe_extreme is None or h > mfe_extreme: mfe_extreme, mfe_ts = h, t
+                      if mae_extreme is None or l < mae_extreme: mae_extreme, mae_ts = l, t
                       hit_target = h >= target
                       hit_stop   = l <= stop
-                  else:
+                  else:  # SHORT
+                      if mfe_extreme is None or l < mfe_extreme: mfe_extreme, mfe_ts = l, t
+                      if mae_extreme is None or h > mae_extreme: mae_extreme, mae_ts = h, t
                       hit_target = l <= target
                       hit_stop   = h >= stop
                   if hit_target and hit_stop:
@@ -179,7 +200,53 @@ jobs:
                                f"bar_extreme: {bar_extreme}\nslippage_pts: {round(slip_pts,2)}\n"
                                f"source signal: {s['timestamp']}"),
                   })
-                  print(f"resolved {s['bot']} {s['symbol']} {s['direction']} @ {s['timestamp']} → {outcome} @ {hit_price} slip={slip_pts:.2f}pt")
+
+                  # ── DEEP ANALYTICS (hidden from dashboard) ──
+                  # MFE/MAE + duration, saved separately to analytics/trades_deep.json.
+                  # These metrics are for post-trade review, not daily glance.
+                  risk_pts = abs(entry - stop)
+                  duration_min = (hit_ts - start_ts) / 60.0
+                  mfe_pts = mae_pts = mfe_r = mae_r = None
+                  mfe_t = mae_t = None
+                  if mfe_extreme is not None and risk_pts > 0:
+                      if is_long:
+                          mfe_pts = mfe_extreme - entry     # favorable = up from entry
+                          mae_pts = entry - mae_extreme     # adverse = down from entry
+                      else:
+                          mfe_pts = entry - mfe_extreme     # favorable = down from entry
+                          mae_pts = mae_extreme - entry     # adverse = up from entry
+                      mfe_r = mfe_pts / risk_pts
+                      mae_r = mae_pts / risk_pts
+                      mfe_t = round((mfe_ts - start_ts) / 60.0, 1)
+                      mae_t = round((mae_ts - start_ts) / 60.0, 1)
+
+                  deep_entries.append({
+                      "signal_ts":       s["timestamp"],
+                      "outcome_ts":      s["outcome_time"],
+                      "bot":             s.get("bot"),
+                      "symbol":          s.get("symbol"),
+                      "direction":       s.get("direction"),
+                      "killzone":        s.get("killzone"),
+                      "entry_price":     entry,
+                      "stop_price":      stop,
+                      "target_price":    target,
+                      "outcome":         outcome,
+                      "outcome_price":   hit_price,
+                      "bar_extreme":     bar_extreme,
+                      "slippage_pts":    round(slip_pts, 2),
+                      "mfe_pts":         round(mfe_pts, 2) if mfe_pts is not None else None,
+                      "mae_pts":         round(mae_pts, 2) if mae_pts is not None else None,
+                      "mfe_r":           round(mfe_r,   3) if mfe_r   is not None else None,
+                      "mae_r":           round(mae_r,   3) if mae_r   is not None else None,
+                      "mfe_time_min":    mfe_t,
+                      "mae_time_min":    mae_t,
+                      "duration_min":    round(duration_min, 1),
+                      "rr_planned":      s.get("rr"),
+                      "contracts":       s.get("contracts"),
+                      "risk_usd":        s.get("risk_usd"),
+                  })
+
+                  print(f"resolved {s['bot']} {s['symbol']} {s['direction']} @ {s['timestamp']} → {outcome} @ {hit_price} slip={slip_pts:.2f}pt MFE={mfe_r:.2f}R MAE={mae_r:.2f}R dur={duration_min:.0f}min" if mfe_r is not None else f"resolved (no MFE/MAE)")
 
           signals.extend(new_events)
           # Sort by timestamp so new events land in place
@@ -192,6 +259,17 @@ jobs:
           with open("signals.json", "w") as f:
               json.dump(signals, f, indent=2, ensure_ascii=False)
 
+          # Append new deep-analytics entries (dedup by signal_ts + bot + symbol)
+          if deep_entries:
+              seen = {(e.get("signal_ts"), e.get("bot"), e.get("symbol")) for e in deep_existing}
+              additions = [e for e in deep_entries if (e["signal_ts"], e["bot"], e["symbol"]) not in seen]
+              if additions:
+                  deep_all = deep_existing + additions
+                  deep_all.sort(key=lambda x: x.get("signal_ts") or "")
+                  with open(deep_path, "w") as f:
+                      json.dump(deep_all, f, indent=2, ensure_ascii=False)
+                  print(f"deep analytics: +{len(additions)} entries (total: {len(deep_all)})")
+
           print(f"total signals: {len(signals)}  new outcome events: {len(new_events)}")
           PY
 
@@ -199,6 +277,6 @@ jobs:
         run: |
           git config user.name  "outcome-bot"
           git config user.email "outcome-bot@users.noreply.github.com"
-          git add signals.json
+          git add signals.json analytics/
           git diff --cached --quiet || git commit -m "auto-resolve: outcomes checked $(date -u +%FT%TZ)"
           git push || true
