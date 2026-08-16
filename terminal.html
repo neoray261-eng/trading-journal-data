@@ -101,11 +101,13 @@ input[type=range]{width:100%;margin:6px 0;accent-color:#00f2ff}
   <div class="panel"><div class="lbl">יעד (נקודות)</div><input type="number" id="tp" value="30" step="0.25" min="0" oninput="calc()"></div>
 </div>
 <div class="panel" style="margin-bottom:8px">
-  <div class="lbl">קישור TradingView</div>
-  <div class="tv-link" style="margin-top:4px">
-    <input type="text" id="tvUrl" placeholder="הדבק קישור לצ'ארט...">
-    <a class="tv-btn" href="#" target="_blank" onclick="return openTV()">📈 פתח</a>
+  <div class="lbl">📷 צילום צ'ארט</div>
+  <div style="display:flex;gap:6px;align-items:center;margin-top:4px;flex-wrap:wrap">
+    <input type="file" id="shot" accept="image/*" onchange="onShot()" style="flex:1;min-width:180px;font-size:12px;color:#00f2ff;background:#0a0a0a;border:1px solid rgba(0,242,255,0.2);border-radius:4px;padding:6px 8px">
+    <button type="button" class="tv-btn" id="shotPreview" onclick="return showShot()" style="display:none">👁️ תצוגה</button>
+    <button type="button" class="tv-btn" id="shotClear" onclick="clearShot()" style="display:none;border-color:rgba(255,75,75,0.3);color:#ff4b4b">✕ נקה</button>
   </div>
+  <div id="shotStatus" style="font-size:10px;opacity:0.55;margin-top:4px">לא נבחר קובץ</div>
 </div>
 <div class="panel" style="margin-bottom:0.75rem"><div class="lbl">סיבה לעסקה</div><input type="text" id="reason" placeholder="למשל: FVG + אזור נזילות" style="margin-top:4px"></div>
 
@@ -236,6 +238,81 @@ async function dispatchJournal(bot,subject,body){
 // ── Trade persistence in localStorage ──────────────────────
 function saveTrades(){try{localStorage.setItem('daily_trades',JSON.stringify(trades));}catch(e){}}
 function loadTrades(){try{var s=localStorage.getItem('daily_trades');if(s)trades=JSON.parse(s)||[];}catch(e){trades=[];}}
+
+// ── Screenshot: pick + compress + upload to GitHub ─────────
+var _shotDataUrl=null, _shotName=null;
+function onShot(){
+  var f=document.getElementById('shot').files[0];
+  if(!f){clearShot();return;}
+  if(!f.type.startsWith('image/')){alert('רק תמונות');clearShot();return;}
+  // Compress to max 1920px width, JPEG 82%
+  var img=new Image();
+  img.onload=function(){
+    var maxW=1920, scale=Math.min(1, maxW/img.width);
+    var w=Math.round(img.width*scale), h=Math.round(img.height*scale);
+    var c=document.createElement('canvas');
+    c.width=w; c.height=h;
+    c.getContext('2d').drawImage(img,0,0,w,h);
+    _shotDataUrl=c.toDataURL('image/jpeg',0.82);
+    _shotName=f.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+    var sizeKB=Math.round(_shotDataUrl.length*0.75/1024);
+    document.getElementById('shotStatus').textContent='✓ ' + _shotName + ' (' + sizeKB + 'KB)';
+    document.getElementById('shotStatus').style.color='#00ff00';
+    document.getElementById('shotPreview').style.display='inline-block';
+    document.getElementById('shotClear').style.display='inline-block';
+  };
+  img.onerror=function(){alert('לא הצלחתי לקרוא את התמונה');clearShot();};
+  var r=new FileReader();
+  r.onload=function(e){img.src=e.target.result;};
+  r.readAsDataURL(f);
+}
+function clearShot(){
+  _shotDataUrl=null; _shotName=null;
+  document.getElementById('shot').value='';
+  document.getElementById('shotStatus').textContent='לא נבחר קובץ';
+  document.getElementById('shotStatus').style.color='';
+  document.getElementById('shotPreview').style.display='none';
+  document.getElementById('shotClear').style.display='none';
+}
+function showShot(){
+  if(!_shotDataUrl)return false;
+  var w=window.open('','_blank');
+  w.document.write('<title>Preview</title><body style="margin:0;background:#0a0a0a;display:flex;align-items:center;justify-content:center;min-height:100vh"><img src="'+_shotDataUrl+'" style="max-width:100%;max-height:100vh"></body>');
+  w.document.close();
+  return false;
+}
+async function uploadScreenshot(bot, symbol, tsMillis){
+  if(!_shotDataUrl)return null;
+  var pat=_pat();
+  if(!pat){console.warn('[shot] no PAT');return null;}
+  // Extract base64 (strip "data:image/jpeg;base64,")
+  var b64=_shotDataUrl.split(',')[1];
+  var date=new Date(tsMillis);
+  var pad=n=>String(n).padStart(2,'0');
+  var stamp = date.getUTCFullYear() + pad(date.getUTCMonth()+1) + pad(date.getUTCDate())
+            + '_' + pad(date.getUTCHours()) + pad(date.getUTCMinutes()) + pad(date.getUTCSeconds());
+  var path='screenshots/'+stamp+'_'+bot+'_'+symbol+'.jpg';
+  try{
+    var r=await fetch('https://api.github.com/repos/'+JOURNAL_REPO+'/contents/'+path,{
+      method:'PUT',
+      headers:{'Accept':'application/vnd.github+json','Authorization':'Bearer '+pat,'Content-Type':'application/json'},
+      body:JSON.stringify({message:'screenshot: '+bot+' '+symbol+' @ '+date.toISOString(), content:b64, branch:'main'})
+    });
+    if(!r.ok){
+      var msg='GitHub '+r.status+': '+(await r.text()).slice(0,200);
+      console.error('[shot] upload failed',msg);
+      alert('העלאת סקרין נכשלה — '+msg);
+      return null;
+    }
+    var out=await r.json();
+    console.log('[shot] uploaded:',out.content.download_url);
+    return out.content.download_url;
+  }catch(e){
+    console.error('[shot]',e);
+    alert('העלאת סקרין נכשלה — '+e.message);
+    return null;
+  }
+}
 var quotes=["סבלנות היא הרווח הגדול ביותר.","היצמד לתוכנית, התוצאה תגיע.","ניהול סיכונים הוא חבל ההצלה שלך.","הגרף לא משקר, הרגש כן.","כל הפסד הוא שכר לימוד.","תתרכז בתהליך, לא בכסף.","אל תרדוף, תן לשוק לבוא אליך.","משמעת היא ההבדל בין מהמר לסוחר.","אל תסחור מתוך נקמה.","תהיה כמו צלף - תחכה לרגע המתאים.","השוק מעביר כסף מחסרי סבלנות לסבלניים.","טרייד טוב הוא טרייד לפי התוכנית.","אם אין טרייד - אל תמציא אחד.","השוק תמיד צודק, אל תתווכח איתו.","ביטחון עצמי מגיע ממשמעת.","ההזדמויות הכי טובות מגיעות בשקט.","אל תיתן ליום אדום להרוס חודש ירוק.","שמור על ראש שקט.","היכולת לא לסחור היא גם מסחר.","סבלנות בטרייד, מהירות בתיעוד.","אל תסתכל על הכסף בטרייד.","המטרה היא להרוויח, לא להיות צודק.","תשמור על התיק, הוא ישמור עליך.","השוק לא חייב לך כלום.","משמעת היא לעשות מה שכואב.","חכה לאישור, אל תנחש.","אל תתן ל-FOMO לנהל אותך.","סוחר מקצועי חושב בהסתברויות.","תכבד את הכסף שלך.","כל יום הוא דף חדש בגרף.","השוק הוא מראה - הוא משקף את המשמעת שלך.","אל תחפש להיות צודק, תחפש להיות עקבי.","הכסף האמיתי נעשה בהמתנה, לא בפעולה.","סוחר אלפא לא מפחד מהפסד, הוא מפחד מסטייה מהתוכנית."];
 var qIdx=Math.floor(Math.random()*quotes.length);
 document.getElementById('quoteEl').textContent=quotes[qIdx];
@@ -292,22 +369,31 @@ function calc(){
   }
   window._s={qty,sym,rr,aRisk,tpUsd,usd,acc,accAfterSL,dir,entry,stopPx,tgtPx,sl,tp};
 }
-function addT(){
+async function addT(){
   var s=window._s;
   var reason=document.getElementById('reason').value||'—';
-  var tvUrl=document.getElementById('tvUrl').value.trim();
   var date=new Date().toLocaleDateString('he-IL');
   var ts=Date.now();
+  var btn=document.getElementById('addBtn');
+  var oldLabel=btn?btn.textContent:'';
+
+  // Upload screenshot first (if selected) — so we have the URL to embed in the body
+  var shotUrl=null;
+  if(_shotDataUrl){
+    if(btn){btn.textContent='📤 מעלה תמונה...';btn.disabled=true;}
+    shotUrl = await uploadScreenshot('MANUAL', s.sym, ts);
+    if(btn)btn.disabled=false;
+  }
+
   var trade={
     id:'m'+ts,ts,date,acc:'$'+s.acc.toFixed(0),sym:s.sym,dir:s.dir,
     entry:s.entry||null,stopPx:s.stopPx,tgtPx:s.tgtPx,
-    rrNum:s.rr,rr:'1:'+s.rr.toFixed(2),status:'Open',tvUrl,
+    rrNum:s.rr,rr:'1:'+s.rr.toFixed(2),status:'Open',shot:shotUrl,
     qty:s.qty,reason,risk:s.aRisk,accAfter:'$'+s.accAfterSL.toFixed(0)
   };
   trades.push(trade);
   saveTrades();
 
-  // Dispatch to central journal (async — don't block UI)
   var entryStr = s.entry ? s.entry.toFixed(2) : '—';
   var subject = '[MANUAL] '+s.sym+' '+s.dir+' @ '+entryStr;
   var bodyLines = [
@@ -319,15 +405,15 @@ function addT(){
     'R:R = 1:'+s.rr.toFixed(2),
     'סיכון: $'+s.aRisk.toFixed(0),
     'סיבה: '+reason,
-    tvUrl?'צ׳ארט: '+tvUrl:''
+    shotUrl?'סקרין: '+shotUrl:''
   ].filter(Boolean).join('\n');
-  dispatchJournal('MANUAL',subject,bodyLines).then(function(ok){
-    if(ok){var el=document.getElementById('addBtn');if(el){var old=el.textContent;el.textContent='✅ נשלח ליומן';setTimeout(function(){el.textContent=old;},1800);}}
-  });
+  var ok=await dispatchJournal('MANUAL',subject,bodyLines);
+  if(ok && btn){btn.textContent='✅ נשלח ליומן';setTimeout(function(){btn.textContent=oldLabel;},1800);}
 
   document.getElementById('c1').checked=false;document.getElementById('c2').checked=false;document.getElementById('c3').checked=false;
   ['c1','c2','c3'].forEach(function(id,i){document.getElementById('chk'+(i+1)).className='chk';});
-  document.getElementById('reason').value='';document.getElementById('tvUrl').value='';
+  document.getElementById('reason').value='';
+  clearShot();
   renderJ();calc();
 }
 function renderJ(){
@@ -336,7 +422,7 @@ function renderJ(){
   document.getElementById('jBody').innerHTML=trades.map(function(t,i){
     var rowClass=t.status==='Win'?'row-win':t.status==='Loss'?'row-loss':'';
     var symColor=t.status==='Win'?'#00ff00':t.status==='Loss'?'#ff4b4b':'#00f2ff';
-    var lnk=t.tvUrl?'<a href="'+t.tvUrl+'" target="_blank" style="color:inherit;text-decoration:none;opacity:0.8">📈 פתח</a>':'<span style="opacity:0.3">—</span>';
+    var lnk=t.shot?'<a href="'+t.shot+'" target="_blank" style="color:inherit;text-decoration:none;opacity:0.8" title="'+t.shot+'">📷 צפה</a>':(t.tvUrl?'<a href="'+t.tvUrl+'" target="_blank" style="color:inherit;text-decoration:none;opacity:0.8">📈 פתח</a>':'<span style="opacity:0.3">—</span>');
     var opts=['Open','Win','Loss'].map(function(s){return '<option'+(t.status===s?' selected':'')+'>'+s+'</option>';}).join('');
     return '<tr class="'+rowClass+'"><td>'+t.date+'</td><td style="opacity:0.7">'+t.acc+'</td><td style="color:'+symColor+';font-weight:700">'+t.sym+'</td><td>'+t.rr+'</td><td><select onchange="updS('+i+',this.value)" style="font-size:10px;padding:2px 3px;background:#0a0a0a;color:#fff;border:1px solid rgba(0,242,255,0.2);border-radius:3px">'+opts+'</select></td><td>'+lnk+'</td><td style="text-align:center">'+t.qty+'</td><td style="max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;opacity:0.5" title="'+t.reason+'">'+t.reason+'</td><td style="opacity:0.7">'+t.accAfter+'</td></tr>';
   }).join('');

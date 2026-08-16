@@ -876,6 +876,52 @@
   ::-webkit-scrollbar-thumb { background: var(--rule-strong); border-radius: 5px; border: 2px solid var(--panel); }
   ::-webkit-scrollbar-thumb:hover { background: color-mix(in oklab, var(--rule-strong) 70%, var(--fg-dim)); }
 
+  /* Screenshot column + modal */
+  .shot-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px; height: 26px;
+    border-radius: 4px;
+    background: var(--manual-dim);
+    color: var(--manual);
+    text-decoration: none;
+    border: 1px solid color-mix(in oklab, var(--manual) 30%, transparent);
+    transition: background 120ms, transform 120ms;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .shot-icon:hover { background: color-mix(in oklab, var(--manual) 25%, transparent); transform: scale(1.1); }
+  .shot-none { color: var(--fg-mute); opacity: 0.5; }
+
+  .modal-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center; justify-content: center;
+    z-index: 100;
+    cursor: zoom-out;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal-backdrop img {
+    max-width: 95vw; max-height: 92vh;
+    border-radius: 6px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    cursor: default;
+  }
+  .modal-close {
+    position: absolute; top: 20px; left: 20px;
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    color: var(--fg);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
   @media (max-width: 700px) {
     .app { padding: var(--sp-3); }
     h1 { font-size: 17px; }
@@ -1012,11 +1058,12 @@
             <th class="sortable" data-sort="rr">יחס</th>
             <th class="sortable" data-sort="contracts">חוזים</th>
             <th class="sortable" data-sort="risk_usd">סיכון</th>
+            <th>📷</th>
             <th>נושא</th>
           </tr>
         </thead>
         <tbody id="rows">
-          <tr><td colspan="12"><div class="state"><h3>טוען נתונים…</h3><p>מושך את הנתונים העדכניים מהמאגר.</p></div></td></tr>
+          <tr><td colspan="13"><div class="state"><h3>טוען נתונים…</h3><p>מושך את הנתונים העדכניים מהמאגר.</p></div></td></tr>
         </tbody>
       </table>
     </div>
@@ -1027,6 +1074,11 @@
     <span class="r">© יומן מסחר אישי · SMT + QT · מצב הערכה</span>
   </footer>
 
+</div>
+
+<div class="modal-backdrop" id="shot-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <button class="modal-close" onclick="document.getElementById('shot-modal').classList.remove('open')" title="סגור">✕</button>
+  <img id="shot-modal-img" alt="Screenshot">
 </div>
 
 <script>
@@ -1615,11 +1667,11 @@
   function renderRows() {
     const rowsEl = document.getElementById('rows');
     if (state.loading) {
-      rowsEl.innerHTML = `<tr><td colspan="12"><div class="state"><h3>טוען נתונים…</h3><p>מושך את הנתונים העדכניים.</p></div></td></tr>`;
+      rowsEl.innerHTML = `<tr><td colspan="13"><div class="state"><h3>טוען נתונים…</h3><p>מושך את הנתונים העדכניים.</p></div></td></tr>`;
       return;
     }
     if (state.error) {
-      rowsEl.innerHTML = `<tr><td colspan="12"><div class="state"><h3>לא הצלחתי לטעון</h3><p>שגיאה: <code>${esc(state.error)}</code></p></div></td></tr>`;
+      rowsEl.innerHTML = `<tr><td colspan="13"><div class="state"><h3>לא הצלחתי לטעון</h3><p>שגיאה: <code>${esc(state.error)}</code></p></div></td></tr>`;
       return;
     }
 
@@ -1630,7 +1682,7 @@
       const empty = state.signals.length === 0
         ? '<h3>עדיין אין איתותים</h3><p>הבוטים ימלאו את היומן ברגע שיזהו הזדמנות. הרשומה הראשונה תופיע כאן תוך שניות מהירי האיתות.</p>'
         : '<h3>אין תוצאות</h3><p>נסה להרחיב את הטווח או לנקות את החיפוש.</p>';
-      rowsEl.innerHTML = `<tr><td colspan="12"><div class="state">${empty}</div></td></tr>`;
+      rowsEl.innerHTML = `<tr><td colspan="13"><div class="state">${empty}</div></td></tr>`;
       return;
     }
 
@@ -1642,6 +1694,13 @@
       const botClass = 'bot-' + (s.bot || '').toLowerCase();
       const evtClass = 'evt-' + (s.event || 'signal');
       const dirLabel = DIR_HE[s.direction] || s.direction || '';
+
+      // Extract screenshot URL from body if present
+      const shotMatch = (s.body || '').match(/(?:סקרין|screenshot|shot)[:\s]+(https?:\/\/\S+)/i);
+      const shotUrl = shotMatch ? shotMatch[1] : null;
+      const shotCell = shotUrl
+        ? `<a class="shot-icon" href="#" data-shot="${esc(shotUrl)}" title="צפה בצילום">📷</a>`
+        : `<span class="shot-none">—</span>`;
 
       html += `<tr data-key="${esc(key)}"${isExp ? ' class="expanded"' : ''}>
         <td class="time">${timeCell(s.timestamp)}</td>
@@ -1655,10 +1714,11 @@
         <td class="num">${s.rr != null ? '1:' + fmt.format(s.rr) : '—'}</td>
         <td class="num">${s.contracts != null ? fmt0.format(s.contracts) : '—'}</td>
         <td class="num">${s.risk_usd != null ? '$' + fmt0.format(s.risk_usd) : '—'}</td>
+        <td style="text-align:center">${shotCell}</td>
         <td class="subject" title="${esc(s.subject || '')}">${esc((s.subject || '').slice(0, 80))}</td>
       </tr>`;
       if (isExp) {
-        html += `<tr class="detail"><td colspan="12">
+        html += `<tr class="detail"><td colspan="13">
           <span class="subject-line">${esc(s.subject || '')}</span>${esc(s.body || '(גוף ריק)')}
         </td></tr>`;
       }
@@ -1666,11 +1726,26 @@
     rowsEl.innerHTML = html;
 
     rowsEl.querySelectorAll('tr[data-key]').forEach(tr => {
-      tr.addEventListener('click', () => {
+      tr.addEventListener('click', (e) => {
+        // Don't toggle expand when clicking on the shot icon (opens modal instead)
+        if (e.target.closest('.shot-icon')) return;
         const k = tr.dataset.key;
         if (state.expanded.has(k)) state.expanded.delete(k);
         else state.expanded.add(k);
         renderRows();
+      });
+    });
+
+    // Wire shot icons — open modal
+    rowsEl.querySelectorAll('.shot-icon').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const url = a.dataset.shot;
+        if (!url) return;
+        const modal = document.getElementById('shot-modal');
+        document.getElementById('shot-modal-img').src = url;
+        modal.classList.add('open');
       });
     });
   }
@@ -1794,6 +1869,13 @@
     fetchSignals();
   });
   setDemoLabel();
+
+  // ESC closes the screenshot modal
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.getElementById('shot-modal').classList.remove('open');
+    }
+  });
 
   // Boot
   fetchSignals();
