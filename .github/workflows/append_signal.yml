@@ -1,0 +1,121 @@
+name: Append Trading Signal
+
+# Called by the SMT/QT bots (via workflow_dispatch) to log each signal to
+# signals.json. Auto-parses body fields into structured JSON for the
+# React dashboard.
+on:
+  workflow_dispatch:
+    inputs:
+      bot:
+        description: "Bot source (SMT or QT)"
+        required: true
+        type: string
+      subject:
+        description: "Email subject (contains symbol + direction + price)"
+        required: true
+        type: string
+      body:
+        description: "Email body (contains stop/target/contracts/etc.)"
+        required: true
+        type: string
+
+jobs:
+  append:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Parse & append to signals.json
+        env:
+          BOT:     ${{ github.event.inputs.bot }}
+          SUBJECT: ${{ github.event.inputs.subject }}
+          BODY:    ${{ github.event.inputs.body }}
+        run: |
+          python <<'PY'
+          import os, json, re, datetime
+          bot = os.environ["BOT"]
+          subject = os.environ["SUBJECT"]
+          body = os.environ["BODY"]
+
+          # Load existing signals
+          with open("signals.json") as f:
+              signals = json.load(f)
+
+          # Parse subject for symbol/direction/price
+          # Examples: "SMT MNQ LONG @ 29840.75", "[DRY-RUN] QT MES SHORT @ 7772.5"
+          symbol = None
+          direction = None
+          entry_price = None
+          for sym in ("MNQ", "MES", "NQ", "ES"):
+              if sym in subject.upper():
+                  symbol = sym
+                  break
+          if "LONG" in subject.upper():
+              direction = "LONG"
+          elif "SHORT" in subject.upper():
+              direction = "SHORT"
+          m = re.search(r"@\s*([\d,]+\.?\d*)", subject)
+          if m:
+              try: entry_price = float(m.group(1).replace(",", ""))
+              except: pass
+
+          # Parse body for stop / target / contracts / R:R / risk
+          def _num(pattern, text, default=None):
+              m = re.search(pattern, text)
+              if not m: return default
+              try: return float(m.group(1).replace(",", ""))
+              except: return default
+
+          stop_price   = _num(r"[Ss]top[:\s]+([\d,.]+)", body) or _num(r"stop[:=]?\s*([\d,.]+)", body)
+          target_price = _num(r"[Tt]arget[^:]*[:\s]+([\d,.]+)", body) or _num(r"יעד[^:]*[:\s]+([\d,.]+)", body)
+          contracts    = _num(r"[Cc]ontracts[:\s]+(\d+)", body) or _num(r"חוזים[:\s]+(\d+)", body)
+          rr           = _num(r"R:R\s*=?\s*1[:=]?(\d+\.?\d*)", body)
+          risk_usd     = _num(r"[Rr]isk[^$]*\$([\d,.]+)", body) or _num(r"סיכון[^$]*\$([\d,.]+)", body)
+
+          # Detect event type from subject
+          event = "signal"
+          subj_low = subject.lower()
+          if any(w in subj_low for w in ["startup", "ping", "bot started"]): event = "startup"
+          elif any(w in subj_low for w in ["target hit", "יעד"]) and "הושג" in subject: event = "target_hit"
+          elif "סטופ נפגע" in subject or "stop hit" in subj_low: event = "stop_hit"
+          elif "סליפאג" in subject or "slippage" in subj_low: event = "slippage_close"
+          elif "עצר" in subject or "halted" in subj_low: event = "day_halt"
+          elif "dry-run" in subj_low or "[dry" in subj_low: event = "dry_run_signal"
+
+          # Build entry
+          entry = {
+              "timestamp":    datetime.datetime.utcnow().isoformat(timespec="seconds") + "Z",
+              "bot":          bot,
+              "event":        event,
+              "symbol":       symbol,
+              "direction":    direction,
+              "entry_price":  entry_price,
+              "stop_price":   stop_price,
+              "target_price": target_price,
+              "contracts":    int(contracts) if contracts else None,
+              "rr":           rr,
+              "risk_usd":     risk_usd,
+              "subject":      subject,
+              "body":         body,
+          }
+          signals.append(entry)
+
+          # Keep last 5000 to prevent unbounded growth
+          if len(signals) > 5000:
+              signals = signals[-5000:]
+
+          with open("signals.json", "w") as f:
+              json.dump(signals, f, indent=2, ensure_ascii=False)
+
+          print(f"appended: bot={bot} event={event} symbol={symbol} direction={direction}")
+          PY
+
+      - name: Commit & push
+        run: |
+          git config user.name  "signal-bot"
+          git config user.email "signal-bot@users.noreply.github.com"
+          git add signals.json
+          git diff --cached --quiet || git commit -m "append: ${{ github.event.inputs.bot }} ${{ github.event.inputs.subject }}"
+          git push
