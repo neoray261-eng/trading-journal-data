@@ -1,0 +1,187 @@
+name: Check Signal Outcomes
+
+# For every open dry-run signal, fetch price bars from Yahoo Finance
+# (free, no auth) and mark whether target or stop was hit first.
+# This is what gives the paper-trading dashboard real W/L numbers.
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'   # every 15 minutes
+  workflow_dispatch:
+
+concurrency:
+  group: journal-writer
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve outcomes
+        run: |
+          python <<'PY'
+          import json, os, re, datetime, urllib.request, urllib.error
+
+          UA = {"User-Agent": "Mozilla/5.0 (trading-journal-bot)"}
+          SYM_MAP = {"MNQ": "NQ=F", "NQ": "NQ=F", "MES": "ES=F", "ES": "ES=F"}
+
+          with open("signals.json") as f:
+              signals = json.load(f)
+
+          def utc_now():
+              return datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc)
+
+          def parse_ts(s):
+              # "2026-08-16T10:55:37Z"
+              return datetime.datetime.fromisoformat(s.replace("Z", "+00:00"))
+
+          # 1) Match each existing target_hit/stop_hit back to its source signal
+          #    so we don't re-resolve. Match by (bot, symbol, direction) and the
+          #    signal's timestamp <= outcome's timestamp within 24h.
+          def find_source_idx(outcome_entry):
+              t_out = parse_ts(outcome_entry["timestamp"])
+              for i, s in enumerate(signals):
+                  if s.get("event") not in ("signal", "dry_run_signal"): continue
+                  if s.get("bot") != outcome_entry.get("bot"): continue
+                  if s.get("symbol") != outcome_entry.get("symbol"): continue
+                  if s.get("direction") != outcome_entry.get("direction"): continue
+                  t_sig = parse_ts(s["timestamp"])
+                  if 0 <= (t_out - t_sig).total_seconds() <= 86400 and not s.get("resolved"):
+                      return i
+              return None
+
+          # First pass: back-fill resolved flags from any existing outcome events
+          for e in signals:
+              if e.get("event") in ("target_hit", "stop_hit"):
+                  idx = find_source_idx(e)
+                  if idx is not None:
+                      signals[idx]["resolved"] = True
+                      signals[idx]["outcome"] = "target" if e["event"] == "target_hit" else "stop"
+
+          # 2) Find open signals to check
+          now = utc_now()
+          to_check = []
+          for i, s in enumerate(signals):
+              if s.get("event") not in ("signal", "dry_run_signal"): continue
+              if s.get("resolved"): continue
+              if not all(s.get(k) is not None for k in ("entry_price", "stop_price", "target_price", "direction", "symbol")): continue
+              t_sig = parse_ts(s["timestamp"])
+              age = (now - t_sig).total_seconds()
+              if age < 300: continue         # give at least 5 min to develop
+              if age > 86400 * 2:
+                  # expired — mark as no-fill so we don't keep checking
+                  s["resolved"] = True
+                  s["outcome"] = "expired"
+                  continue
+              to_check.append(i)
+
+          print(f"open signals to check: {len(to_check)}")
+
+          def fetch_bars(yahoo_sym, start_ts, end_ts):
+              # 1-minute bars, up to ~5 days back. Yahoo returns unix seconds.
+              range_days = max(1, min(5, int((end_ts - start_ts) / 86400) + 1))
+              url = (f"https://query1.finance.yahoo.com/v7/finance/chart/{yahoo_sym}"
+                     f"?interval=1m&range={range_days}d")
+              try:
+                  req = urllib.request.Request(url, headers=UA)
+                  with urllib.request.urlopen(req, timeout=30) as r:
+                      data = json.load(r)
+              except Exception as e:
+                  print(f"fetch failed {yahoo_sym}: {e}")
+                  return []
+              try:
+                  result = data["chart"]["result"][0]
+                  ts = result["timestamp"]
+                  q  = result["indicators"]["quote"][0]
+                  bars = []
+                  for i, t in enumerate(ts):
+                      if t < start_ts - 60 or t > end_ts + 60: continue
+                      h = q["high"][i]; l = q["low"][i]
+                      if h is None or l is None: continue
+                      bars.append((t, h, l))
+                  return bars
+              except Exception as e:
+                  print(f"parse failed {yahoo_sym}: {e}")
+                  return []
+
+          new_events = []
+          for i in to_check:
+              s = signals[i]
+              yh = SYM_MAP.get(s["symbol"])
+              if not yh: continue
+              t_sig_dt = parse_ts(s["timestamp"])
+              start_ts = int(t_sig_dt.timestamp())
+              end_ts   = int(now.timestamp())
+              bars = fetch_bars(yh, start_ts, end_ts)
+              if not bars:
+                  print(f"no bars for {s['symbol']} since {s['timestamp']}")
+                  continue
+
+              entry  = s["entry_price"]
+              stop   = s["stop_price"]
+              target = s["target_price"]
+              is_long = s["direction"] == "LONG"
+
+              outcome = None; hit_ts = None; hit_price = None
+              for (t, h, l) in bars:
+                  if is_long:
+                      hit_target = h >= target
+                      hit_stop   = l <= stop
+                  else:
+                      hit_target = l <= target
+                      hit_stop   = h >= stop
+                  if hit_target and hit_stop:
+                      # both in same 1-min bar — conservative: stop first
+                      outcome = "stop"; hit_ts = t; hit_price = stop; break
+                  if hit_stop:
+                      outcome = "stop"; hit_ts = t; hit_price = stop; break
+                  if hit_target:
+                      outcome = "target"; hit_ts = t; hit_price = target; break
+
+              if outcome:
+                  s["resolved"] = True
+                  s["outcome"] = outcome
+                  s["outcome_time"] = datetime.datetime.fromtimestamp(hit_ts, tz=datetime.timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+                  s["outcome_price"] = hit_price
+                  new_events.append({
+                      "timestamp": s["outcome_time"],
+                      "bot": s["bot"],
+                      "event": "target_hit" if outcome == "target" else "stop_hit",
+                      "symbol": s["symbol"],
+                      "direction": s["direction"],
+                      "entry_price": entry,
+                      "stop_price": stop,
+                      "target_price": target,
+                      "contracts": s.get("contracts"),
+                      "rr": s.get("rr"),
+                      "risk_usd": s.get("risk_usd"),
+                      "subject": f"[AUTO] {s['bot']} {s['symbol']} {s['direction']} {'TARGET HIT' if outcome=='target' else 'STOP HIT'} @ {hit_price}",
+                      "body": f"resolved paper trade\nentry: {entry}\nstop: {stop}\ntarget: {target}\nhit: {hit_price} at {s['outcome_time']}\nsource signal: {s['timestamp']}",
+                  })
+                  print(f"resolved {s['bot']} {s['symbol']} {s['direction']} @ {s['timestamp']} → {outcome} @ {hit_price}")
+
+          signals.extend(new_events)
+          # Sort by timestamp so new events land in place
+          signals.sort(key=lambda x: x.get("timestamp", ""))
+
+          # Cap size
+          if len(signals) > 5000:
+              signals = signals[-5000:]
+
+          with open("signals.json", "w") as f:
+              json.dump(signals, f, indent=2, ensure_ascii=False)
+
+          print(f"total signals: {len(signals)}  new outcome events: {len(new_events)}")
+          PY
+
+      - name: Commit if changed
+        run: |
+          git config user.name  "outcome-bot"
+          git config user.email "outcome-bot@users.noreply.github.com"
+          git add signals.json
+          git diff --cached --quiet || git commit -m "auto-resolve: outcomes checked $(date -u +%FT%TZ)"
+          git push || true
