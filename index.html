@@ -594,36 +594,88 @@
   .bot-progress-label .l { color: var(--long); }
   .bot-progress-label .s { color: var(--short); }
 
-  /* ── HOUR BARS ──────────────────────────────────────────────────── */
-  .hour-chart {
+  /* ── HOUR BARS — DIVERGING CHART WITH SESSION BANDS ─────────────── */
+  .hour-chart-wrap {
+    position: relative;
+    padding: 0;
+    background: linear-gradient(180deg,
+      transparent 0%,
+      transparent 49.5%,
+      var(--rule-strong) 49.5%,
+      var(--rule-strong) 50.5%,
+      transparent 50.5%,
+      transparent 100%);
+  }
+  .hour-sessions {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
     display: grid;
     grid-template-columns: repeat(24, 1fr);
     gap: 2px;
     direction: ltr;
-    align-items: end;
-    height: 120px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hour-sessions .band { border-radius: 3px; }
+  .hour-sessions .band.asia    { background: color-mix(in oklab, var(--long)  8%, transparent); }
+  .hour-sessions .band.london  { background: color-mix(in oklab, var(--info)  8%, transparent); }
+  .hour-sessions .band.ny      { background: color-mix(in oklab, var(--accent) 8%, transparent); }
+  .hour-sessions .band.overlap { background: color-mix(in oklab, var(--accent) 14%, transparent); }
+
+  .hour-chart {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    gap: 3px;
+    direction: ltr;
+    height: 140px;
+    position: relative;
+    z-index: 1;
   }
   .hour-col {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    justify-content: end;
+    justify-content: center;
     height: 100%;
     position: relative;
     cursor: default;
   }
-  .hour-col .win-bar { background: var(--long); border-radius: 1px 1px 0 0; min-height: 1px; }
-  .hour-col .loss-bar { background: var(--short); border-radius: 0 0 1px 1px; min-height: 1px; }
-  .hour-col:hover .win-bar { background: var(--long-strong); }
-  .hour-col:hover .loss-bar { background: var(--short-strong); }
-  .hour-col.empty { background: var(--panel-lift); border-radius: 1px; opacity: 0.4; }
+  .hour-col .wins-half,
+  .hour-col .losses-half {
+    height: 50%;
+    display: flex;
+  }
+  .hour-col .wins-half   { align-items: flex-end; }
+  .hour-col .losses-half { align-items: flex-start; }
+  .hour-col .win-bar {
+    width: 100%;
+    background: var(--long);
+    border-radius: 3px 3px 0 0;
+    min-height: 2px;
+    transition: opacity 100ms;
+  }
+  .hour-col .loss-bar {
+    width: 100%;
+    background: var(--short);
+    border-radius: 0 0 3px 3px;
+    min-height: 2px;
+    transition: opacity 100ms;
+  }
+  .hour-col:hover .win-bar,
+  .hour-col:hover .loss-bar { opacity: 0.75; }
+  .hour-col.active-hour::before {
+    content: '';
+    position: absolute;
+    top: -6px; left: 50%; transform: translateX(-50%);
+    width: 4px; height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
   .hour-col[data-tip]:hover::after {
     content: attr(data-tip);
     position: absolute;
-    bottom: 100%;
+    bottom: calc(100% + 8px);
     left: 50%;
     transform: translateX(-50%);
-    margin-bottom: 8px;
     background: var(--ink);
     border: 1px solid var(--rule-strong);
     padding: 6px 10px;
@@ -634,27 +686,35 @@
     font-family: var(--font-mono);
     z-index: 20;
     pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
   }
   .hour-axis {
     display: grid;
     grid-template-columns: repeat(24, 1fr);
-    gap: 2px;
-    margin-top: 6px;
+    gap: 3px;
+    margin-top: 8px;
     direction: ltr;
     font-size: 9px;
     color: var(--fg-mute);
     font-family: var(--font-mono);
     text-align: center;
+    font-variant-numeric: tabular-nums;
   }
-  .hour-legend {
+  .hour-session-labels {
     display: flex;
-    justify-content: flex-end;
-    gap: var(--sp-3);
+    gap: var(--sp-4);
+    justify-content: center;
     margin-top: var(--sp-3);
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--rule);
     font-size: 11px;
     color: var(--fg-dim);
+    flex-wrap: wrap;
   }
-  .hour-legend .sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-inline-start: 6px; vertical-align: middle; }
+  .hour-session-labels span { display: inline-flex; align-items: center; gap: 6px; }
+  .hour-session-labels .sw {
+    display: inline-block; width: 10px; height: 10px; border-radius: 2px;
+  }
 
   /* ── FILTERS ────────────────────────────────────────────────────── */
   .filters {
@@ -1029,15 +1089,22 @@
     <section class="panel bot-card" id="bot-card-manual"></section>
   </div>
 
-  <!-- ── ROW 4: HOURLY ──────────────────────────────────── -->
+  <!-- ── ROW 4: HOURLY (diverging with session bands) ────── -->
   <section class="panel" style="margin-top: var(--sp-4)">
     <div class="panel-title">
       <h3>ביצועים לפי שעה (UTC)</h3>
       <span class="subtle" id="hour-summary">—</span>
     </div>
-    <div class="hour-chart" id="hour-chart"></div>
+    <div class="hour-chart-wrap">
+      <div class="hour-sessions" id="hour-sessions"></div>
+      <div class="hour-chart" id="hour-chart"></div>
+    </div>
     <div class="hour-axis" id="hour-axis"></div>
-    <div class="hour-legend">
+    <div class="hour-session-labels">
+      <span><span class="sw" style="background: color-mix(in oklab, var(--long) 40%, var(--panel-lift))"></span>Asia (17-01)</span>
+      <span><span class="sw" style="background: color-mix(in oklab, var(--info) 40%, var(--panel-lift))"></span>London (07-16)</span>
+      <span><span class="sw" style="background: color-mix(in oklab, var(--accent) 40%, var(--panel-lift))"></span>NY (13-22)</span>
+      <span style="color:var(--fg-mute)">·</span>
       <span><span class="sw" style="background: var(--long)"></span>זכיות</span>
       <span><span class="sw" style="background: var(--short)"></span>הפסדים</span>
     </div>
@@ -1715,34 +1782,76 @@
     `;
   }
 
-  // ── HOUR CHART ──────────────────────────────────────────────
+  // ── HOUR CHART (diverging, session-banded) ──────────────────
   function renderHourChart(trades) {
-    const chartEl = document.getElementById('hour-chart');
-    const axisEl  = document.getElementById('hour-axis');
-    const buckets = Array.from({ length: 24 }, () => ({ wins: 0, losses: 0 }));
+    const chartEl    = document.getElementById('hour-chart');
+    const axisEl     = document.getElementById('hour-axis');
+    const sessionsEl = document.getElementById('hour-sessions');
+    const buckets    = Array.from({ length: 24 }, () => ({ wins: 0, losses: 0, r: 0 }));
 
     for (const t of trades) {
       if (!t.resolved || t.r == null) continue;
       const h = new Date(t.ts).getUTCHours();
       if (t.r > 0) buckets[h].wins++; else buckets[h].losses++;
+      buckets[h].r += t.r;
     }
 
-    let maxCount = 1;
-    for (const b of buckets) maxCount = Math.max(maxCount, b.wins + b.losses);
+    // Normalize wins and losses INDEPENDENTLY so a low-count hour with 1 win
+    // and 3 losses still shows the correct balance visually.
+    let maxWins = 1, maxLosses = 1;
+    for (const b of buckets) {
+      if (b.wins   > maxWins)   maxWins   = b.wins;
+      if (b.losses > maxLosses) maxLosses = b.losses;
+    }
+
+    // Session bands — FX-style time-of-day overlays (UTC hours)
+    //   Asia:   17-01  (Sydney/Tokyo)
+    //   London: 07-16
+    //   NY:     13-22   (overlaps London 13-16)
+    const bandFor = (h) => {
+      const inAsia   = h >= 17 || h < 1;
+      const inLondon = h >= 7  && h < 16;
+      const inNY     = h >= 13 && h < 22;
+      if (inLondon && inNY) return 'overlap';
+      if (inNY)             return 'ny';
+      if (inLondon)         return 'london';
+      if (inAsia)           return 'asia';
+      return '';
+    };
+
+    let sHtml = '';
+    for (let h = 0; h < 24; h++) {
+      const cls = bandFor(h);
+      sHtml += `<div class="band ${cls}"></div>`;
+    }
+    sessionsEl.innerHTML = sHtml;
+
+    // Best and worst hour (by net R) for summary
+    let bestH = null, worstH = null;
+    for (let h = 0; h < 24; h++) {
+      const b = buckets[h];
+      if (b.wins + b.losses === 0) continue;
+      if (bestH  === null || b.r > buckets[bestH].r)  bestH  = h;
+      if (worstH === null || b.r < buckets[worstH].r) worstH = h;
+    }
 
     let cHtml = '';
     for (let h = 0; h < 24; h++) {
       const b = buckets[h];
       const total = b.wins + b.losses;
+      const cls = ['hour-col'];
+      if (bestH === h && b.r > 0)    cls.push('active-hour');
+
       if (total === 0) {
-        cHtml += `<div class="hour-col empty" data-tip="${String(h).padStart(2,'0')}:00 UTC · אין עסקאות"></div>`;
+        cHtml += `<div class="${cls.join(' ')}" data-tip="${String(h).padStart(2,'0')}:00 UTC · אין עסקאות"></div>`;
       } else {
-        const winH  = (b.wins / maxCount) * 100;
-        const lossH = (b.losses / maxCount) * 100;
-        const wr = total ? Math.round((b.wins / total) * 100) : 0;
-        cHtml += `<div class="hour-col" data-tip="${String(h).padStart(2,'0')}:00 UTC · ${b.wins}W ${b.losses}L · ${wr}% WR">
-          <div class="win-bar" style="height:${winH.toFixed(1)}%"></div>
-          <div class="loss-bar" style="height:${lossH.toFixed(1)}%"></div>
+        const winH  = (b.wins   / maxWins)   * 100;
+        const lossH = (b.losses / maxLosses) * 100;
+        const wr = Math.round((b.wins / total) * 100);
+        const rStr = (b.r > 0 ? '+' : '') + b.r.toFixed(1) + 'R';
+        cHtml += `<div class="${cls.join(' ')}" data-tip="${String(h).padStart(2,'0')}:00 UTC · ${b.wins}W ${b.losses}L · ${wr}% WR · ${rStr}">
+          <div class="wins-half"><div class="win-bar" style="height:${winH.toFixed(1)}%"></div></div>
+          <div class="losses-half"><div class="loss-bar" style="height:${lossH.toFixed(1)}%"></div></div>
         </div>`;
       }
     }
@@ -1754,9 +1863,18 @@
     }
     axisEl.innerHTML = aHtml;
 
+    // Summary — resolved count + best/worst hour
     const resolvedCount = trades.filter(t => t.resolved && t.r != null).length;
-    document.getElementById('hour-summary').textContent =
-      resolvedCount ? `${resolvedCount} עסקאות מנותחות` : 'אין נתונים';
+    let summaryText;
+    if (!resolvedCount) summaryText = 'אין נתונים';
+    else if (bestH != null) {
+      const bR = buckets[bestH].r, wR = buckets[worstH].r;
+      const bStr = String(bestH).padStart(2,'0');
+      const wStr = String(worstH).padStart(2,'0');
+      summaryText = `${resolvedCount} עסקאות · השעה הטובה ${bStr}:00 (+${bR.toFixed(1)}R)` +
+                    (worstH !== bestH ? ` · הרעה ${wStr}:00 (${wR.toFixed(1)}R)` : '');
+    } else summaryText = `${resolvedCount} עסקאות מנותחות`;
+    document.getElementById('hour-summary').textContent = summaryText;
   }
 
   // ── TABLE ───────────────────────────────────────────────────
