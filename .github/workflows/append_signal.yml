@@ -86,15 +86,15 @@ jobs:
           rr           = _num(r"R:R\s*=?\s*1[:=]?(\d+\.?\d*)", body)
           risk_usd     = _num(r"[Rr]isk[^$]*\$([\d,.]+)", body) or _num(r"סיכון[^$]*\$([\d,.]+)", body)
 
-          # Event type
+          # Event type — accept English OR Hebrew phrasing independently
           event = "signal"
           subj_low = subject.lower()
           if   any(w in subj_low for w in ["startup", "ping", "bot started"]): event = "startup"
-          elif any(w in subj_low for w in ["target hit", "יעד"]) and "הושג" in subject: event = "target_hit"
-          elif "סטופ נפגע" in subject or "stop hit" in subj_low: event = "stop_hit"
-          elif "סליפאג" in subject or "slippage" in subj_low: event = "slippage_close"
-          elif "עצר" in subject or "halted" in subj_low: event = "day_halt"
-          elif "dry-run" in subj_low or "[dry" in subj_low: event = "dry_run_signal"
+          elif "target hit" in subj_low or ("יעד" in subject and "הושג" in subject): event = "target_hit"
+          elif "stop hit"   in subj_low or "סטופ נפגע" in subject:                  event = "stop_hit"
+          elif "slippage"   in subj_low or "סליפאג" in subject:                    event = "slippage_close"
+          elif "halted"     in subj_low or "עצר" in subject:                       event = "day_halt"
+          elif "[dry"       in subj_low or "dry-run" in subj_low:                   event = "dry_run_signal"
 
           entry = {
               "timestamp":    datetime.datetime.utcnow().isoformat(timespec="seconds") + "Z",

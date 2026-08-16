@@ -279,9 +279,11 @@ function calc(){
   document.getElementById('rrR').style.width=((1/tot)*100).toFixed(1)+'%';
   document.getElementById('rrG').style.width=((rr/tot)*100).toFixed(1)+'%';
   var ab=document.getElementById('actBox'),btn=document.getElementById('addBtn');
+  var entry=parseFloat(document.getElementById('entryPx').value)||0;
   if(!allCh){ab.className='act act-wait';ab.textContent='⏳ המתן... אשר את הצ\'ק ליסט לאישור הפעולה';btn.style.display='none';}
+  else if(entry<=0){ab.className='act act-bad';ab.textContent='📍 מלא מחיר כניסה כדי להוסיף עסקה ליומן';btn.style.display='none';}
   else if(rr<1.5){ab.className='act act-bad';ab.textContent='🛑 יחס R:R גרוע ('+rr.toFixed(2)+') - לא להיכנס!';btn.style.display='none';}
-  else{ab.className='act act-ok';ab.textContent='✅ פעולה: פתח '+qty+' חוזי '+sym;btn.style.display='block';}
+  else{ab.className='act act-ok';ab.textContent='✅ פעולה: פתח '+qty+' חוזי '+sym+' ב-'+entry;btn.style.display='block';}
   var entry=parseFloat(document.getElementById('entryPx').value)||0;
   var stopPx=null, tgtPx=null;
   if(entry>0 && sl>0){
@@ -307,7 +309,7 @@ function addT(){
 
   // Dispatch to central journal (async — don't block UI)
   var entryStr = s.entry ? s.entry.toFixed(2) : '—';
-  var subject = '[MANUAL] MANUAL '+s.sym+' '+s.dir+' @ '+entryStr;
+  var subject = '[MANUAL] '+s.sym+' '+s.dir+' @ '+entryStr;
   var bodyLines = [
     'כיוון: '+s.dir,
     'כניסה: '+entryStr,
@@ -354,7 +356,7 @@ function updS(i,v){
   if(v==='Win' || v==='Loss'){
     var event = v==='Win' ? 'target_hit' : 'stop_hit';
     var hitPx = v==='Win' ? (t.tgtPx!=null?t.tgtPx.toFixed(2):'—') : (t.stopPx!=null?t.stopPx.toFixed(2):'—');
-    var subject = '[MANUAL-AUTO] MANUAL '+t.sym+' '+(t.dir||'')+' '+(v==='Win'?'TARGET HIT':'STOP HIT')+' @ '+hitPx;
+    var subject = '[MANUAL-AUTO] '+t.sym+' '+(t.dir||'')+' '+(v==='Win'?'TARGET HIT':'STOP HIT')+' @ '+hitPx;
     var body = [
       'עסקה ידנית נסגרה',
       'כניסה: '+(t.entry!=null?t.entry.toFixed(2):'—'),
