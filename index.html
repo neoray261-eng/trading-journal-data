@@ -36,6 +36,9 @@
     --info:        #6FA9E5;
     --info-dim:    rgba(111, 169, 229, 0.14);
 
+    --manual:      #C594E8;
+    --manual-dim:  rgba(197, 148, 232, 0.16);
+
     --grid-line:   rgba(255, 255, 255, 0.04);
 
     --font-sans:   "Segoe UI", "Arial Hebrew", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
@@ -77,6 +80,9 @@
       --info:        #3A6EA5;
       --info-dim:    rgba(58, 110, 165, 0.16);
 
+      --manual:      #7B4FB8;
+      --manual-dim:  rgba(123, 79, 184, 0.16);
+
       --grid-line:   rgba(0, 0, 0, 0.06);
     }
   }
@@ -103,6 +109,8 @@
     --short-faint: rgba(184, 68, 67, 0.08);
     --info:        #3A6EA5;
     --info-dim:    rgba(58, 110, 165, 0.16);
+    --manual:      #7B4FB8;
+    --manual-dim:  rgba(123, 79, 184, 0.16);
     --grid-line:   rgba(0, 0, 0, 0.06);
   }
 
@@ -323,6 +331,13 @@
   }
   @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
 
+  .bot-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--sp-4);
+    margin-bottom: var(--sp-4);
+  }
+
   /* ── MONTHLY CALENDAR ───────────────────────────────────────────── */
   .cal-nav {
     display: flex;
@@ -524,8 +539,9 @@
     border-radius: 4px;
     direction: ltr;
   }
-  .bot-tag.smt { background: var(--accent-dim); color: var(--accent); border: 1px solid color-mix(in oklab, var(--accent) 30%, transparent); }
-  .bot-tag.qt  { background: var(--info-dim);   color: var(--info);   border: 1px solid color-mix(in oklab, var(--info) 30%, transparent); }
+  .bot-tag.smt    { background: var(--accent-dim); color: var(--accent); border: 1px solid color-mix(in oklab, var(--accent) 30%, transparent); }
+  .bot-tag.qt     { background: var(--info-dim);   color: var(--info);   border: 1px solid color-mix(in oklab, var(--info) 30%, transparent); }
+  .bot-tag.manual { background: var(--manual-dim); color: var(--manual); border: 1px solid color-mix(in oklab, var(--manual) 30%, transparent); }
 
   .bot-mini-kpis {
     display: grid;
@@ -787,9 +803,10 @@
     font-family: var(--font-sans);
     direction: ltr;
   }
-  .chip.bot-smt  { background: var(--accent-dim); color: var(--accent); border: 1px solid color-mix(in oklab, var(--accent) 30%, transparent); }
-  .chip.bot-qt   { background: var(--info-dim);   color: var(--info); border: 1px solid color-mix(in oklab, var(--info) 30%, transparent); }
-  .chip.bot-test { background: var(--panel-lift); color: var(--fg-dim); border: 1px solid var(--rule); }
+  .chip.bot-smt    { background: var(--accent-dim); color: var(--accent); border: 1px solid color-mix(in oklab, var(--accent) 30%, transparent); }
+  .chip.bot-qt     { background: var(--info-dim);   color: var(--info); border: 1px solid color-mix(in oklab, var(--info) 30%, transparent); }
+  .chip.bot-manual { background: var(--manual-dim); color: var(--manual); border: 1px solid color-mix(in oklab, var(--manual) 30%, transparent); }
+  .chip.bot-test   { background: var(--panel-lift); color: var(--fg-dim); border: 1px solid var(--rule); }
   .chip.dir-long  { background: var(--long-dim);  color: var(--long); }
   .chip.dir-short { background: var(--short-dim); color: var(--short); }
 
@@ -917,10 +934,11 @@
     </section>
   </div>
 
-  <!-- ── ROW 3: BOT COMPARISON ──────────────────────────── -->
-  <div class="grid-2">
+  <!-- ── ROW 3: BOT + MANUAL COMPARISON ─────────────────── -->
+  <div class="bot-cards-grid">
     <section class="panel bot-card" id="bot-card-smt"></section>
     <section class="panel bot-card" id="bot-card-qt"></section>
+    <section class="panel bot-card" id="bot-card-manual"></section>
   </div>
 
   <!-- ── ROW 4: HOURLY ──────────────────────────────────── -->
@@ -951,6 +969,7 @@
           <button type="button" data-value="all" class="active">הכל</button>
           <button type="button" data-value="SMT">SMT</button>
           <button type="button" data-value="QT">QT</button>
+          <button type="button" data-value="MANUAL">ידני</button>
         </div>
       </div>
 
@@ -1042,8 +1061,8 @@
   // ── DEMO DATA (only shown when user clicks "דוגמה") ─────────
   function generateDemoData() {
     const now = Date.now();
-    const bots = ['SMT', 'QT'];
-    const syms = { SMT: 'NQ', QT: 'MNQ' };
+    const bots = ['SMT', 'QT', 'MANUAL'];
+    const syms = { SMT: 'NQ', QT: 'MNQ', MANUAL: 'MNQ' };
     const out = [];
     let seed = 42;
     const rand = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
@@ -1055,7 +1074,7 @@
       const ts = new Date(now - daysAgo * 86400000);
       ts.setUTCHours(hoursAgo % 24, Math.floor(rand() * 60), 0, 0);
 
-      const bot = bots[Math.floor(rand() * 2)];
+      const bot = bots[Math.floor(rand() * bots.length)];
       const symbol = syms[bot];
       const direction = rand() > 0.5 ? 'LONG' : 'SHORT';
       const entry = 30000 + Math.floor(rand() * 500);
@@ -1674,8 +1693,9 @@
     renderKPIs(trades);
     renderCalendar(trades);
     renderEquityCurve(trades);
-    renderBotCard('bot-card-smt', 'SMT', 'smt', trades);
-    renderBotCard('bot-card-qt',  'QT',  'qt',  trades);
+    renderBotCard('bot-card-smt',    'SMT',    'smt',    trades);
+    renderBotCard('bot-card-qt',     'QT',     'qt',     trades);
+    renderBotCard('bot-card-manual', 'MANUAL', 'manual', trades);
     renderHourChart(trades);
     renderRows();
     renderStatus();
