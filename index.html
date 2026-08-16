@@ -807,6 +807,7 @@
         <span id="live-text">טוען…</span>
       </span>
       <span class="updated-txt" id="last-updated"></span>
+      <button class="theme-toggle" id="demo-toggle" type="button" title="הצג דוגמה עם נתונים מדומים">דוגמה</button>
       <button class="theme-toggle" id="theme-toggle" type="button">אוטומטי</button>
     </div>
   </header>
@@ -952,6 +953,7 @@
     loading: true,
     error: null,
     lastFetch: null,
+    demo: new URLSearchParams(location.search).get('demo') === '1',
   };
 
   // ── UTILS ───────────────────────────────────────────────────
@@ -965,8 +967,71 @@
 
   const parseTS = s => new Date(s);
 
+  // ── DEMO DATA (only shown when user clicks "דוגמה") ─────────
+  function generateDemoData() {
+    const now = Date.now();
+    const bots = ['SMT', 'QT'];
+    const syms = { SMT: 'NQ', QT: 'MNQ' };
+    const out = [];
+    let seed = 42;
+    const rand = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+
+    // Generate ~60 signals over the last 45 days
+    for (let i = 0; i < 60; i++) {
+      const daysAgo = Math.floor(rand() * 45);
+      const hoursAgo = Math.floor(rand() * 12) + 13; // between 13:00-01:00 UTC (NY session)
+      const ts = new Date(now - daysAgo * 86400000);
+      ts.setUTCHours(hoursAgo % 24, Math.floor(rand() * 60), 0, 0);
+
+      const bot = bots[Math.floor(rand() * 2)];
+      const symbol = syms[bot];
+      const direction = rand() > 0.5 ? 'LONG' : 'SHORT';
+      const entry = 30000 + Math.floor(rand() * 500);
+      const stopDist = 30 + Math.floor(rand() * 40);
+      const rr = 1.8 + rand() * 2;
+      const targetDist = stopDist * rr;
+      const stop   = direction === 'LONG' ? entry - stopDist : entry + stopDist;
+      const target = direction === 'LONG' ? entry + targetDist : entry - targetDist;
+      const contracts = 2 + Math.floor(rand() * 4);
+      const risk = Math.min(100, stopDist * contracts * (symbol === 'NQ' ? 5 : 0.5));
+
+      const sig = {
+        timestamp: ts.toISOString().replace(/\.\d{3}Z$/, 'Z'),
+        bot, event: 'dry_run_signal', symbol, direction,
+        entry_price: entry, stop_price: stop, target_price: target,
+        contracts, rr: +rr.toFixed(2), risk_usd: +risk.toFixed(2),
+        subject: `[DEMO] ${bot} ${symbol} ${direction} @ ${entry}`,
+        body: `[דוגמה]\nכיוון: ${direction}\nכניסה: ${entry}\nסטופ: ${stop}\nיעד: ${target.toFixed(2)}\nחוזים: ${contracts}\nR:R = 1:${rr.toFixed(2)}\nסיכון: $${risk.toFixed(2)}`,
+      };
+      out.push(sig);
+
+      // 85% chance the trade has resolved (skewed toward wins with real R:R)
+      if (rand() < 0.85 && daysAgo > 0) {
+        const isWin = rand() < 0.52;  // ~52% WR baseline
+        const outTs = new Date(ts.getTime() + (30 + Math.floor(rand() * 180)) * 60000);
+        out.push({
+          timestamp: outTs.toISOString().replace(/\.\d{3}Z$/, 'Z'),
+          bot, event: isWin ? 'target_hit' : 'stop_hit', symbol, direction,
+          entry_price: entry, stop_price: stop, target_price: target,
+          contracts, rr: sig.rr, risk_usd: sig.risk_usd,
+          subject: `[DEMO-AUTO] ${bot} ${symbol} ${direction} ${isWin ? 'TARGET HIT' : 'STOP HIT'} @ ${isWin ? target.toFixed(2) : stop}`,
+          body: `[דוגמה] resolved paper trade\nentry: ${entry}\n${isWin ? 'target' : 'stop'} hit`,
+        });
+      }
+    }
+    return out.sort((a, b) => a.timestamp.localeCompare(b.timestamp));
+  }
+
   // ── DATA ────────────────────────────────────────────────────
   async function fetchSignals() {
+    if (state.demo) {
+      state.signals = generateDemoData();
+      state.error = null;
+      state.loading = false;
+      state.lastFetch = new Date();
+      render();
+      return;
+    }
     try {
       const r = await fetch(`${DATA_URL}?t=${Date.now()}`, { cache: 'no-store' });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
@@ -1551,6 +1616,26 @@
   });
   applyTheme();
   setThemeLabel();
+
+  // Demo toggle
+  const demoBtn = document.getElementById('demo-toggle');
+  function setDemoLabel() {
+    demoBtn.textContent = state.demo ? 'חי' : 'דוגמה';
+    demoBtn.style.color = state.demo ? 'var(--accent)' : '';
+    demoBtn.style.borderColor = state.demo ? 'var(--accent)' : '';
+  }
+  demoBtn.addEventListener('click', () => {
+    state.demo = !state.demo;
+    const url = new URL(location.href);
+    if (state.demo) url.searchParams.set('demo', '1');
+    else url.searchParams.delete('demo');
+    history.replaceState(null, '', url);
+    setDemoLabel();
+    state.loading = true;
+    render();
+    fetchSignals();
+  });
+  setDemoLabel();
 
   // Boot
   fetchSignals();
