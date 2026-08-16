@@ -3,9 +3,10 @@ name: Append Trading Signal
 # Called by the SMT/QT bots (via workflow_dispatch) to log each signal to
 # signals.json. Auto-parses body fields into structured JSON for the dashboard.
 #
-# Concurrency: SMT and QT can fire at the same second. We serialize via the
-# `journal-writer` group, AND on push conflict we reset to latest and re-run
-# the append. That's a belt-and-suspenders guarantee: no signal can be lost.
+# NOTE: We deliberately do NOT use `concurrency:` — GitHub Actions concurrency
+# cancels any run beyond the 1-slot queue, which would silently drop signals
+# when bots fire in bursts. Instead, every run works on the latest state, and
+# on push conflict we reset + re-append and retry. Every dispatch is preserved.
 on:
   workflow_dispatch:
     inputs:
@@ -21,10 +22,6 @@ on:
         description: "Email body"
         required: true
         type: string
-
-concurrency:
-  group: journal-writer
-  cancel-in-progress: false
 
 jobs:
   append:
