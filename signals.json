@@ -304,7 +304,13 @@
     "risk_usd": 5.8,
     "killzone": "RTH",
     "subject": "[DRY-RUN] LONG MES signal",
-    "body": "[SIGNAL] LONG MES  entry=7777.75  stop=7772.00  target=7800.00  risk=5.8pts  reward=22.2pts  R:R=1:3.87  contracts=3  Killzone=RTH  IFVG@2m"
+    "body": "[SIGNAL] LONG MES  entry=7777.75  stop=7772.00  target=7800.00  risk=5.8pts  reward=22.2pts  R:R=1:3.87  contracts=3  Killzone=RTH  IFVG@2m",
+    "resolved": true,
+    "outcome": "stop",
+    "outcome_time": "2026-08-17T19:13:00Z",
+    "outcome_price": 7772.0,
+    "bar_extreme": 7772.0,
+    "slippage_pts": 0.0
   },
   {
     "timestamp": "2026-08-17T18:42:33Z",
@@ -320,6 +326,46 @@
     "risk_usd": 96.0,
     "killzone": "RTH",
     "subject": "[TV] LONG MES @ 7774.50",
-    "body": "Direction: LONG\nEntry: 7774.50\nStop: 7771.75\nTarget: 7780.00\nContracts: 7\nR:R = 1:2.00\nRisk: $96\nReward: $192\nKillzone=RTH\nWaited 2 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+    "body": "Direction: LONG\nEntry: 7774.50\nStop: 7771.75\nTarget: 7780.00\nContracts: 7\nR:R = 1:2.00\nRisk: $96\nReward: $192\nKillzone=RTH\nWaited 2 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)",
+    "resolved": true,
+    "outcome": "stop",
+    "outcome_time": "2026-08-17T19:30:00Z",
+    "outcome_price": 7771.75,
+    "bar_extreme": 7770.0,
+    "slippage_pts": 1.75
+  },
+  {
+    "timestamp": "2026-08-17T19:13:00Z",
+    "bot": "SMT",
+    "event": "stop_hit",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7777.75,
+    "stop_price": 7772.0,
+    "target_price": 7800.0,
+    "contracts": 3,
+    "rr": 3.87,
+    "risk_usd": 5.8,
+    "bar_extreme": 7772.0,
+    "slippage_pts": 0.0,
+    "subject": "[AUTO] SMT MES LONG STOP HIT @ 7772.0",
+    "body": "resolved paper trade\nentry: 7777.75\nstop: 7772.0\ntarget: 7800.0\nhit: 7772.0 at 2026-08-17T19:13:00Z\nbar_extreme: 7772.0\nslippage_pts: 0.0\nsource signal: 2026-08-17T18:30:16Z"
+  },
+  {
+    "timestamp": "2026-08-17T19:30:00Z",
+    "bot": "SMT-TV",
+    "event": "stop_hit",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7774.5,
+    "stop_price": 7771.75,
+    "target_price": 7780.0,
+    "contracts": 7,
+    "rr": 2.0,
+    "risk_usd": 96.0,
+    "bar_extreme": 7770.0,
+    "slippage_pts": 1.75,
+    "subject": "[AUTO] SMT-TV MES LONG STOP HIT @ 7771.75",
+    "body": "resolved paper trade\nentry: 7774.5\nstop: 7771.75\ntarget: 7780.0\nhit: 7771.75 at 2026-08-17T19:30:00Z\nbar_extreme: 7770.0\nslippage_pts: 1.75\nsource signal: 2026-08-17T18:42:33Z"
   }
 ]
