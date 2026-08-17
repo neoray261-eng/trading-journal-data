@@ -142,5 +142,21 @@
     "killzone": null,
     "subject": "[DRY-RUN] QT MES LONG @ 7806.25",
     "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 16:30\nנכס: MES\nכיוון: LONG\nכניסה: 7806.25\nסטופ: 7798.25\nיעד: 7824.5\nחוזים: 3\nR:R: 1:2.28"
+  },
+  {
+    "timestamp": "2026-08-17T13:44:10Z",
+    "bot": "QT",
+    "event": "dry_run_signal",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7803.25,
+    "stop_price": 7795.25,
+    "target_price": 7824.5,
+    "contracts": 3,
+    "rr": 2.66,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "[DRY-RUN] QT MES LONG @ 7803.25",
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 16:45\nנכס: MES\nכיוון: LONG\nכניסה: 7803.25\nסטופ: 7795.25\nיעד: 7824.5\nחוזים: 3\nR:R: 1:2.66"
   }
 ]
