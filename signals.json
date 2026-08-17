@@ -250,5 +250,21 @@
     "slippage_pts": 1.5,
     "subject": "[AUTO] QT MES LONG STOP HIT @ 7795.25",
     "body": "resolved paper trade\nentry: 7803.25\nstop: 7795.25\ntarget: 7824.5\nhit: 7795.25 at 2026-08-17T13:46:00Z\nbar_extreme: 7793.75\nslippage_pts: 1.5\nsource signal: 2026-08-17T13:44:10Z"
+  },
+  {
+    "timestamp": "2026-08-17T13:59:15Z",
+    "bot": "QT",
+    "event": "dry_run_signal",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7803.25,
+    "stop_price": 7795.25,
+    "target_price": 7824.5,
+    "contracts": 3,
+    "rr": 2.66,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "[DRY-RUN] QT MES LONG @ 7803.25",
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 17:00\nנכס: MES\nכיוון: LONG\nכניסה: 7803.25\nסטופ: 7795.25\nיעד: 7824.5\nחוזים: 3\nR:R: 1:2.66"
   }
 ]
