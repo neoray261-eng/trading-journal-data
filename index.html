@@ -1456,25 +1456,44 @@
   // ── COMPUTE OUTCOMES ────────────────────────────────────────
   // Build a list of resolved trades from source signals paired with outcome events.
   // Optional `includeHiddenBots=true` to include SMT-TV (used by the drawer).
+  //
+  // BUGFIX 2026-08-17: outcomes are now CONSUMED per-signal. Previously the
+  // pairing used `.find()` which never marked outcomes as taken — so two
+  // signals within 24h that had the same (bot, symbol, direction) would BOTH
+  // bind to the same first outcome, inflating win counts and equity curve.
+  // Now we sort signals by ts, iterate in order, and greedily consume the
+  // earliest still-available outcome per signal.
   function computeTrades(includeHiddenBots = false) {
     const trades = [];
     const source = includeHiddenBots
       ? state.signals
       : state.signals.filter(s => !HIDDEN_BOTS.has(s.bot));
+    // Sort outcomes by timestamp so we consume oldest first (matches chronology)
     const outcomes = source.filter(s =>
-      s.event === 'target_hit' || s.event === 'stop_hit');
+      s.event === 'target_hit' || s.event === 'stop_hit'
+    ).map(o => ({ o, ts: parseTS(o.timestamp).getTime(), consumed: false }))
+     .sort((a, b) => a.ts - b.ts);
 
-    for (const s of source) {
-      if (s.event !== 'signal' && s.event !== 'dry_run_signal') continue;
-      const ts = parseTS(s.timestamp).getTime();
-      // Find matching outcome event
-      const outcome = outcomes.find(o =>
-        o.bot === s.bot &&
-        o.symbol === s.symbol &&
-        o.direction === s.direction &&
-        parseTS(o.timestamp).getTime() >= ts &&
-        parseTS(o.timestamp).getTime() - ts <= 86_400_000
-      );
+    // Sort signals by timestamp so pairing is chronological
+    const signals = source.filter(s =>
+      s.event === 'signal' || s.event === 'dry_run_signal'
+    ).map(s => ({ s, ts: parseTS(s.timestamp).getTime() }))
+     .sort((a, b) => a.ts - b.ts);
+
+    for (const { s, ts } of signals) {
+      // Find earliest UNCONSUMED matching outcome within 24h
+      let outcome = null;
+      for (const oh of outcomes) {
+        if (oh.consumed) continue;
+        if (oh.o.bot !== s.bot) continue;
+        if (oh.o.symbol !== s.symbol) continue;
+        if (oh.o.direction !== s.direction) continue;
+        if (oh.ts < ts) continue;                    // outcome must be after signal
+        if (oh.ts - ts > 86_400_000) break;          // outcomes sorted → no need to keep looking
+        outcome = oh.o;
+        oh.consumed = true;
+        break;
+      }
       const isResolved = !!outcome || s.resolved === true;
       const outcomeKind = outcome ? (outcome.event === 'target_hit' ? 'win' : 'loss') :
                           (s.outcome === 'target' ? 'win' :
@@ -2067,10 +2086,13 @@
     }
 
     const rows = filteredSignals();
-    document.getElementById('row-count').textContent = `${rows.length} מתוך ${state.signals.length}`;
+    // BUGFIX 2026-08-17: exclude hidden bots (SMT-TV) from the denominator
+    // so "X of Y" reflects the visible universe, not silently includes the drawer.
+    const visibleTotal = state.signals.filter(s => !HIDDEN_BOTS.has(s.bot)).length;
+    document.getElementById('row-count').textContent = `${rows.length} מתוך ${visibleTotal}`;
 
     if (rows.length === 0) {
-      const empty = state.signals.length === 0
+      const empty = visibleTotal === 0
         ? '<h3>עדיין אין איתותים</h3><p>הבוטים ימלאו את היומן ברגע שיזהו הזדמנות. הרשומה הראשונה תופיע כאן תוך שניות מהירי האיתות.</p>'
         : '<h3>אין תוצאות</h3><p>נסה להרחיב את הטווח או לנקות את החיפוש.</p>';
       rowsEl.innerHTML = `<tr><td colspan="13"><div class="state">${empty}</div></td></tr>`;

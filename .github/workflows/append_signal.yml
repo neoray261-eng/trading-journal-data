@@ -61,33 +61,48 @@ jobs:
               signals = json.load(f)
 
           # Parse subject → symbol / direction / entry
+          # BUGFIX 2026-08-17: the parser now searches BOTH subject and body for
+          # every field. Previously entry_price came ONLY from `@N` in subject,
+          # and stop/target/contracts/rr/risk came ONLY from body — but the SMT
+          # bot puts fields as `entry=X stop=X ...` inside the msg (body), and
+          # its subject is just "[DRY-RUN] LONG MNQ signal" with no numbers.
+          # Result: EVERY SMT signal appeared in the journal with NULL prices.
+          all_text = subject + "\n" + body
           symbol = None; direction = None; entry_price = None
           for sym in ("MNQ", "MES", "NQ", "ES"):
               if sym in subject.upper():
                   symbol = sym; break
           if   "LONG"  in subject.upper(): direction = "LONG"
           elif "SHORT" in subject.upper(): direction = "SHORT"
-          m = re.search(r"@\s*([\d,]+\.?\d*)", subject)
-          if m:
-              try: entry_price = float(m.group(1).replace(",", ""))
-              except: pass
 
-          # Parse body → stop / target / contracts / R:R / risk (Hebrew first)
-          def _num(pat, text, default=None):
-              m = re.search(pat, text)
+          def _num(pat, text, default=None, flags=0):
+              m = re.search(pat, text, flags)
               if not m: return default
               try: return float(m.group(1).replace(",", ""))
               except: return default
-          stop_price   = (_num(r"סטופ[^:]*[:\s]+([\d,.]+)", body)
-                          or _num(r"[Ss]top[^:]*[:\s]+([\d,.]+)", body))
-          target_price = (_num(r"יעד[^:]*[:\s]+([\d,.]+)", body)
-                          or _num(r"[Tt]arget[^:]*[:\s]+([\d,.]+)", body))
-          contracts    = _num(r"[Cc]ontracts[:\s]+(\d+)", body) or _num(r"חוזים[:\s]+(\d+)", body)
-          rr           = _num(r"R:R\s*=?\s*1[:=]?(\d+\.?\d*)", body)
-          risk_usd     = _num(r"[Rr]isk[^$]*\$([\d,.]+)", body) or _num(r"סיכון[^$]*\$([\d,.]+)", body)
+
+          # Entry: try "entry=X" or "כניסה: X" in body/subject first,
+          # then fall back to "@ N" in subject — but require a proper decimal
+          # or 3+ digits so "IFVG@2m" doesn't get parsed as entry_price=2.0.
+          entry_price = (_num(r"[Ee]ntry\s*[=:]\s*([\d,]+\.?\d*)", all_text)
+                         or _num(r"כניסה\s*[=:]\s*([\d,]+\.?\d*)", all_text)
+                         or _num(r"@\s*([\d,]+\.\d+|\d{3,}(?![A-Za-z]))", subject))
+
+          # Stop / Target / Contracts / R:R / Risk — accept =, :, or whitespace as separator
+          stop_price   = (_num(r"סטופ\s*[=:]?\s*([\d,.]+)", all_text)
+                          or _num(r"[Ss]top\s*[=:]\s*([\d,.]+)", all_text)
+                          or _num(r"[Ss]top\s+([\d,.]+)", all_text))
+          target_price = (_num(r"יעד\s*[=:]?\s*([\d,.]+)", all_text)
+                          or _num(r"[Tt]arget\s*[=:]\s*([\d,.]+)", all_text)
+                          or _num(r"[Tt]arget\s+([\d,.]+)", all_text))
+          contracts    = (_num(r"[Cc]ontracts\s*[=:]?\s*(\d+)", all_text)
+                          or _num(r"חוזים\s*[=:]?\s*(\d+)", all_text))
+          rr           = _num(r"R:R\s*[=:]?\s*1\s*[:=]\s*([\d]+\.?\d*)", all_text)
+          risk_usd     = (_num(r"[Rr]isk[^$\n]*\$\s*([\d,.]+)", all_text)
+                          or _num(r"סיכון[^$\n]*\$\s*([\d,.]+)", all_text)
+                          or _num(r"[Rr]isk\s*[=:]\s*([\d,.]+)", all_text))
           # Killzone tag — appears as "Killzone=ASIA-KZ" or similar; None if absent
-          import re as _re
-          kz_match = _re.search(r"[Kk]illzone[=:]\s*([A-Za-z0-9-]+)", body) or _re.search(r"[Kk]illzone[=:]\s*([A-Za-z0-9-]+)", subject)
+          kz_match = re.search(r"[Kk]illzone\s*[=:]\s*([A-Za-z0-9-]+)", all_text)
           killzone = kz_match.group(1) if kz_match else None
 
           # Event type — accept English OR Hebrew phrasing independently

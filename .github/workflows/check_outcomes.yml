@@ -63,20 +63,26 @@ jobs:
                       signals[idx]["outcome"] = "target" if e["event"] == "target_hit" else "stop"
 
           # 2) Find open signals to check
+          # BUGFIX 2026-08-17: age/expiry check MUST run before the "missing
+          # fields" filter — otherwise a malformed signal (missing entry/stop/
+          # target due to parser bugs) stays resolved=false FOREVER, inflating
+          # the "open" count and calendar/hourly denominators for weeks.
           now = utc_now()
           to_check = []
           for i, s in enumerate(signals):
               if s.get("event") not in ("signal", "dry_run_signal"): continue
               if s.get("resolved"): continue
-              if not all(s.get(k) is not None for k in ("entry_price", "stop_price", "target_price", "direction", "symbol")): continue
               t_sig = parse_ts(s["timestamp"])
               age = (now - t_sig).total_seconds()
-              if age < 300: continue         # give at least 5 min to develop
+              # Age/expiry first — even malformed signals get retired after 2d
               if age > 86400 * 2:
-                  # expired — mark as no-fill so we don't keep checking
                   s["resolved"] = True
                   s["outcome"] = "expired"
                   continue
+              # Now the has-required-fields check (malformed signals stay
+              # unresolved for max 2d, then get expired above)
+              if not all(s.get(k) is not None for k in ("entry_price", "stop_price", "target_price", "direction", "symbol")): continue
+              if age < 300: continue         # give at least 5 min to develop
               to_check.append(i)
 
           print(f"open signals to check: {len(to_check)}")
@@ -273,10 +279,32 @@ jobs:
           print(f"total signals: {len(signals)}  new outcome events: {len(new_events)}")
           PY
 
-      - name: Commit if changed
+      - name: Commit & push (with retry — race with append_signal)
         run: |
           git config user.name  "outcome-bot"
           git config user.email "outcome-bot@users.noreply.github.com"
           git add signals.json analytics/
-          git diff --cached --quiet || git commit -m "auto-resolve: outcomes checked $(date -u +%FT%TZ)"
-          git push || true
+          if git diff --cached --quiet; then
+            echo "nothing to commit"
+            exit 0
+          fi
+          # BUGFIX 2026-08-17: previous `git push || true` silently swallowed
+          # rejected pushes when append_signal.yml raced us — outcome markers
+          # would be lost and re-emitted next cron run, producing DUPLICATE
+          # target_hit/stop_hit events. Retry up to 4× with pull --rebase so
+          # our resolution commits actually land.
+          git commit -m "auto-resolve: outcomes checked $(date -u +%FT%TZ)"
+          for i in 1 2 3 4; do
+            if git push; then
+              echo "push OK on attempt $i"
+              exit 0
+            fi
+            echo "push attempt $i failed — rebasing on latest and retrying"
+            git pull --rebase --autostash origin main || {
+              echo "rebase conflict — abandoning this cron cycle; next 15-min run will retry"
+              git rebase --abort || true
+              exit 0
+            }
+          done
+          echo "push failed after 4 attempts — will retry next cron"
+          exit 0
