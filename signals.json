@@ -367,5 +367,21 @@
     "slippage_pts": 1.75,
     "subject": "[AUTO] SMT-TV MES LONG STOP HIT @ 7771.75",
     "body": "resolved paper trade\nentry: 7774.5\nstop: 7771.75\ntarget: 7780.0\nhit: 7771.75 at 2026-08-17T19:30:00Z\nbar_extreme: 7770.0\nslippage_pts: 1.75\nsource signal: 2026-08-17T18:42:33Z"
+  },
+  {
+    "timestamp": "2026-08-17T22:40:29Z",
+    "bot": "SMT",
+    "event": "dry_run_signal",
+    "symbol": "MNQ",
+    "direction": "LONG",
+    "entry_price": 30063.5,
+    "stop_price": 30054.5,
+    "target_price": 30174.25,
+    "contracts": 5,
+    "rr": 12.31,
+    "risk_usd": 9.0,
+    "killzone": "OFF-KZ",
+    "subject": "[DRY-RUN] LONG MNQ signal",
+    "body": "[SIGNAL] LONG MNQ  entry=30063.50  stop=30054.50  target=30174.25  risk=9.0pts  reward=110.8pts  R:R=1:12.31  contracts=5  Killzone=OFF-KZ  IFVG@1m"
   }
 ]
