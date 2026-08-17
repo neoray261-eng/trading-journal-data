@@ -383,5 +383,21 @@
     "killzone": "OFF-KZ",
     "subject": "[DRY-RUN] LONG MNQ signal",
     "body": "[SIGNAL] LONG MNQ  entry=30063.50  stop=30054.50  target=30174.25  risk=9.0pts  reward=110.8pts  R:R=1:12.31  contracts=5  Killzone=OFF-KZ  IFVG@1m"
+  },
+  {
+    "timestamp": "2026-08-17T22:51:10Z",
+    "bot": "SMT-TV",
+    "event": "signal",
+    "symbol": "MNQ",
+    "direction": "LONG",
+    "entry_price": 30070.75,
+    "stop_price": 30060.25,
+    "target_price": 30091.75,
+    "contracts": 4,
+    "rr": 2.0,
+    "risk_usd": 84.0,
+    "killzone": "OFF-KZ",
+    "subject": "[TV] LONG MNQ @ 30070.75",
+    "body": "Direction: LONG\nEntry: 30070.75\nStop: 30060.25\nTarget: 30091.75\nContracts: 4\nR:R = 1:2.00\nRisk: $84\nReward: $168\nKillzone=OFF-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
   }
 ]
