@@ -78,5 +78,21 @@
     "killzone": null,
     "subject": "Bot started (startup ping)",
     "body": "QT bot just started on Railway.\nMNQ=MNQU6  MES=MESU6\nIf you got this — the email path via GitHub Actions works."
+  },
+  {
+    "timestamp": "2026-08-17T10:45:15Z",
+    "bot": "SMT-TV",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7816.0,
+    "stop_price": 7812.0,
+    "target_price": 7824.0,
+    "contracts": 5,
+    "rr": 2.0,
+    "risk_usd": 100.0,
+    "killzone": "OFF-KZ",
+    "subject": "[TV] LONG MES @ 7816.00",
+    "body": "Direction: LONG\nEntry: 7816.00\nStop: 7812.00\nTarget: 7824.00\nContracts: 5\nR:R = 1:2.00\nRisk: $100\nReward: $200\nKillzone=OFF-KZ\nWaited 2 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
   }
 ]
