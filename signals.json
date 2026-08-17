@@ -305,5 +305,21 @@
     "killzone": "RTH",
     "subject": "[DRY-RUN] LONG MES signal",
     "body": "[SIGNAL] LONG MES  entry=7777.75  stop=7772.00  target=7800.00  risk=5.8pts  reward=22.2pts  R:R=1:3.87  contracts=3  Killzone=RTH  IFVG@2m"
+  },
+  {
+    "timestamp": "2026-08-17T18:42:33Z",
+    "bot": "SMT-TV",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7774.5,
+    "stop_price": 7771.75,
+    "target_price": 7780.0,
+    "contracts": 7,
+    "rr": 2.0,
+    "risk_usd": 96.0,
+    "killzone": "RTH",
+    "subject": "[TV] LONG MES @ 7774.50",
+    "body": "Direction: LONG\nEntry: 7774.50\nStop: 7771.75\nTarget: 7780.00\nContracts: 7\nR:R = 1:2.00\nRisk: $96\nReward: $192\nKillzone=RTH\nWaited 2 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
   }
 ]
