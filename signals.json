@@ -94,5 +94,21 @@
     "killzone": "OFF-KZ",
     "subject": "[TV] LONG MES @ 7816.00",
     "body": "Direction: LONG\nEntry: 7816.00\nStop: 7812.00\nTarget: 7824.00\nContracts: 5\nR:R = 1:2.00\nRisk: $100\nReward: $200\nKillzone=OFF-KZ\nWaited 2 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+  },
+  {
+    "timestamp": "2026-08-17T11:25:37Z",
+    "bot": "SMT",
+    "event": "startup",
+    "symbol": null,
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "Bot started (startup ping)",
+    "body": "SMT+IFVG bot just started on Railway.\nDRY_RUN=True\nAllowed: MNQ L=True/S=True, MES L=True/S=True\nIf you got this — email path from Railway works."
   }
 ]
