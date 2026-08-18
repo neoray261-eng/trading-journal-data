@@ -552,7 +552,13 @@
     "risk_usd": 2.2,
     "killzone": "RTH",
     "subject": "[DRY-RUN] SHORT MES signal",
-    "body": "[SIGNAL] SHORT MES  entry=7726.50  stop=7728.75  target=7713.25  risk=2.2pts  reward=13.2pts  R:R=1:5.89  contracts=8  Killzone=RTH  IFVG@1m"
+    "body": "[SIGNAL] SHORT MES  entry=7726.50  stop=7728.75  target=7713.25  risk=2.2pts  reward=13.2pts  R:R=1:5.89  contracts=8  Killzone=RTH  IFVG@1m",
+    "resolved": true,
+    "outcome": "target",
+    "outcome_time": "2026-08-18T19:54:00Z",
+    "outcome_price": 7713.25,
+    "bar_extreme": 7713.25,
+    "slippage_pts": 0.0
   },
   {
     "timestamp": "2026-08-18T17:26:19Z",
@@ -568,6 +574,46 @@
     "risk_usd": 98.0,
     "killzone": "RTH",
     "subject": "[TV] SHORT MES @ 7724.00",
-    "body": "Direction: SHORT\nEntry: 7724.00\nStop: 7730.50\nTarget: 7711.00\nContracts: 3\nR:R = 1:2.00\nRisk: $98\nReward: $195\nKillzone=RTH\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+    "body": "Direction: SHORT\nEntry: 7724.00\nStop: 7730.50\nTarget: 7711.00\nContracts: 3\nR:R = 1:2.00\nRisk: $98\nReward: $195\nKillzone=RTH\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)",
+    "resolved": true,
+    "outcome": "target",
+    "outcome_time": "2026-08-18T19:59:00Z",
+    "outcome_price": 7711.0,
+    "bar_extreme": 7710.25,
+    "slippage_pts": 0.75
+  },
+  {
+    "timestamp": "2026-08-18T19:54:00Z",
+    "bot": "SMT",
+    "event": "target_hit",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7726.5,
+    "stop_price": 7728.75,
+    "target_price": 7713.25,
+    "contracts": 8,
+    "rr": 5.89,
+    "risk_usd": 2.2,
+    "bar_extreme": 7713.25,
+    "slippage_pts": 0.0,
+    "subject": "[AUTO] SMT MES SHORT TARGET HIT @ 7713.25",
+    "body": "resolved paper trade\nentry: 7726.5\nstop: 7728.75\ntarget: 7713.25\nhit: 7713.25 at 2026-08-18T19:54:00Z\nbar_extreme: 7713.25\nslippage_pts: 0.0\nsource signal: 2026-08-18T17:15:14Z"
+  },
+  {
+    "timestamp": "2026-08-18T19:59:00Z",
+    "bot": "SMT-TV",
+    "event": "target_hit",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7724.0,
+    "stop_price": 7730.5,
+    "target_price": 7711.0,
+    "contracts": 3,
+    "rr": 2.0,
+    "risk_usd": 98.0,
+    "bar_extreme": 7710.25,
+    "slippage_pts": 0.75,
+    "subject": "[AUTO] SMT-TV MES SHORT TARGET HIT @ 7711.0",
+    "body": "resolved paper trade\nentry: 7724.0\nstop: 7730.5\ntarget: 7711.0\nhit: 7711.0 at 2026-08-18T19:59:00Z\nbar_extreme: 7710.25\nslippage_pts: 0.75\nsource signal: 2026-08-18T17:26:19Z"
   }
 ]
