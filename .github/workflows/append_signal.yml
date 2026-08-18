@@ -98,9 +98,10 @@ jobs:
           contracts    = (_num(r"[Cc]ontracts\s*[=:]?\s*(\d+)", all_text)
                           or _num(r"חוזים\s*[=:]?\s*(\d+)", all_text))
           rr           = _num(r"R:R\s*[=:]?\s*1\s*[:=]\s*([\d]+\.?\d*)", all_text)
+          # Risk in DOLLARS — must have "$" marker. The plain "risk=X" fallback
+          # was catching "risk_pts=10.2" and treating points as dollars → nonsense.
           risk_usd     = (_num(r"[Rr]isk[^$\n]*\$\s*([\d,.]+)", all_text)
-                          or _num(r"סיכון[^$\n]*\$\s*([\d,.]+)", all_text)
-                          or _num(r"[Rr]isk\s*[=:]\s*([\d,.]+)", all_text))
+                          or _num(r"סיכון[^$\n]*\$\s*([\d,.]+)", all_text))
           # Killzone tag — appears as "Killzone=ASIA-KZ" or similar; None if absent
           kz_match = re.search(r"[Kk]illzone\s*[=:]\s*([A-Za-z0-9-]+)", all_text)
           killzone = kz_match.group(1) if kz_match else None
