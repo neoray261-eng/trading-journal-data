@@ -649,5 +649,21 @@
     "killzone": null,
     "subject": "Bot started (startup ping)",
     "body": "QT bot just started on Railway.\nMNQ=MNQU6  MES=MESU6\nIf you got this — the email path via GitHub Actions works."
+  },
+  {
+    "timestamp": "2026-08-18T22:25:31Z",
+    "bot": "SMT",
+    "event": "dry_run_signal",
+    "symbol": "MNQ",
+    "direction": "SHORT",
+    "entry_price": 29579.0,
+    "stop_price": 29586.0,
+    "target_price": 29547.25,
+    "contracts": 7,
+    "rr": 4.54,
+    "risk_usd": 98.0,
+    "killzone": "OFF-KZ",
+    "subject": "[DRY-RUN] SHORT MNQ signal",
+    "body": "[SIGNAL] SHORT MNQ  entry=29579.00  stop=29586.00  target=29547.25  risk_pts=7.0  reward_pts=31.8  R:R=1:4.54  contracts=7  risk=$98  reward=$444  Killzone=OFF-KZ  IFVG@1m"
   }
 ]
