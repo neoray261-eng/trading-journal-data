@@ -1217,10 +1217,10 @@
       </div>
 
       <div class="filter-group">
-        <span class="filter-label">אירוע</span>
+        <span class="filter-label">סטטוס</span>
         <div class="seg" data-filter="event">
           <button type="button" data-value="all" class="active">הכל</button>
-          <button type="button" data-value="signal">איתותים</button>
+          <button type="button" data-value="signal">פתוחות</button>
           <button type="button" data-value="target_hit">זכיות</button>
           <button type="button" data-value="stop_hit">הפסדים</button>
         </div>
@@ -1246,7 +1246,7 @@
           <tr>
             <th class="sortable desc" data-sort="timestamp">זמן</th>
             <th>בוט</th>
-            <th>אירוע</th>
+            <th>סטטוס</th>
             <th>סימבול</th>
             <th>כיוון</th>
             <th class="sortable" data-sort="entry_price">כניסה</th>
@@ -2023,7 +2023,11 @@
   }
 
   // ── TABLE ───────────────────────────────────────────────────
-  function filteredSignals() {
+  // Trade-based (not event-based): one row per SIGNAL, paired with its
+  // outcome via computeTrades. Filter chips map to trade outcomes:
+  //   all → every trade  |  signal → still-open trades
+  //   target_hit → wins  |  stop_hit → losses
+  function filteredTrades() {
     const { bot, event, range, q } = state.filter;
     let cutoff = 0;
     if (range === 'today') {
@@ -2033,11 +2037,14 @@
     else if (range === 'month')   cutoff = Date.now() - 30 * 86400_000;
 
     const ql = q.trim().toLowerCase();
-    let rows = state.signals.filter(s => {
-      if (HIDDEN_BOTS.has(s.bot)) return false;  // SMT-TV lives in its own drawer
+    const trades = computeTrades();   // already filters HIDDEN_BOTS + skips startup/etc.
+    let rows = trades.filter(t => {
+      const s = t.signal;
       if (bot !== 'all' && s.bot !== bot) return false;
-      if (event !== 'all' && s.event !== event && !(event === 'signal' && s.event === 'dry_run_signal')) return false;
-      if (cutoff && parseTS(s.timestamp).getTime() < cutoff) return false;
+      if (event === 'target_hit' && t.outcome !== 'win') return false;
+      if (event === 'stop_hit'   && t.outcome !== 'loss') return false;
+      if (event === 'signal'     && t.resolved) return false;  // "open" filter
+      if (cutoff && t.ts < cutoff) return false;
       if (ql && !(s.subject || '').toLowerCase().includes(ql)) return false;
       return true;
     });
@@ -2045,8 +2052,8 @@
     const { key, dir } = state.sort;
     const mul = dir === 'asc' ? 1 : -1;
     rows.sort((a, b) => {
-      let av = a[key], bv = b[key];
-      if (key === 'timestamp') { av = parseTS(av).getTime(); bv = parseTS(bv).getTime(); }
+      let av = a.signal[key], bv = b.signal[key];
+      if (key === 'timestamp') { av = a.ts; bv = b.ts; }
       if (av == null && bv == null) return 0;
       if (av == null) return 1;
       if (bv == null) return -1;
@@ -2091,40 +2098,71 @@
       return;
     }
 
-    const rows = filteredSignals();
-    // BUGFIX 2026-08-17: exclude hidden bots (SMT-TV) from the denominator
-    // so "X of Y" reflects the visible universe, not silently includes the drawer.
-    const visibleTotal = state.signals.filter(s => !HIDDEN_BOTS.has(s.bot)).length;
-    document.getElementById('row-count').textContent = `${rows.length} מתוך ${visibleTotal}`;
+    const rows = filteredTrades();   // one row per trade (paired signal+outcome)
+    // Total count = distinct trades (signals only, excluding hidden bots + non-signal events)
+    const visibleTotal = state.signals.filter(s =>
+      !HIDDEN_BOTS.has(s.bot) &&
+      (s.event === 'signal' || s.event === 'dry_run_signal')
+    ).length;
+    document.getElementById('row-count').textContent = `${rows.length} מתוך ${visibleTotal} עסקאות`;
 
     if (rows.length === 0) {
       const empty = visibleTotal === 0
-        ? '<h3>עדיין אין איתותים</h3><p>הבוטים ימלאו את היומן ברגע שיזהו הזדמנות. הרשומה הראשונה תופיע כאן תוך שניות מהירי האיתות.</p>'
+        ? '<h3>עדיין אין עסקאות</h3><p>הבוטים ימלאו את היומן ברגע שיזהו הזדמנות. הרשומה הראשונה תופיע כאן תוך שניות מהירי האיתות.</p>'
         : '<h3>אין תוצאות</h3><p>נסה להרחיב את הטווח או לנקות את החיפוש.</p>';
       rowsEl.innerHTML = `<tr><td colspan="13"><div class="state">${empty}</div></td></tr>`;
       return;
     }
 
+    // Trade-outcome → visual mapping
+    const OUTCOME_CHIP = {
+      'win':     { cls: 'evt-target_hit',    he: 'זכייה ✓' },
+      'loss':    { cls: 'evt-stop_hit',      he: 'הפסד ✗' },
+      'no_fill': { cls: 'evt-startup',       he: 'לא נמלא' },
+      'expired': { cls: 'evt-startup',       he: 'פג תוקף' },
+    };
+    const OPEN_CHIP = { cls: 'evt-dry_run_signal', he: 'פתוחה' };
+
     let html = '';
-    rows.forEach((s, i) => {
+    rows.forEach((t, i) => {
+      const s = t.signal;
       const key = s.timestamp + '|' + i;
       const isExp = state.expanded.has(key);
       const dirClass = s.direction === 'LONG' ? 'dir-long' : s.direction === 'SHORT' ? 'dir-short' : '';
       const botClass = 'bot-' + (s.bot || '').toLowerCase();
-      const evtClass = 'evt-' + (s.event || 'signal');
       const dirLabel = DIR_HE[s.direction] || s.direction || '';
 
-      // Extract screenshot URL from body if present
+      // Status chip: outcome-based, not event-based
+      let statusChip;
+      if (t.resolved && OUTCOME_CHIP[t.outcome]) {
+        const oc = OUTCOME_CHIP[t.outcome];
+        const rSuffix = t.r != null && t.r !== 0 ? ` ${t.r > 0 ? '+' : ''}${fmt.format(t.r)}R` : '';
+        statusChip = chip(oc.cls, oc.he + rSuffix);
+      } else if (t.resolved) {
+        statusChip = chip('evt-startup', 'לא ידוע');
+      } else {
+        // Open — for dry-run signals, show they're paper
+        const label = s.event === 'dry_run_signal' ? OPEN_CHIP.he + ' (יבש)' : OPEN_CHIP.he;
+        statusChip = chip(OPEN_CHIP.cls, label);
+      }
+
+      // Screenshot from body
       const shotMatch = (s.body || '').match(/(?:סקרין|screenshot|shot)[:\s]+(https?:\/\/\S+)/i);
       const shotUrl = shotMatch ? shotMatch[1] : null;
       const shotCell = shotUrl
         ? `<a class="shot-icon" href="#" data-shot="${esc(shotUrl)}" title="צפה בצילום">📷</a>`
         : `<span class="shot-none">—</span>`;
 
+      // Subject clean-up: strip the outcome subject if we're showing a resolved trade
+      // (we're showing the SIGNAL subject, but include outcome_time if present)
+      const outcomeInfo = t.resolved && t.outcomeTime
+        ? ` · נסגר: ${new Date(t.outcomeTime).toLocaleTimeString('en-GB', { hour12: false })}`
+        : '';
+
       html += `<tr data-key="${esc(key)}"${isExp ? ' class="expanded"' : ''}>
         <td class="time">${timeCell(s.timestamp)}</td>
         <td>${s.bot ? chip(botClass, s.bot) : ''}</td>
-        <td>${chip(evtClass, EVENT_HE[s.event] || s.event || '—')}</td>
+        <td>${statusChip}</td>
         <td class="num">${esc(s.symbol || '—')}</td>
         <td>${s.direction ? chip(dirClass, dirLabel) : ''}</td>
         <td class="num">${s.entry_price != null ? fmt.format(s.entry_price) : '—'}</td>
@@ -2134,7 +2172,7 @@
         <td class="num">${s.contracts != null ? fmt0.format(s.contracts) : '—'}</td>
         <td class="num">${s.risk_usd != null ? '$' + fmt0.format(s.risk_usd) : '—'}</td>
         <td style="text-align:center">${shotCell}</td>
-        <td class="subject" title="${esc(s.subject || '')}">${esc((s.subject || '').slice(0, 80))}</td>
+        <td class="subject" title="${esc(s.subject || '')}">${esc((s.subject || '').slice(0, 80))}${outcomeInfo}</td>
       </tr>`;
       if (isExp) {
         html += `<tr class="detail"><td colspan="13">
