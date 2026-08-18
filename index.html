@@ -2334,16 +2334,21 @@
     const totalR = resolved.reduce((s, t) => s + t.r, 0);
     const wr = resolved.length ? wins.length / resolved.length : null;
 
-    // Summary strip in the summary tag
+    // Compute $ P&L: sum of (risk_usd × R) per resolved trade
+    const totalUsd = Math.round(resolved.reduce((sum, t) =>
+      sum + (t.signal.risk_usd || 0) * t.r, 0));
     const totalRStr = resolved.length ? (totalR > 0 ? '+' : '') + fmt.format(totalR) + 'R' : '—';
+    const totalUsdStr = resolved.length ? (totalUsd >= 0 ? '+$' : '−$') + Math.abs(totalUsd) : '—';
+
+    // Summary strip — $ P&L primary, R as tag
     document.getElementById('tv-summary').textContent =
-      `${fmt0.format(tv.length)} עסקאות · ${fmt0.format(resolved.length)} סגורות · ${totalRStr}`;
+      `${fmt0.format(tv.length)} עסקאות · ${fmt0.format(resolved.length)} סגורות · ${totalUsdStr}`;
 
     // Mini KPIs
     const kpisEl = document.getElementById('tv-kpis');
     const wrStr    = wr != null ? Math.round(wr * 100) + '%' : '—';
     const wrColor  = wr == null ? '' : wr >= 0.45 ? 'var(--long)' : 'var(--short)';
-    const rColor   = totalR > 0 ? 'var(--long)' : totalR < 0 ? 'var(--short)' : '';
+    const rColor   = totalUsd > 0 ? 'var(--long)' : totalUsd < 0 ? 'var(--short)' : '';
     const gw       = wins.reduce((s, t) => s + t.r, 0);
     const gl       = Math.abs(losses.reduce((s, t) => s + t.r, 0));
     const pf       = gl > 0 ? gw / gl : (gw > 0 ? Infinity : null);
@@ -2353,10 +2358,10 @@
       <div class="tv-mini"><div class="tv-mini-label">סגורות</div><div class="tv-mini-val">${fmt0.format(resolved.length)}</div></div>
       <div class="tv-mini"><div class="tv-mini-label">אחוז זכיות</div><div class="tv-mini-val" style="color:${wrColor}">${wrStr}</div></div>
       <div class="tv-mini"><div class="tv-mini-label">מקדם רווח</div><div class="tv-mini-val">${pfStr}</div></div>
-      <div class="tv-mini"><div class="tv-mini-label">סך R</div><div class="tv-mini-val" style="color:${rColor}">${totalRStr}</div></div>
+      <div class="tv-mini"><div class="tv-mini-label">סך רווח/הפסד</div><div class="tv-mini-val" style="color:${rColor}">${totalUsdStr}</div><div style="font-size:10px;color:var(--fg-mute);margin-top:2px;direction:ltr;text-align:right;font-family:var(--font-mono)">${totalRStr}</div></div>
     `;
 
-    // Rows — compact table
+    // Rows — compact table with $ P&L in status column
     const rowsEl = document.getElementById('tv-rows');
     if (tv.length === 0) {
       rowsEl.innerHTML = '<tr><td colspan="11"><div class="state"><h3>עדיין אין איתותים מ-SMT-TV</h3><p>הבוט התחיל לתייג ברגע ש-Railway פרס את הקוד המעודכן. הרשומה הראשונה תגיע ברגע שהאינדיקטור יזהה SMT + ריברסל 1m.</p></div></td></tr>';
@@ -2369,8 +2374,25 @@
       const s = t.signal;
       const dirClass = s.direction === 'LONG' ? 'dir-long' : s.direction === 'SHORT' ? 'dir-short' : '';
       const dirLabel = DIR_HE[s.direction] || s.direction || '';
-      const evtLabel = t.outcome === 'win' ? 'זכייה' : t.outcome === 'loss' ? 'הפסד' : 'איתות';
-      const evtClass = t.outcome === 'win' ? 'evt-target_hit' : t.outcome === 'loss' ? 'evt-stop_hit' : 'evt-signal';
+      // Status label — $ P&L primary, R in parens (matches main table)
+      let evtLabel, evtClass;
+      if (t.outcome === 'win' || t.outcome === 'loss') {
+        const isWin = t.outcome === 'win';
+        evtClass = isWin ? 'evt-target_hit' : 'evt-stop_hit';
+        let dollarSuffix = '';
+        if (t.r != null && t.r !== 0 && s.risk_usd != null) {
+          const pnl_usd = Math.round(s.risk_usd * t.r);
+          dollarSuffix = pnl_usd >= 0 ? ` +$${pnl_usd}` : ` −$${Math.abs(pnl_usd)}`;
+        }
+        const rSuffix = t.r != null && t.r !== 0 ? ` (${t.r > 0 ? '+' : ''}${fmt.format(t.r)}R)` : '';
+        evtLabel = (isWin ? 'זכייה' : 'הפסד') + dollarSuffix + rSuffix;
+      } else if (t.outcome === 'no_fill') {
+        evtClass = 'evt-startup'; evtLabel = 'לא נמלא';
+      } else if (t.outcome === 'expired') {
+        evtClass = 'evt-startup'; evtLabel = 'פג תוקף';
+      } else {
+        evtClass = 'evt-dry_run_signal'; evtLabel = 'פתוחה';
+      }
       html += `<tr>
         <td class="time">${timeCell(s.timestamp)}</td>
         <td>${chip(evtClass, evtLabel)}</td>
