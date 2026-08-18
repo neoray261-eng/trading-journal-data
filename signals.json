@@ -534,5 +534,21 @@
     "killzone": "RTH",
     "subject": "[TV] SHORT MES @ 7720.00",
     "body": "Direction: SHORT\nEntry: 7720.00\nStop: 7737.25\nTarget: 7685.50\nContracts: 1\nR:R = 1:2.00\nRisk: $86\nReward: $172\nKillzone=RTH\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+  },
+  {
+    "timestamp": "2026-08-18T17:15:14Z",
+    "bot": "SMT",
+    "event": "dry_run_signal",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7726.5,
+    "stop_price": 7728.75,
+    "target_price": 7713.25,
+    "contracts": 8,
+    "rr": 5.89,
+    "risk_usd": 2.2,
+    "killzone": "RTH",
+    "subject": "[DRY-RUN] SHORT MES signal",
+    "body": "[SIGNAL] SHORT MES  entry=7726.50  stop=7728.75  target=7713.25  risk=2.2pts  reward=13.2pts  R:R=1:5.89  contracts=8  Killzone=RTH  IFVG@1m"
   }
 ]
