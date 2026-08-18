@@ -536,7 +536,9 @@
     "risk_usd": 86,
     "killzone": "RTH",
     "subject": "[TV] SHORT MES @ 7720.00",
-    "body": "Direction: SHORT\nEntry: 7720.00\nStop: 7737.25\nTarget: 7685.50\nContracts: 1\nR:R = 1:2.00\nRisk: $86\nReward: $172\nKillzone=RTH\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+    "body": "Direction: SHORT\nEntry: 7720.00\nStop: 7737.25\nTarget: 7685.50\nContracts: 1\nR:R = 1:2.00\nRisk: $86\nReward: $172\nKillzone=RTH\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)",
+    "resolved": true,
+    "outcome": "target"
   },
   {
     "timestamp": "2026-08-18T17:15:14Z",
