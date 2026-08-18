@@ -1609,9 +1609,15 @@
         cls: pf == null ? '' : pf >= 1.5 ? 'pos good' : pf >= 1 ? '' : 'neg bad',
       },
       {
-        label: 'סך R מצטבר',
-        value: resolved.length ? fmtR.format(totalR) + 'R' : '—',
-        hint: `${fmt0.format(resolved.length)} נסגרו`,
+        label: 'סך רווח/הפסד',
+        value: resolved.length ? (() => {
+          // Compute actual $ P&L: sum of (risk_usd × R) per trade
+          const totalUsd = Math.round(resolved.reduce((sum, t) =>
+            sum + (t.signal.risk_usd || 0) * t.r, 0));
+          const sign = totalUsd >= 0 ? '+' : '−';
+          return `${sign}$${Math.abs(totalUsd)}`;
+        })() : '—',
+        hint: resolved.length ? `${fmtR.format(totalR)}R · ${fmt0.format(resolved.length)} עסקאות` : '—',
         cls: totalR > 0 ? 'pos accent' : totalR < 0 ? 'neg bad' : '',
       },
       {
@@ -2132,12 +2138,19 @@
       const botClass = 'bot-' + (s.bot || '').toLowerCase();
       const dirLabel = DIR_HE[s.direction] || s.direction || '';
 
-      // Status chip: outcome-based, not event-based
+      // Status chip: outcome-based, showing DOLLAR P&L (primary) + R (secondary)
       let statusChip;
       if (t.resolved && OUTCOME_CHIP[t.outcome]) {
         const oc = OUTCOME_CHIP[t.outcome];
-        const rSuffix = t.r != null && t.r !== 0 ? ` ${t.r > 0 ? '+' : ''}${fmt.format(t.r)}R` : '';
-        statusChip = chip(oc.cls, oc.he + rSuffix);
+        // For win: P&L = risk_usd × rr | For loss: P&L = -risk_usd
+        let dollarSuffix = '';
+        if (t.r != null && t.r !== 0 && s.risk_usd != null) {
+          const pnl_usd = Math.round(s.risk_usd * t.r);
+          dollarSuffix = ` ${pnl_usd > 0 ? '+' : ''}$${Math.abs(pnl_usd)}`;
+          if (pnl_usd < 0) dollarSuffix = ` −$${Math.abs(pnl_usd)}`;
+        }
+        const rSuffix = t.r != null && t.r !== 0 ? ` (${t.r > 0 ? '+' : ''}${fmt.format(t.r)}R)` : '';
+        statusChip = chip(oc.cls, oc.he + dollarSuffix + rSuffix);
       } else if (t.resolved) {
         statusChip = chip('evt-startup', 'לא ידוע');
       } else {
