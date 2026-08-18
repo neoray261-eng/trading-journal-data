@@ -28,6 +28,10 @@ jobs:
 
           UA = {"User-Agent": "Mozilla/5.0 (trading-journal-bot)"}
           SYM_MAP = {"MNQ": "NQ=F", "NQ": "NQ=F", "MES": "ES=F", "ES": "ES=F"}
+          # Bots that trade with LIMIT orders — we can't count target/stop as hit
+          # unless the limit was FILLED first (price returned to entry level).
+          # SMT/SMT-TV use market entries so their outcome is checked from signal_ts.
+          LIMIT_ORDER_BOTS = {"QT"}
 
           with open("signals.json") as f:
               signals = json.load(f)
@@ -144,13 +148,57 @@ jobs:
               target = s["target_price"]
               is_long = s["direction"] == "LONG"
 
+              # LIMIT-ORDER SEMANTICS (2026-08-18 fix): for bots that use limit
+              # entries (QT), the target/stop can only be "hit" AFTER the limit
+              # itself was filled. Previously we'd walk from signal_ts and mark
+              # target_hit the moment price crossed the target level — even if
+              # the limit at the entry price was never touched. Result: QT
+              # signals that fired below their limit level got instant fake
+              # "wins" as the market kept going without ever pulling back to fill.
+              is_limit_bot = s.get("bot") in LIMIT_ORDER_BOTS
+
               outcome = None; hit_ts = None; hit_price = None; bar_extreme = None
-              # MFE (max favorable) / MAE (max adverse) — track extremes while walking bars
+              filled = not is_limit_bot   # market bots start "filled"
+              fill_ts = t_sig_dt.timestamp() if not is_limit_bot else None
+              # MFE (max favorable) / MAE (max adverse) — track extremes AFTER fill
               mfe_extreme = None; mfe_ts = None
               mae_extreme = None; mae_ts = None
               for (t, h, l) in bars:
-                  # Update MFE / MAE trackers BEFORE checking crossings — reflects
-                  # what the price did during the trade, up to and including the hit bar
+                  # ── PHASE 1: wait for limit fill ──
+                  if not filled:
+                      # LONG limit fills when price DIPS DOWN to entry (low <= entry)
+                      # SHORT limit fills when price RISES UP to entry (high >= entry)
+                      touched_entry = (l <= entry) if is_long else (h >= entry)
+                      if not touched_entry:
+                          continue    # limit hasn't filled yet, no outcome possible
+                      filled = True
+                      fill_ts = t
+                      # Special case: same bar filled AND touched an outcome level.
+                      # Ambiguous intra-bar sequence — take the conservative worst
+                      # case (stop, if it was touched at all).
+                      if is_long:
+                          same_bar_stop = l <= stop
+                          same_bar_target = h >= target
+                      else:
+                          same_bar_stop = h >= stop
+                          same_bar_target = l <= target
+                      if same_bar_stop:
+                          outcome = "stop"; hit_ts = t; hit_price = stop
+                          bar_extreme = l if is_long else h
+                          # seed MFE/MAE with this bar even though pre-fill wasn't tracked
+                          mfe_extreme, mfe_ts = (h if is_long else l), t
+                          mae_extreme, mae_ts = (l if is_long else h), t
+                          break
+                      if same_bar_target:
+                          outcome = "target"; hit_ts = t; hit_price = target
+                          bar_extreme = h if is_long else l
+                          mfe_extreme, mfe_ts = (h if is_long else l), t
+                          mae_extreme, mae_ts = (l if is_long else h), t
+                          break
+                      # otherwise: fill happened cleanly, continue to phase 2 on next bar
+                      continue
+
+                  # ── PHASE 2: fill completed, track outcome ──
                   if is_long:
                       if mfe_extreme is None or h > mfe_extreme: mfe_extreme, mfe_ts = h, t
                       if mae_extreme is None or l < mae_extreme: mae_extreme, mae_ts = l, t
@@ -162,7 +210,6 @@ jobs:
                       hit_target = l <= target
                       hit_stop   = h >= stop
                   if hit_target and hit_stop:
-                      # both in same 1-min bar — conservative: stop first
                       outcome = "stop"; hit_ts = t; hit_price = stop
                       bar_extreme = l if is_long else h
                       break
@@ -174,6 +221,21 @@ jobs:
                       outcome = "target"; hit_ts = t; hit_price = target
                       bar_extreme = h if is_long else l
                       break
+
+              # ── SPECIAL: limit-order signal that never got filled ──
+              # If we walked all available bars and the limit price was never
+              # touched, this is a "no_fill" — the trade would never have opened.
+              # After 4 hours without fill, retire it (don't wait 2 days like
+              # regular signals — the setup is stale by then).
+              if not filled and is_limit_bot:
+                  age_hours = (now.timestamp() - t_sig_dt.timestamp()) / 3600.0
+                  if age_hours >= 4:
+                      outcome = "no_fill"    # sentinel — dashboard treats as neutral
+                      s["resolved"] = True
+                      s["outcome"] = "no_fill"
+                      s["outcome_time"] = datetime.datetime.utcnow().isoformat(timespec="seconds") + "Z"
+                      print(f"resolved (NO FILL) {s['bot']} {s['symbol']} {s['direction']} @ {s['timestamp']} → limit at {entry} never touched in {age_hours:.1f}h")
+                      continue   # skip the outcome-writing block below (no event emitted)
 
               if outcome:
                   # Slippage = how far past the trigger the bar actually went.

@@ -1495,11 +1495,17 @@
         break;
       }
       const isResolved = !!outcome || s.resolved === true;
+      // "no_fill" outcome = limit-order signal that never touched entry → trade
+      // never happened. "expired" = signal too old to check. Both are RESOLVED
+      // but excluded from W/L stats (r stays null). Existing KPI code filters
+      // trades by `r != null` so these correctly don't count.
       const outcomeKind = outcome ? (outcome.event === 'target_hit' ? 'win' : 'loss') :
                           (s.outcome === 'target' ? 'win' :
-                           s.outcome === 'stop' ? 'loss' : null);
+                           s.outcome === 'stop' ? 'loss' :
+                           s.outcome === 'no_fill' ? 'no_fill' :
+                           s.outcome === 'expired' ? 'expired' : null);
 
-      // R multiple: +rr for win, -1 for loss (each trade risks 1R by definition)
+      // R multiple: +rr for win, -1 for loss. no_fill/expired = null (no impact on stats).
       const r = outcomeKind === 'win'  ? (s.rr || 2) :
                 outcomeKind === 'loss' ? -1 : null;
 
