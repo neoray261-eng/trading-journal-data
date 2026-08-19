@@ -782,5 +782,21 @@
     "killzone": null,
     "subject": "Bot started (startup ping)",
     "body": "SMT+IFVG bot just started on Railway.\nDRY_RUN=True\nAllowed: MNQ L=True/S=True, MES L=True/S=True\nIf you got this — email path from Railway works."
+  },
+  {
+    "timestamp": "2026-08-19T13:29:14Z",
+    "bot": "QT",
+    "event": "dry_run_signal",
+    "symbol": "MNQ",
+    "direction": "LONG",
+    "entry_price": 29592.0,
+    "stop_price": 29562.0,
+    "target_price": 29759.0,
+    "contracts": 2,
+    "rr": 5.57,
+    "risk_usd": 120.0,
+    "killzone": null,
+    "subject": "[DRY-RUN] QT MNQ LONG @ 29592.0",
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 16:30\nנכס: MNQ\nכיוון: LONG\nכניסה: 29592.0\nסטופ: 29562.0\nיעד: 29759.0\nחוזים: 2\nR:R: 1:5.57\nסיכון: $120\nרווח פוטנציאלי: $668"
   }
 ]
