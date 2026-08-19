@@ -323,5 +323,30 @@
     "rr_planned": 2.0,
     "contracts": 2,
     "risk_usd": 79.0
+  },
+  {
+    "signal_ts": "2026-08-19T06:50:28Z",
+    "outcome_ts": "2026-08-19T06:50:00Z",
+    "bot": "SMT",
+    "symbol": "MNQ",
+    "direction": "SHORT",
+    "killzone": "LONDON-KZ",
+    "entry_price": 29485.0,
+    "stop_price": 29512.25,
+    "target_price": 29430.5,
+    "outcome": "stop",
+    "outcome_price": 29512.25,
+    "bar_extreme": 29528.25,
+    "slippage_pts": 16.0,
+    "mfe_pts": -33.5,
+    "mae_pts": 43.25,
+    "mfe_r": -1.229,
+    "mae_r": 1.587,
+    "mfe_time_min": -0.5,
+    "mae_time_min": -0.5,
+    "duration_min": -0.5,
+    "rr_planned": 2.0,
+    "contracts": 1,
+    "risk_usd": 54.0
   }
 ]
