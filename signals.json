@@ -931,5 +931,21 @@
     "slippage_pts": 13.25,
     "subject": "[AUTO] SMT-TV MNQ SHORT TARGET HIT @ 29568.0",
     "body": "resolved paper trade\nentry: 29610.5\nstop: 29631.75\ntarget: 29568.0\nhit: 29568.0 at 2026-08-19T15:40:00Z\nbar_extreme: 29554.75\nslippage_pts: 13.25\nsource signal: 2026-08-19T15:22:09Z"
+  },
+  {
+    "timestamp": "2026-08-19T19:38:24Z",
+    "bot": "SMT",
+    "event": "startup",
+    "symbol": null,
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "Bot started (startup ping)",
+    "body": "SMT+IFVG bot just started on Railway.\nDRY_RUN=True\nAllowed: MNQ L=True/S=True, MES L=True/S=True\nIf you got this — email path from Railway works."
   }
 ]
