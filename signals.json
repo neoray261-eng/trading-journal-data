@@ -852,7 +852,30 @@
     "risk_usd": 120.0,
     "killzone": null,
     "subject": "[DRY-RUN] QT MNQ SHORT @ 29508.25",
-    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 17:00\nנכס: MNQ\nכיוון: SHORT\nכניסה: 29508.25\nסטופ: 29538.25\nיעד: 29407.75\nחוזים: 2\nR:R: 1:3.35\nסיכון: $120\nרווח פוטנציאלי: $402"
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 17:00\nנכס: MNQ\nכיוון: SHORT\nכניסה: 29508.25\nסטופ: 29538.25\nיעד: 29407.75\nחוזים: 2\nR:R: 1:3.35\nסיכון: $120\nרווח פוטנציאלי: $402",
+    "resolved": true,
+    "outcome": "target",
+    "outcome_time": "2026-08-19T14:11:00Z",
+    "outcome_price": 29407.75,
+    "bar_extreme": 29384.25,
+    "slippage_pts": 23.5
+  },
+  {
+    "timestamp": "2026-08-19T14:11:00Z",
+    "bot": "QT",
+    "event": "target_hit",
+    "symbol": "MNQ",
+    "direction": "SHORT",
+    "entry_price": 29508.25,
+    "stop_price": 29538.25,
+    "target_price": 29407.75,
+    "contracts": 2,
+    "rr": 3.35,
+    "risk_usd": 120.0,
+    "bar_extreme": 29384.25,
+    "slippage_pts": 23.5,
+    "subject": "[AUTO] QT MNQ SHORT TARGET HIT @ 29407.75",
+    "body": "resolved paper trade\nentry: 29508.25\nstop: 29538.25\ntarget: 29407.75\nhit: 29407.75 at 2026-08-19T14:11:00Z\nbar_extreme: 29384.25\nslippage_pts: 23.5\nsource signal: 2026-08-19T13:59:16Z"
   },
   {
     "timestamp": "2026-08-19T14:38:23Z",
@@ -884,6 +907,29 @@
     "risk_usd": 85.0,
     "killzone": "RTH",
     "subject": "[TV] SHORT MNQ @ 29610.50",
-    "body": "Direction: SHORT\nEntry: 29610.50\nStop: 29631.75\nTarget: 29568.00\nContracts: 2\nR:R = 1:2.00\nRisk: $85\nReward: $170\nKillzone=RTH\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+    "body": "Direction: SHORT\nEntry: 29610.50\nStop: 29631.75\nTarget: 29568.00\nContracts: 2\nR:R = 1:2.00\nRisk: $85\nReward: $170\nKillzone=RTH\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)",
+    "resolved": true,
+    "outcome": "target",
+    "outcome_time": "2026-08-19T15:40:00Z",
+    "outcome_price": 29568.0,
+    "bar_extreme": 29554.75,
+    "slippage_pts": 13.25
+  },
+  {
+    "timestamp": "2026-08-19T15:40:00Z",
+    "bot": "SMT-TV",
+    "event": "target_hit",
+    "symbol": "MNQ",
+    "direction": "SHORT",
+    "entry_price": 29610.5,
+    "stop_price": 29631.75,
+    "target_price": 29568.0,
+    "contracts": 2,
+    "rr": 2.0,
+    "risk_usd": 85.0,
+    "bar_extreme": 29554.75,
+    "slippage_pts": 13.25,
+    "subject": "[AUTO] SMT-TV MNQ SHORT TARGET HIT @ 29568.0",
+    "body": "resolved paper trade\nentry: 29610.5\nstop: 29631.75\ntarget: 29568.0\nhit: 29568.0 at 2026-08-19T15:40:00Z\nbar_extreme: 29554.75\nslippage_pts: 13.25\nsource signal: 2026-08-19T15:22:09Z"
   }
 ]
