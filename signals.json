@@ -727,5 +727,21 @@
     "slippage_pts": 1.75,
     "subject": "[AUTO] SMT-TV MNQ SHORT TARGET HIT @ 29525.25",
     "body": "resolved paper trade\nentry: 29564.75\nstop: 29584.5\ntarget: 29525.25\nhit: 29525.25 at 2026-08-18T22:39:00Z\nbar_extreme: 29523.5\nslippage_pts: 1.75\nsource signal: 2026-08-18T22:36:16Z"
+  },
+  {
+    "timestamp": "2026-08-19T06:50:28Z",
+    "bot": "SMT",
+    "event": "dry_run_signal",
+    "symbol": "MNQ",
+    "direction": "SHORT",
+    "entry_price": 29485.0,
+    "stop_price": 29512.25,
+    "target_price": 29430.5,
+    "contracts": 1,
+    "rr": 2.0,
+    "risk_usd": 54.0,
+    "killzone": "LONDON-KZ",
+    "subject": "[DRY-RUN] SHORT MNQ signal",
+    "body": "[SIGNAL] SHORT MNQ  entry=29485.00  stop=29512.25  target=29430.50  risk_pts=27.2  reward_pts=54.5  R:R=1:2.00  contracts=1  risk=$54  reward=$109  Killzone=LONDON-KZ  IFVG@2m"
   }
 ]
