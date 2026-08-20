@@ -541,6 +541,25 @@
     "outcome": "target"
   },
   {
+    "timestamp": "2026-08-18T14:26:25Z",
+    "bot": "SMT-TV",
+    "event": "stop_hit",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7720,
+    "stop_price": 7737.25,
+    "target_price": 7685.5,
+    "contracts": 1,
+    "rr": 2,
+    "risk_usd": 86,
+    "killzone": "RTH",
+    "subject": "סטופ נפגע MES | -86$",
+    "body": "כניסה 7720 סטופ 7737.25 הפסד -86$ (סינתטי — סגירת יומן אוטומטית, Bug 36)",
+    "outcome_price": 7737.25,
+    "pnl_usd": -86,
+    "synthetic": true
+  },
+  {
     "timestamp": "2026-08-18T17:15:14Z",
     "bot": "SMT",
     "event": "dry_run_signal",
@@ -1132,22 +1151,6 @@
     "body": "נכס: MNQ\nכיוון: SHORT\nכניסה: 29613.00\nסטופ: 29657.00\nיעד swing: 29581.25\nחוזים: 1\nסיכון: ~$88"
   },
   {
-    "timestamp": "2026-08-20T04:36:05Z",
-    "bot": "MONITOR",
-    "event": "signal",
-    "symbol": "MNQ",
-    "direction": null,
-    "entry_price": null,
-    "stop_price": null,
-    "target_price": null,
-    "contracts": null,
-    "rr": null,
-    "risk_usd": null,
-    "killzone": null,
-    "subject": "🚨 Monitor flatten MNQU6 @ MAIN",
-    "body": "Reason: NO STOP after 48s\nAccount: MAIN\nSymbol: MNQU6\nContract ID: 4399654\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI."
-  },
-  {
     "timestamp": "2026-08-20T04:36:18Z",
     "bot": "SMT",
     "event": "stop_hit",
@@ -1199,22 +1202,6 @@
     "body": "נכס: MNQ\nכיוון: SHORT\nכניסה: 29617.50\nסטופ: 29662.50\nיעד swing: 29581.25\nחוזים: 1\nסיכון: ~$90"
   },
   {
-    "timestamp": "2026-08-20T04:56:41Z",
-    "bot": "MONITOR",
-    "event": "signal",
-    "symbol": "MNQ",
-    "direction": null,
-    "entry_price": null,
-    "stop_price": null,
-    "target_price": null,
-    "contracts": null,
-    "rr": null,
-    "risk_usd": null,
-    "killzone": null,
-    "subject": "🚨 Monitor flatten MNQU6 @ MAIN",
-    "body": "Reason: NO STOP after 48s\nAccount: MAIN\nSymbol: MNQU6\nContract ID: 4399654\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI."
-  },
-  {
     "timestamp": "2026-08-20T04:56:46Z",
     "bot": "SMT",
     "event": "stop_hit",
@@ -1264,6 +1251,25 @@
     "killzone": null,
     "subject": "SMT MNQ SHORT @ 29617.00",
     "body": "נכס: MNQ\nכיוון: SHORT\nכניסה: 29617.00\nסטופ: 29662.50\nיעד swing: 29581.25\nחוזים: 1\nסיכון: ~$91"
+  },
+  {
+    "timestamp": "2026-08-20T05:11:16Z",
+    "bot": "SMT",
+    "event": "stop_hit",
+    "symbol": "MNQ",
+    "direction": "SHORT",
+    "entry_price": 29617.0,
+    "stop_price": 29662.5,
+    "target_price": null,
+    "contracts": 1,
+    "rr": null,
+    "risk_usd": 91.0,
+    "killzone": null,
+    "subject": "סטופ נפגע MNQ | -91$",
+    "body": "כניסה 29617.0 סטופ 29662.5 הפסד -91$ (סינתטי — סגירת יומן אוטומטית, Bug 36)",
+    "outcome_price": 29662.5,
+    "pnl_usd": -91,
+    "synthetic": true
   },
   {
     "timestamp": "2026-08-20T05:39:18Z",
