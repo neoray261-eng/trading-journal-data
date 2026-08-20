@@ -1107,6 +1107,255 @@
     thead th, tbody td { padding: var(--sp-2); }
     .bot-mini-kpis { grid-template-columns: 1fr 1fr; }
   }
+
+  /* ── TAB BAR (Live / Signals) ─────────────────────────── */
+  .tab-bar {
+    display: flex;
+    gap: var(--sp-2);
+    padding: var(--sp-2) 0 0;
+    margin: var(--sp-4) 0 var(--sp-5);
+    border-bottom: 1px solid var(--rule);
+  }
+  .tab-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    border-bottom: none;
+    color: var(--fg-dim);
+    font: 500 14px/1 var(--font-sans);
+    padding: var(--sp-3) var(--sp-5);
+    cursor: pointer;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    margin-bottom: -1px;
+    transition: color .15s ease, background .15s ease;
+    display: flex; align-items: center; gap: var(--sp-2);
+  }
+  .tab-btn:hover:not(.active) {
+    color: var(--fg);
+    background: var(--panel-lift);
+  }
+  .tab-btn.active {
+    color: var(--accent);
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-bottom: 1px solid var(--panel);
+  }
+  .tab-btn .tab-count {
+    font-size: 11px;
+    color: var(--fg-mute);
+    background: var(--panel-lift);
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+  .tab-btn.active .tab-count {
+    color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── SIGNALS TAB layout (main + collapsible sidebar) ─── */
+  .signals-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--sp-5);
+    align-items: start;
+  }
+  .signals-layout.sidebar-collapsed {
+    grid-template-columns: 1fr 44px;
+  }
+  .signals-main { min-width: 0; }
+  .signals-sidebar {
+    position: sticky;
+    top: var(--sp-4);
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - var(--sp-6));
+  }
+  .signals-sidebar .sidebar-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--sp-3) var(--sp-4);
+    border-bottom: 1px solid var(--rule);
+    background: var(--panel-lift);
+  }
+  .signals-sidebar .sidebar-head h4 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--fg);
+    letter-spacing: 0.02em;
+  }
+  .signals-sidebar .sidebar-toggle {
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--fg-dim);
+    width: 28px; height: 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .signals-sidebar .sidebar-toggle:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .signals-sidebar .sidebar-body {
+    overflow-y: auto;
+    flex: 1;
+  }
+  .signals-layout.sidebar-collapsed .signals-sidebar .sidebar-body,
+  .signals-layout.sidebar-collapsed .signals-sidebar .sidebar-head h4 {
+    display: none;
+  }
+  .signals-layout.sidebar-collapsed .signals-sidebar .sidebar-head {
+    padding: var(--sp-3);
+    justify-content: center;
+    border-bottom: none;
+  }
+  .sidebar-section {
+    border-bottom: 1px solid var(--rule);
+  }
+  .sidebar-section:last-child { border-bottom: none; }
+  .sidebar-section > summary {
+    list-style: none;
+    padding: var(--sp-3) var(--sp-4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--fg);
+    user-select: none;
+    background: var(--panel);
+  }
+  .sidebar-section > summary::-webkit-details-marker { display: none; }
+  .sidebar-section > summary::after {
+    content: "▾";
+    color: var(--fg-mute);
+    font-size: 10px;
+    transition: transform .15s ease;
+  }
+  .sidebar-section[open] > summary::after { transform: rotate(180deg); }
+  .sidebar-section > summary:hover { background: var(--panel-hover); }
+  .sidebar-section-body { padding: var(--sp-3) var(--sp-4) var(--sp-4); }
+
+  /* Sidebar KPI cards */
+  .side-stat {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: var(--sp-2) 0;
+    border-bottom: 1px dashed var(--rule);
+    font-size: 12px;
+  }
+  .side-stat:last-child { border-bottom: none; }
+  .side-stat .lbl { color: var(--fg-dim); }
+  .side-stat .val {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    color: var(--fg);
+    font-weight: 600;
+  }
+  .side-stat .val.long-color  { color: var(--long); }
+  .side-stat .val.short-color { color: var(--short); }
+  .side-stat .val.neutral     { color: var(--fg-mute); }
+  .side-conclusion {
+    margin-top: var(--sp-3);
+    padding: var(--sp-3);
+    background: var(--panel-lift);
+    border-right: 3px solid var(--accent);
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--fg);
+    line-height: 1.5;
+  }
+  .side-opp {
+    padding: var(--sp-3);
+    margin-bottom: var(--sp-2);
+    background: var(--panel-lift);
+    border-radius: 4px;
+    border-right: 3px solid;
+    font-size: 12px;
+  }
+  .side-opp.win-would  { border-right-color: var(--long); }
+  .side-opp.loss-avoid { border-right-color: var(--short); }
+  .side-opp .opp-head {
+    display: flex; justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .side-opp .opp-sym { color: var(--fg); font-weight: 600; }
+  .side-opp .opp-pl.long-color  { color: var(--long); font-family: var(--font-mono); font-weight: 700; }
+  .side-opp .opp-pl.short-color { color: var(--short); font-family: var(--font-mono); font-weight: 700; }
+  .side-opp .opp-detail { color: var(--fg-dim); font-size: 11px; }
+  .side-empty {
+    text-align: center;
+    color: var(--fg-mute);
+    font-size: 12px;
+    padding: var(--sp-4);
+    font-style: italic;
+  }
+  .story-group { margin-bottom: var(--sp-4); }
+  .story-group:last-child { margin-bottom: 0; }
+  .story-group-title {
+    font-size: 11px;
+    color: var(--fg-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: var(--sp-2);
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .story-row {
+    display: flex; justify-content: space-between;
+    padding: 4px 0;
+    font-size: 11px;
+    color: var(--fg-dim);
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+  .story-row .r-sym { color: var(--fg); }
+
+  /* Signal status badges (in main table) */
+  .sig-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .sig-badge.taken   { background: var(--long-dim);  color: var(--long);  border-color: color-mix(in oklab, var(--long) 30%, transparent); }
+  .sig-badge.blocked { background: var(--short-dim); color: var(--short); border-color: color-mix(in oklab, var(--short) 30%, transparent); }
+  .sig-badge.pending { background: var(--panel-lift); color: var(--fg-mute); border: 1px dashed var(--rule); }
+
+  /* Signals table specific overrides */
+  #signals-signal-table td { font-size: 12px; }
+  .would-pl {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+  .would-pl.long-color  { color: var(--long); }
+  .would-pl.short-color { color: var(--short); }
+  .would-pl.neutral     { color: var(--fg-mute); }
+
+  @media (max-width: 900px) {
+    .signals-layout { grid-template-columns: 1fr; }
+    .signals-sidebar {
+      position: static;
+      max-height: none;
+    }
+  }
 </style>
 </head>
 <body>
@@ -1131,6 +1380,19 @@
       <button class="theme-toggle" id="theme-toggle" type="button">אוטומטי</button>
     </div>
   </header>
+
+  <!-- ── TAB BAR (Live / Signals) — added 2026-08-20 ─────── -->
+  <nav class="tab-bar" role="tablist" aria-label="מצב תצוגה">
+    <button type="button" class="tab-btn active" role="tab" data-tab="live" aria-selected="true">
+      📊 מצב חי <span class="tab-count" id="tab-count-live">—</span>
+    </button>
+    <button type="button" class="tab-btn" role="tab" data-tab="signals" aria-selected="false">
+      🔍 סיגנלים <span class="tab-count" id="tab-count-signals">—</span>
+    </button>
+  </nav>
+
+  <!-- ══════════════ TAB PANEL: LIVE (default) ══════════════ -->
+  <div class="tab-panel active" id="tab-live" role="tabpanel">
 
   <!-- ── KPI STRIP ────────────────────────────────────────── -->
   <section class="kpi-grid" id="kpis" aria-label="סטטיסטיקות ראשיות"></section>
@@ -1301,6 +1563,100 @@
     </div>
   </details>
 
+  </div>
+  <!-- ═════════ end tab-live ═════════ -->
+
+  <!-- ══════════════ TAB PANEL: SIGNALS ══════════════ -->
+  <div class="tab-panel" id="tab-signals" role="tabpanel">
+    <div class="signals-layout" id="signals-layout">
+      <!-- ── main: signals table ── -->
+      <div class="signals-main">
+        <section class="panel">
+          <div class="panel-title">
+            <h3>סיגנלים שהבוט זיהה (חי + נחסמו)</h3>
+            <span class="subtle" id="signals-row-count">—</span>
+          </div>
+          <div class="filters" aria-label="פילטרים">
+            <div class="filter-group">
+              <span class="filter-label">מקור</span>
+              <div class="seg" data-filter="sig-bot">
+                <button type="button" data-value="all"            class="active">הכל</button>
+                <button type="button" data-value="SMT-SIGNAL"    >SMT</button>
+                <button type="button" data-value="SMT-TV-SIGNAL" >SMT-TV</button>
+              </div>
+            </div>
+            <div class="filter-group">
+              <span class="filter-label">סטטוס</span>
+              <div class="seg" data-filter="sig-status">
+                <button type="button" data-value="all"     class="active">הכל</button>
+                <button type="button" data-value="taken"  >🟢 נכנסנו</button>
+                <button type="button" data-value="blocked">🔴 חסום</button>
+                <button type="button" data-value="pending">⚪ ממתין</button>
+              </div>
+            </div>
+            <div class="filter-group">
+              <span class="filter-label">טווח</span>
+              <div class="seg" data-filter="sig-range">
+                <button type="button" data-value="today"          >היום</button>
+                <button type="button" data-value="week" class="active">שבוע</button>
+                <button type="button" data-value="month"          >חודש</button>
+                <button type="button" data-value="all"            >הכל</button>
+              </div>
+            </div>
+          </div>
+          <div class="table-scroll">
+            <table id="signals-signal-table">
+              <thead>
+                <tr>
+                  <th>זמן</th>
+                  <th>מקור</th>
+                  <th>סימבול</th>
+                  <th>כיוון</th>
+                  <th>כניסה</th>
+                  <th>סטופ</th>
+                  <th>יעד</th>
+                  <th>R:R</th>
+                  <th>סטטוס</th>
+                  <th>P&L היה-פועל</th>
+                </tr>
+              </thead>
+              <tbody id="signals-rows">
+                <tr><td colspan="10"><div class="state"><h3>אין עדיין סיגנלים לתעד</h3><p>סיגנלים יופיעו כאן ברגע שהבוט יזהה סטאפ (SMT + IFVG או TV-Pine reversal), עוד לפני שהוא מחליט להיכנס.</p></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- ── sidebar: 3 accordions ── -->
+      <aside class="signals-sidebar" id="signals-sidebar">
+        <div class="sidebar-head">
+          <h4>ניתוח סיגנלים</h4>
+          <button type="button" class="sidebar-toggle" id="sidebar-toggle" title="הצג/הסתר סרגל צד">◀</button>
+        </div>
+        <div class="sidebar-body">
+
+          <details class="sidebar-section" open>
+            <summary>📊 סיכום פילטר</summary>
+            <div class="sidebar-section-body" id="sidebar-summary">—</div>
+          </details>
+
+          <details class="sidebar-section" open>
+            <summary>💡 הזדמנויות שפספסנו</summary>
+            <div class="sidebar-section-body" id="sidebar-opps">—</div>
+          </details>
+
+          <details class="sidebar-section" open>
+            <summary>📖 סיפור מלא</summary>
+            <div class="sidebar-section-body" id="sidebar-story">—</div>
+          </details>
+
+        </div>
+      </aside>
+    </div>
+  </div>
+  <!-- ═════════ end tab-signals ═════════ -->
+
   <footer>
     <span class="l">נתונים: <a href="https://github.com/neoray261-eng/trading-journal-data" target="_blank" rel="noopener">trading-journal-data</a> · מתעדכן כל 60 שניות</span>
     <span class="r">© יומן מסחר אישי · SMT + QT · מצב הערכה</span>
@@ -1323,12 +1679,18 @@
   const state = {
     signals: [],
     filter: { bot: 'all', event: 'all', range: 'week', q: '' },
+    // Signals tab (2026-08-20) has its own filter state so switching tabs
+    // doesn't lose either view's user selection.
+    sigFilter: { bot: 'all', status: 'all', range: 'week' },
     sort: { key: 'timestamp', dir: 'desc' },
     expanded: new Set(),
     loading: true,
     error: null,
     lastFetch: null,
     demo: new URLSearchParams(location.search).get('demo') === '1',
+    // Which tab is currently active. Persisted in localStorage below.
+    activeTab: (localStorage.getItem('journal-active-tab') || 'live'),
+    sidebarCollapsed: (localStorage.getItem('journal-sidebar-collapsed') === '1'),
   };
 
   // ── UTILS ───────────────────────────────────────────────────
@@ -1449,9 +1811,12 @@
   const MIN_SAMPLE_FOR_MATCH = 15;  // trades needed before showing the KPI
 
   // Bot names to HIDE from the main dashboard (KPIs, cards, tables, charts).
-  // SMT-TV is the parallel Pine v12 signal source — user wants it in a
-  // separate hidden drawer at the bottom, not mixed into the main analytics.
-  const HIDDEN_BOTS = new Set(['SMT-TV']);
+  // SMT-TV: parallel Pine v12 signal source — shown in its own drawer.
+  // SMT-SIGNAL / SMT-TV-SIGNAL (2026-08-20): pre-decision journal-only tags;
+  // shown exclusively in the "Signals" tab so they don't pollute Live P&L.
+  const HIDDEN_BOTS = new Set(['SMT-TV', 'SMT-SIGNAL', 'SMT-TV-SIGNAL']);
+  const SIGNAL_BOTS = new Set(['SMT-SIGNAL', 'SMT-TV-SIGNAL']);
+  const LIVE_BOTS   = new Set(['SMT', 'SMT-TV']);
 
   // ── COMPUTE OUTCOMES ────────────────────────────────────────
   // Build a list of resolved trades from source signals paired with outcome events.
@@ -2410,6 +2775,275 @@
     rowsEl.innerHTML = html;
   }
 
+  // ── SIGNALS TAB (2026-08-20) ────────────────────────────────
+  // Pairs each SMT-SIGNAL / SMT-TV-SIGNAL entry with the live SMT / SMT-TV
+  // trade that (may have) happened just after, so the dashboard can show:
+  //   - 🟢 נכנסנו: matching live entry within ±120s of the signal
+  //   - 🔴 חסום:  no matching live entry (post-fill R:R cut, skip, fail…)
+  //   - ⚪ ממתין:  live entry may or may not exist but no outcome yet
+  // Uses `computeTrades(true)` so hidden bots (including our signal tags)
+  // are included; then filters to just signals and enriches each.
+  function _pairKey(sig) {
+    // Match on (weakSymbol, direction) — plenty for pairing within a 2min window.
+    return `${sig.symbol || ''}|${sig.direction || ''}`;
+  }
+  const SIG_MATCH_WINDOW_MS = 2 * 60 * 1000;   // 2 min
+
+  function computeSignalTrades() {
+    const all = computeTrades(true);           // includes hidden bots
+    // Build a per-key list of live entries, sorted by ts.
+    const liveByKey = new Map();
+    for (const t of all) {
+      if (!t.signal) continue;
+      const bot = t.signal.bot;
+      if (!LIVE_BOTS.has(bot)) continue;
+      const k = _pairKey(t.signal);
+      if (!liveByKey.has(k)) liveByKey.set(k, []);
+      liveByKey.get(k).push(t);
+    }
+    for (const arr of liveByKey.values()) arr.sort((a,b) => a.ts - b.ts);
+
+    // Enrich each SIGNAL entry with pairing + status
+    const out = [];
+    for (const t of all) {
+      if (!t.signal || !SIGNAL_BOTS.has(t.signal.bot)) continue;
+      const k = _pairKey(t.signal);
+      const candidates = liveByKey.get(k) || [];
+      // Find matching live entry within ±SIG_MATCH_WINDOW_MS
+      let paired = null;
+      for (const live of candidates) {
+        if (Math.abs(live.ts - t.ts) <= SIG_MATCH_WINDOW_MS) { paired = live; break; }
+      }
+      const hasOutcome = t.resolved && t.r != null;
+      let status;
+      if (paired) status = 'taken';
+      else if (hasOutcome) status = 'blocked';
+      else status = 'pending';
+      out.push({
+        ...t,
+        status,
+        paired,
+        // Hypothetical P&L if the signal had been taken (using its planned
+        // risk_usd × the outcome R). This is what "would have happened".
+        wouldPl: hasOutcome && t.signal.risk_usd
+          ? Math.round(t.signal.risk_usd * t.r)
+          : null,
+      });
+    }
+    return out;
+  }
+
+  function _filterSignals(sigs) {
+    const now = Date.now();
+    const rangeCutoff = {
+      today: now - 24*3600*1000,
+      week:  now - 7*24*3600*1000,
+      month: now - 30*24*3600*1000,
+      all:   0,
+    }[state.sigFilter.range] || 0;
+    return sigs.filter(s => {
+      if (state.sigFilter.bot    !== 'all' && s.signal.bot !== state.sigFilter.bot) return false;
+      if (state.sigFilter.status !== 'all' && s.status     !== state.sigFilter.status) return false;
+      if (s.ts < rangeCutoff) return false;
+      return true;
+    });
+  }
+
+  function _sigBadge(status) {
+    if (status === 'taken')   return `<span class="sig-badge taken">🟢 נכנסנו</span>`;
+    if (status === 'blocked') return `<span class="sig-badge blocked">🔴 חסום</span>`;
+    return `<span class="sig-badge pending">⚪ ממתין</span>`;
+  }
+
+  function renderSignalsTab() {
+    const sigsAll = computeSignalTrades();
+    const sigs    = _filterSignals(sigsAll);
+    // Newest first
+    sigs.sort((a,b) => b.ts - a.ts);
+
+    // ── Tab count badges (both tabs) ──
+    const liveAll = computeTrades();  // live-tab count (excludes signal tags via HIDDEN_BOTS)
+    const elLiveCount = document.getElementById('tab-count-live');
+    const elSigCount  = document.getElementById('tab-count-signals');
+    if (elLiveCount) elLiveCount.textContent = fmt0.format(liveAll.length);
+    if (elSigCount)  elSigCount.textContent  = fmt0.format(sigsAll.length);
+
+    // ── Row count subtle ──
+    document.getElementById('signals-row-count').textContent =
+      `${fmt0.format(sigs.length)} סיגנלים בטווח`;
+
+    // ── Rows ──
+    const rowsEl = document.getElementById('signals-rows');
+    if (sigs.length === 0) {
+      rowsEl.innerHTML = '<tr><td colspan="10"><div class="state"><h3>אין סיגנלים בטווח שנבחר</h3><p>נסה טווח רחב יותר או שנה את הפילטרים.</p></div></td></tr>';
+    } else {
+      let html = '';
+      for (const s of sigs) {
+        const sig = s.signal;
+        const dirClass = sig.direction === 'LONG' ? 'dir-long' : sig.direction === 'SHORT' ? 'dir-short' : '';
+        const dirLabel = ({ LONG:'לונג', SHORT:'שורט' })[sig.direction] || sig.direction || '';
+        const time = new Date(s.ts).toLocaleString('he-IL', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+        const rr = sig.rr != null ? '1:' + fmt.format(sig.rr) : '—';
+        const wouldCell = s.wouldPl != null
+          ? `<span class="would-pl ${s.wouldPl > 0 ? 'long-color' : s.wouldPl < 0 ? 'short-color' : 'neutral'}">${s.wouldPl >= 0 ? '+' : '−'}$${Math.abs(s.wouldPl)}</span>`
+          : `<span class="would-pl neutral">—</span>`;
+        const botLabel = sig.bot === 'SMT-SIGNAL' ? 'SMT' : sig.bot === 'SMT-TV-SIGNAL' ? 'SMT-TV' : sig.bot;
+        html += `<tr>
+          <td>${esc(time)}</td>
+          <td><span class="bot-tag ${sig.bot === 'SMT-SIGNAL' ? 'smt' : 'qt'}">${esc(botLabel)}</span></td>
+          <td>${esc(sig.symbol || '—')}</td>
+          <td class="${dirClass}">${esc(dirLabel)}</td>
+          <td>${sig.entry_price != null ? fmt.format(sig.entry_price) : '—'}</td>
+          <td>${sig.stop_price  != null ? fmt.format(sig.stop_price)  : '—'}</td>
+          <td>${sig.target_price!= null ? fmt.format(sig.target_price): '—'}</td>
+          <td>${rr}</td>
+          <td>${_sigBadge(s.status)}</td>
+          <td>${wouldCell}</td>
+        </tr>`;
+      }
+      rowsEl.innerHTML = html;
+    }
+
+    // ── Sidebar: Summary ──
+    const taken   = sigsAll.filter(s => s.status === 'taken');
+    const blocked = sigsAll.filter(s => s.status === 'blocked');
+    const pending = sigsAll.filter(s => s.status === 'pending');
+    const blockedWon  = blocked.filter(s => s.wouldPl != null && s.wouldPl > 0);
+    const blockedLost = blocked.filter(s => s.wouldPl != null && s.wouldPl < 0);
+    const missedProfit = blockedWon .reduce((sum,s) => sum + s.wouldPl, 0);
+    const avoidedLoss  = blockedLost.reduce((sum,s) => sum + s.wouldPl, 0);
+    const filterNet    = avoidedLoss * -1 - missedProfit; // positive = filter helped
+    const takenPl      = taken.reduce((sum,s) => sum + (s.wouldPl || 0), 0);
+    const filterEffPct = blocked.length > 0
+      ? Math.round((blockedLost.length / blocked.length) * 100)
+      : null;
+    const summaryEl = document.getElementById('sidebar-summary');
+    summaryEl.innerHTML = `
+      <div class="side-stat"><span class="lbl">סיגנלים סה"כ</span>            <span class="val">${fmt0.format(sigsAll.length)}</span></div>
+      <div class="side-stat"><span class="lbl">🟢 נכנסו למסחר</span>          <span class="val long-color">${fmt0.format(taken.length)}</span></div>
+      <div class="side-stat"><span class="lbl">🔴 נחסמו ע"י R:R</span>        <span class="val short-color">${fmt0.format(blocked.length)}</span></div>
+      <div class="side-stat"><span class="lbl">⚪ ממתינים לתוצאה</span>       <span class="val neutral">${fmt0.format(pending.length)}</span></div>
+      <div class="side-stat"><span class="lbl">P&L של הנכנסו</span>           <span class="val ${takenPl > 0 ? 'long-color' : takenPl < 0 ? 'short-color' : 'neutral'}">${takenPl >= 0 ? '+' : '−'}$${Math.abs(takenPl)}</span></div>
+      <div class="side-stat"><span class="lbl">נמנע הפסד (של החסומים)</span> <span class="val long-color">+$${Math.abs(avoidedLoss)}</span></div>
+      <div class="side-stat"><span class="lbl">פספסנו רווח (של החסומים)</span><span class="val short-color">−$${missedProfit}</span></div>
+      <div class="side-stat"><span class="lbl">נטו של הפילטר</span>           <span class="val ${filterNet > 0 ? 'long-color' : filterNet < 0 ? 'short-color' : 'neutral'}">${filterNet >= 0 ? '+' : '−'}$${Math.abs(filterNet)}</span></div>
+      ${blocked.length > 0 ? `<div class="side-stat"><span class="lbl">יעילות פילטר</span> <span class="val ${filterEffPct >= 50 ? 'long-color' : 'short-color'}">${filterEffPct}% צדק</span></div>` : ''}
+      <div class="side-conclusion">
+        ${sigsAll.length === 0
+          ? 'עדיין אין סיגנלים לתעד. הראשונים יגיעו ברגע שהבוט יזהה סטאפ.'
+          : filterNet > 0
+            ? `הפילטר הרוויח לך <b>$${filterNet}</b> נטו — הוא עובד ✅`
+            : filterNet < 0
+              ? `הפילטר עלה לך <b>$${Math.abs(filterNet)}</b> נטו — שקול להקל`
+              : 'הפילטר מאוזן — לא עולה ולא מרוויח.'}
+      </div>
+    `;
+
+    // ── Sidebar: Missed Opportunities ──
+    const oppsEl = document.getElementById('sidebar-opps');
+    const oppsList = [
+      ...blockedWon .sort((a,b) => b.wouldPl - a.wouldPl).slice(0, 5).map(o => ({...o, type:'win-would'})),
+      ...blockedLost.sort((a,b) => a.wouldPl - b.wouldPl).slice(0, 3).map(o => ({...o, type:'loss-avoid'})),
+    ];
+    if (oppsList.length === 0) {
+      oppsEl.innerHTML = `<div class="side-empty">אין סיגנלים חסומים עם תוצאה — או שלא נחסם כלום, או שהעסקאות עוד לא סגורות.</div>`;
+    } else {
+      let html = '';
+      for (const o of oppsList) {
+        const sig = o.signal;
+        const dir = ({ LONG:'לונג', SHORT:'שורט' })[sig.direction] || sig.direction || '';
+        const time = new Date(o.ts).toLocaleString('he-IL', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+        const plClass = o.wouldPl > 0 ? 'long-color' : 'short-color';
+        const plStr   = (o.wouldPl >= 0 ? '+$' : '−$') + Math.abs(o.wouldPl);
+        const emoji   = o.type === 'win-would' ? '😢 פספסנו' : '😊 נמנע';
+        html += `
+          <div class="side-opp ${o.type}">
+            <div class="opp-head">
+              <span class="opp-sym">${esc(dir)} ${esc(sig.symbol)}</span>
+              <span class="opp-pl ${plClass}">${plStr}</span>
+            </div>
+            <div class="opp-detail">${esc(time)} · ${emoji} · R:R 1:${fmt.format(sig.rr || 0)}</div>
+          </div>`;
+      }
+      oppsEl.innerHTML = html;
+    }
+
+    // ── Sidebar: Full Story ──
+    const storyEl = document.getElementById('sidebar-story');
+    const groups = [
+      { title: '🟢 נכנסו',   list: taken   },
+      { title: '🔴 נחסמו',   list: blocked },
+      { title: '⚪ ממתינים', list: pending },
+    ];
+    let storyHtml = '';
+    for (const g of groups) {
+      if (g.list.length === 0) continue;
+      const items = [...g.list].sort((a,b) => b.ts - a.ts).slice(0, 8);
+      storyHtml += `<div class="story-group">
+        <div class="story-group-title">${g.title} (${g.list.length})</div>`;
+      for (const s of items) {
+        const sig = s.signal;
+        const t = new Date(s.ts).toLocaleString('he-IL', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+        const dir = sig.direction === 'LONG' ? '↑' : '↓';
+        const pl  = s.wouldPl != null ? ((s.wouldPl >= 0 ? '+$' : '−$') + Math.abs(s.wouldPl)) : '';
+        storyHtml += `<div class="story-row">
+          <span class="r-sym">${dir} ${esc(sig.symbol || '')}</span>
+          <span>${esc(t)} ${pl}</span>
+        </div>`;
+      }
+      if (g.list.length > 8) {
+        storyHtml += `<div class="story-row" style="color:var(--fg-mute);font-style:italic">…ועוד ${g.list.length - 8}</div>`;
+      }
+      storyHtml += `</div>`;
+    }
+    if (!storyHtml) storyHtml = `<div class="side-empty">אין נתונים בטווח שנבחר.</div>`;
+    storyEl.innerHTML = storyHtml;
+  }
+
+  // ── TAB SWITCH ──────────────────────────────────────────────
+  function switchTab(name) {
+    if (name !== 'live' && name !== 'signals') name = 'live';
+    state.activeTab = name;
+    try { localStorage.setItem('journal-active-tab', name); } catch (e) {}
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      const on = b.dataset.tab === name;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('.tab-panel').forEach(p => {
+      p.classList.toggle('active', p.id === 'tab-' + name);
+    });
+  }
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.addEventListener('click', () => switchTab(b.dataset.tab));
+  });
+
+  // Sidebar collapse toggle
+  function applySidebarCollapsed() {
+    const layout = document.getElementById('signals-layout');
+    const btn    = document.getElementById('sidebar-toggle');
+    if (!layout) return;
+    layout.classList.toggle('sidebar-collapsed', state.sidebarCollapsed);
+    if (btn) btn.textContent = state.sidebarCollapsed ? '▶' : '◀';
+  }
+  document.getElementById('sidebar-toggle')?.addEventListener('click', () => {
+    state.sidebarCollapsed = !state.sidebarCollapsed;
+    try { localStorage.setItem('journal-sidebar-collapsed', state.sidebarCollapsed ? '1' : '0'); } catch (e) {}
+    applySidebarCollapsed();
+  });
+
+  // Signals tab filter buttons
+  document.querySelectorAll('.seg[data-filter^="sig-"]').forEach(seg => {
+    const dim = seg.dataset.filter.slice(4);   // sig-bot → bot
+    seg.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.sigFilter[dim === 'range' ? 'range' : dim === 'status' ? 'status' : 'bot'] = btn.dataset.value;
+        seg.querySelectorAll('button').forEach(b => b.classList.toggle('active', b === btn));
+        renderSignalsTab();
+      });
+    });
+  });
+
   function render() {
     const trades = computeTrades();
     renderKPIs(trades);
@@ -2422,7 +3056,11 @@
     renderKillzones(trades);
     renderRows();
     renderTVDrawer();
+    renderSignalsTab();
     renderStatus();
+    // First-time layout apply (respects persisted state)
+    switchTab(state.activeTab);
+    applySidebarCollapsed();
   }
 
   document.getElementById('cal-prev').addEventListener('click', () => {
