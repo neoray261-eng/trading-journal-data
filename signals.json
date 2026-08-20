@@ -1130,5 +1130,21 @@
     "killzone": null,
     "subject": "SMT MNQ SHORT @ 29613.00 — חתכתי חוזים",
     "body": "סליפאג' העלה את הסיכון ל-$264\nחתכתי מ-3 ל-1 חוזים\nסיכון עכשיו: ~$88\nרווח אפשרי: ~$64\n(היחס בדולרים ירד עם החוזים — יחסי)"
+  },
+  {
+    "timestamp": "2026-08-20T04:35:18Z",
+    "bot": "SMT",
+    "event": "signal",
+    "symbol": "MNQ",
+    "direction": "SHORT",
+    "entry_price": 29613.0,
+    "stop_price": 29657.0,
+    "target_price": null,
+    "contracts": 1,
+    "rr": null,
+    "risk_usd": 88.0,
+    "killzone": null,
+    "subject": "SMT MNQ SHORT @ 29613.00",
+    "body": "נכס: MNQ\nכיוון: SHORT\nכניסה: 29613.00\nסטופ: 29657.00\nיעד swing: 29581.25\nחוזים: 1\nסיכון: ~$88"
   }
 ]
