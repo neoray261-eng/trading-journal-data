@@ -1748,5 +1748,21 @@
     "killzone": null,
     "subject": "QT ידלג — לימיט רחוק מדי (619 נק')",
     "body": "סאטפ LONG על MNQ\nמחיר עכשיו: 29434.50\nלימיט מתוכנן: 30053.50\nמרחק: 619 נקודות (מעל התקרה 150)\n\nתנועה כזאת נדירה — הבוט לא ישחית פקודה על סאטפ שכזה."
+  },
+  {
+    "timestamp": "2026-08-20T13:59:17Z",
+    "bot": "QT",
+    "event": "signal",
+    "symbol": null,
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "QT ידלג — לימיט רחוק מדי (168 נק')",
+    "body": "סאטפ SHORT על MNQ\nמחיר עכשיו: 29330.50\nלימיט מתוכנן: 29498.50\nמרחק: 168 נקודות (מעל התקרה 150)\n\nתנועה כזאת נדירה — הבוט לא ישחית פקודה על סאטפ שכזה."
   }
 ]
