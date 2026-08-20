@@ -1631,6 +1631,23 @@
     "body": "resolved paper trade\nentry: 7727.0\nstop: 7728.75\ntarget: 7723.5\nhit: 7728.75 at 2026-08-20T10:48:00Z\nbar_extreme: 7730.0\nslippage_pts: 1.25\nsource signal: 2026-08-20T10:39:20Z"
   },
   {
+    "timestamp": "2026-08-20T11:29:00Z",
+    "bot": "SMT-SIGNAL",
+    "event": "target_hit",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7725.0,
+    "stop_price": 7727.25,
+    "target_price": 7715.25,
+    "contracts": 8,
+    "rr": 4.33,
+    "risk_usd": 90.0,
+    "bar_extreme": 7714.75,
+    "slippage_pts": 0.5,
+    "subject": "[AUTO] SMT-SIGNAL MES SHORT TARGET HIT @ 7715.25",
+    "body": "resolved paper trade\nentry: 7725.0\nstop: 7727.25\ntarget: 7715.25\nhit: 7715.25 at 2026-08-20T11:29:00Z\nbar_extreme: 7714.75\nslippage_pts: 0.5\nsource signal: 2026-08-20T11:29:12Z"
+  },
+  {
     "timestamp": "2026-08-20T11:29:07Z",
     "bot": "SMT",
     "event": "startup",
@@ -1660,7 +1677,13 @@
     "risk_usd": 90.0,
     "killzone": "OFF-KZ",
     "subject": "[SIGNAL] SHORT MES @ 7725.00",
-    "body": "Direction: SHORT\nEntry (planned): 7725.00\nStop: 7727.25\nTarget: 7715.25\nContracts: 8\nR:R = 1:4.33\nRisk: $90\nReward: $390\nKillzone: OFF-KZ\nSource: SMT + IFVG@2m (pre-decision)"
+    "body": "Direction: SHORT\nEntry (planned): 7725.00\nStop: 7727.25\nTarget: 7715.25\nContracts: 8\nR:R = 1:4.33\nRisk: $90\nReward: $390\nKillzone: OFF-KZ\nSource: SMT + IFVG@2m (pre-decision)",
+    "resolved": true,
+    "outcome": "target",
+    "outcome_time": "2026-08-20T11:29:00Z",
+    "outcome_price": 7715.25,
+    "bar_extreme": 7714.75,
+    "slippage_pts": 0.5
   },
   {
     "timestamp": "2026-08-20T11:29:15Z",
