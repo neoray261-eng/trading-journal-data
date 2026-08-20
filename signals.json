@@ -1386,5 +1386,21 @@
     "killzone": null,
     "subject": "SMT MNQ סליפאג' גדול — סגרתי מיד",
     "body": "תכנון: כניסה 29642.00 סטופ 29657.00\nבפועל: 29661.00 (סליפאג' +19.00)\nהסטופ היה נדחה — סגרתי את הפוזיציה להגנת התיק."
+  },
+  {
+    "timestamp": "2026-08-20T06:11:13Z",
+    "bot": "SMT",
+    "event": "signal",
+    "symbol": "MNQ",
+    "direction": "LONG",
+    "entry_price": null,
+    "stop_price": 29588.25,
+    "target_price": 29683.75,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "SMT MNQ — לא נכנסנו (LONG 29610.50)",
+    "body": "הזמנת LIMIT ב-29610.50 לא נמלאה תוך 30 שניות.\nהמחיר לא הגיע לרמה המתוכננת — מדלגים על העסקה במקום להיכנס עם סליפאג'.\nתוכנן: entry 29610.50  stop 29588.25  target 29683.75\nR:R היה 1:3.29 — לא שווה להתפשר על זה."
   }
 ]
