@@ -1482,5 +1482,21 @@
     "killzone": "OFF-KZ",
     "subject": "[TV] SHORT MES @ 7725.50",
     "body": "Direction: SHORT\nEntry: 7725.50\nStop: 7728.75\nTarget: 7719.00\nContracts: 6\nR:R = 1:2.00\nRisk: $98\nReward: $195\nKillzone=OFF-KZ\nWaited 2 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+  },
+  {
+    "timestamp": "2026-08-20T10:12:01Z",
+    "bot": "SMT",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "SMT MES — פוזיציה נסגרה בברוקר",
+    "body": "הבוט זיהה שהפוזיציה כבר לא קיימת בברוקר (סגירה מבחוץ / liquidation / manual).\nמבטל stop/target שנשארו ומאפס. בדוק ב-Tradovate."
   }
 ]
