@@ -1370,5 +1370,21 @@
     "killzone": null,
     "subject": "SMT MNQ — פוזיציה נסגרה בברוקר",
     "body": "הבוט זיהה שהפוזיציה כבר לא קיימת בברוקר (סגירה מבחוץ / liquidation / manual).\nמבטל stop/target שנשארו ומאפס. בדוק ב-Tradovate."
+  },
+  {
+    "timestamp": "2026-08-20T06:10:39Z",
+    "bot": "SMT",
+    "event": "slippage_close",
+    "symbol": "MNQ",
+    "direction": null,
+    "entry_price": null,
+    "stop_price": 29657.0,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "SMT MNQ סליפאג' גדול — סגרתי מיד",
+    "body": "תכנון: כניסה 29642.00 סטופ 29657.00\nבפועל: 29661.00 (סליפאג' +19.00)\nהסטופ היה נדחה — סגרתי את הפוזיציה להגנת התיק."
   }
 ]
