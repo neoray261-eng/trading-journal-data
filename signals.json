@@ -1645,5 +1645,21 @@
     "killzone": null,
     "subject": "Bot started (startup ping)",
     "body": "SMT+IFVG bot just started on Railway.\nDRY_RUN=False\nAllowed: MNQ L=True/S=True, MES L=True/S=True\nIf you got this — email path from Railway works."
+  },
+  {
+    "timestamp": "2026-08-20T11:29:12Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7725.0,
+    "stop_price": 7727.25,
+    "target_price": 7715.25,
+    "contracts": 8,
+    "rr": 4.33,
+    "risk_usd": 90.0,
+    "killzone": "OFF-KZ",
+    "subject": "[SIGNAL] SHORT MES @ 7725.00",
+    "body": "Direction: SHORT\nEntry (planned): 7725.00\nStop: 7727.25\nTarget: 7715.25\nContracts: 8\nR:R = 1:4.33\nRisk: $90\nReward: $390\nKillzone: OFF-KZ\nSource: SMT + IFVG@2m (pre-decision)"
   }
 ]
