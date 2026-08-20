@@ -1562,5 +1562,21 @@
     "killzone": null,
     "subject": "סטופ נפגע MES | -46$",
     "body": "כניסה 7726.25 סטופ מתוכנן 7727.25  fill בפועל 7727.41\nסליפאג' +0.16 נקודות\nהפסד בפועל -46$"
+  },
+  {
+    "timestamp": "2026-08-20T10:37:38Z",
+    "bot": "SMT",
+    "event": "day_halt",
+    "symbol": null,
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "בוט SMT עצר — 2 הפסדים היום",
+    "body": "הגענו ל-2 הפסדים."
   }
 ]
