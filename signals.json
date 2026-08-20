@@ -1546,5 +1546,21 @@
     "killzone": null,
     "subject": "SMT MES SHORT @ 7726.25",
     "body": "נכס: MES\nכיוון: SHORT\nכניסה: 7726.25\nסטופ: 7727.25\nיעד swing: 7715.25\nחוזים: 8\nסיכון: ~$40"
+  },
+  {
+    "timestamp": "2026-08-20T10:37:37Z",
+    "bot": "SMT",
+    "event": "stop_hit",
+    "symbol": "MES",
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "סטופ נפגע MES | -46$",
+    "body": "כניסה 7726.25 סטופ מתוכנן 7727.25  fill בפועל 7727.41\nסליפאג' +0.16 נקודות\nהפסד בפועל -46$"
   }
 ]
