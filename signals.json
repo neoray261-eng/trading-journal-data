@@ -1530,5 +1530,21 @@
     "killzone": "OFF-KZ",
     "subject": "[SIGNAL] SHORT MES @ 7725.00",
     "body": "Direction: SHORT\nEntry (planned): 7725.00\nStop: 7727.25\nTarget: 7715.25\nContracts: 8\nR:R = 1:4.33\nRisk: $90\nReward: $390\nKillzone: OFF-KZ\nSource: SMT + IFVG@2m (pre-decision)"
+  },
+  {
+    "timestamp": "2026-08-20T10:37:20Z",
+    "bot": "SMT",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7726.25,
+    "stop_price": 7727.25,
+    "target_price": null,
+    "contracts": 8,
+    "rr": null,
+    "risk_usd": 40.0,
+    "killzone": null,
+    "subject": "SMT MES SHORT @ 7726.25",
+    "body": "נכס: MES\nכיוון: SHORT\nכניסה: 7726.25\nסטופ: 7727.25\nיעד swing: 7715.25\nחוזים: 8\nסיכון: ~$40"
   }
 ]
