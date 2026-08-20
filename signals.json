@@ -1578,5 +1578,21 @@
     "killzone": null,
     "subject": "בוט SMT עצר — 2 הפסדים היום",
     "body": "הגענו ל-2 הפסדים."
+  },
+  {
+    "timestamp": "2026-08-20T10:39:20Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7727.0,
+    "stop_price": 7728.75,
+    "target_price": 7723.5,
+    "contracts": 11,
+    "rr": 2.0,
+    "risk_usd": 96.0,
+    "killzone": "OFF-KZ",
+    "subject": "[TV] SHORT MES @ 7727.00",
+    "body": "Direction: SHORT\nEntry: 7727.00\nStop: 7728.75\nTarget: 7723.50\nContracts: 11\nR:R = 1:2.00\nRisk: $96\nReward: $192\nKillzone=OFF-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
   }
 ]
