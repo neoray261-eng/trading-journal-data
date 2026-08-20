@@ -1466,5 +1466,21 @@
     "killzone": null,
     "subject": "SMT MES SHORT @ 7724.75",
     "body": "נכס: MES\nכיוון: SHORT\nכניסה: 7724.75\nסטופ: 7727.25\nיעד swing: 7715.25\nחוזים: 8\nסיכון: ~$100"
+  },
+  {
+    "timestamp": "2026-08-20T10:08:10Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7725.5,
+    "stop_price": 7728.75,
+    "target_price": 7719.0,
+    "contracts": 6,
+    "rr": 2.0,
+    "risk_usd": 98.0,
+    "killzone": "OFF-KZ",
+    "subject": "[TV] SHORT MES @ 7725.50",
+    "body": "Direction: SHORT\nEntry: 7725.50\nStop: 7728.75\nTarget: 7719.00\nContracts: 6\nR:R = 1:2.00\nRisk: $98\nReward: $195\nKillzone=OFF-KZ\nWaited 2 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
   }
 ]
