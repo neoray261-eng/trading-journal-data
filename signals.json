@@ -1354,5 +1354,21 @@
     "killzone": null,
     "subject": "SMT startup — Trade משוחזר: MNQ SHORT",
     "body": "הבוט שיחזר את הפוזיציה מהברוקר: 1 חוזים\nכניסה 29617.00  סטופ 29662.50  יעד 29581.25\ncheck_exit ינהל את היציאה מעכשיו."
+  },
+  {
+    "timestamp": "2026-08-20T06:10:37Z",
+    "bot": "SMT",
+    "event": "signal",
+    "symbol": "MNQ",
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "SMT MNQ — פוזיציה נסגרה בברוקר",
+    "body": "הבוט זיהה שהפוזיציה כבר לא קיימת בברוקר (סגירה מבחוץ / liquidation / manual).\nמבטל stop/target שנשארו ומאפס. בדוק ב-Tradovate."
   }
 ]
