@@ -2784,8 +2784,17 @@
   // Uses `computeTrades(true)` so hidden bots (including our signal tags)
   // are included; then filters to just signals and enriches each.
   function _pairKey(sig) {
-    // Match on (weakSymbol, direction) — plenty for pairing within a 2min window.
-    return `${sig.symbol || ''}|${sig.direction || ''}`;
+    // Match on (LIVE bot family, symbol, direction). Include the LIVE bot
+    // so an SMT-SIGNAL pairs only to SMT live entries, and SMT-TV-SIGNAL
+    // pairs only to SMT-TV. Fixes the 2026-08-20 bug where a SMT-TV
+    // signal at 13:39 wrongly showed "נכנסנו" because MAIN had an SMT
+    // (bot=SMT) trade for the same symbol/direction at 13:37 — within
+    // the ±2min window. The two are on separate accounts and must not
+    // cross-pair. Live entries carry their own bot as-is.
+    const liveBot = sig.bot === 'SMT-SIGNAL' ? 'SMT'
+                  : sig.bot === 'SMT-TV-SIGNAL' ? 'SMT-TV'
+                  : sig.bot;
+    return `${liveBot}|${sig.symbol || ''}|${sig.direction || ''}`;
   }
   const SIG_MATCH_WINDOW_MS = 2 * 60 * 1000;   // 2 min
 
