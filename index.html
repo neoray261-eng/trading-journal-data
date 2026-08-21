@@ -3104,7 +3104,12 @@
   });
 
   // ── EVENTS ──────────────────────────────────────────────────
-  document.querySelectorAll('.seg').forEach(seg => {
+  // Bug #19 fix (2026-08-21): scope this handler to LIVE-tab filters
+  // only. Previously it matched EVERY .seg on the page — including the
+  // Signals-tab filters (sig-bot, sig-status, sig-range) — and wrote
+  // junk keys into state.filter[] plus wiped state.expanded on every
+  // Signals-tab filter click. The Signals tab has its own handler.
+  document.querySelectorAll('.seg:not([data-filter^="sig-"])').forEach(seg => {
     seg.addEventListener('click', (e) => {
       const b = e.target.closest('button'); if (!b) return;
       const filterKey = seg.dataset.filter;
