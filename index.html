@@ -540,6 +540,7 @@
     direction: ltr;
   }
   .bot-tag.smt    { background: var(--accent-dim); color: var(--accent); border: 1px solid color-mix(in oklab, var(--accent) 30%, transparent); }
+  .bot-tag.smt-tv { background: var(--long-dim);   color: var(--long);   border: 1px solid color-mix(in oklab, var(--long) 30%, transparent); }
   .bot-tag.qt     { background: var(--info-dim);   color: var(--info);   border: 1px solid color-mix(in oklab, var(--info) 30%, transparent); }
   .bot-tag.manual { background: var(--manual-dim); color: var(--manual); border: 1px solid color-mix(in oklab, var(--manual) 30%, transparent); }
 
@@ -1334,8 +1335,10 @@
     border: 1px solid transparent;
     white-space: nowrap;
   }
-  .sig-badge.taken   { background: var(--long-dim);  color: var(--long);  border-color: color-mix(in oklab, var(--long) 30%, transparent); }
-  .sig-badge.blocked { background: var(--short-dim); color: var(--short); border-color: color-mix(in oklab, var(--short) 30%, transparent); }
+  .sig-badge.taken       { background: var(--long-dim);  color: var(--long);  border-color: color-mix(in oklab, var(--long) 30%, transparent); }
+  .sig-badge.taken-win   { background: var(--long-dim);  color: var(--long);  border-color: color-mix(in oklab, var(--long) 30%, transparent); }
+  .sig-badge.taken-loss  { background: var(--short-dim); color: var(--short); border-color: color-mix(in oklab, var(--short) 40%, transparent); }
+  .sig-badge.blocked     { background: var(--short-dim); color: var(--short); border-color: color-mix(in oklab, var(--short) 30%, transparent); }
   .sig-badge.pending { background: var(--panel-lift); color: var(--fg-mute); border: 1px dashed var(--rule); }
 
   /* Signals table specific overrides */
@@ -2871,8 +2874,16 @@
     });
   }
 
-  function _sigBadge(status) {
-    if (status === 'taken')   return `<span class="sig-badge taken">🟢 נכנסנו</span>`;
+  function _sigBadge(status, r) {
+    // Bug #22 fix (2026-08-21): "taken" for a QT paper loss shouldn't
+    // look identical to a real WIN. Split by outcome sign when r is
+    // present — win stays green, loss goes red-ish, otherwise the
+    // generic "took the trade" green.
+    if (status === 'taken') {
+      if (r != null && r < 0) return `<span class="sig-badge taken-loss">🟢 נכנסנו · הפסיד</span>`;
+      if (r != null && r > 0) return `<span class="sig-badge taken-win">🟢 נכנסנו · זכה</span>`;
+      return `<span class="sig-badge taken">🟢 נכנסנו</span>`;
+    }
     if (status === 'blocked') return `<span class="sig-badge blocked">🔴 חסום</span>`;
     return `<span class="sig-badge pending">⚪ ממתין</span>`;
   }
@@ -2910,16 +2921,21 @@
           ? `<span class="would-pl ${s.wouldPl > 0 ? 'long-color' : s.wouldPl < 0 ? 'short-color' : 'neutral'}">${s.wouldPl >= 0 ? '+' : '−'}$${Math.abs(s.wouldPl)}</span>`
           : `<span class="would-pl neutral">—</span>`;
         const botLabel = sig.bot === 'SMT-SIGNAL' ? 'SMT' : sig.bot === 'SMT-TV-SIGNAL' ? 'SMT-TV' : sig.bot;
+        // Bug #21 fix (2026-08-21): distinct class per bot family so
+        // SMT-TV signals don't share the QT color.
+        const botClass = sig.bot === 'SMT-SIGNAL'    ? 'smt' :
+                         sig.bot === 'SMT-TV-SIGNAL' ? 'smt-tv' :
+                         sig.bot === 'QT'            ? 'qt' : 'manual';
         html += `<tr>
           <td>${esc(time)}</td>
-          <td><span class="bot-tag ${sig.bot === 'SMT-SIGNAL' ? 'smt' : 'qt'}">${esc(botLabel)}</span></td>
+          <td><span class="bot-tag ${botClass}">${esc(botLabel)}</span></td>
           <td>${esc(sig.symbol || '—')}</td>
           <td class="${dirClass}">${esc(dirLabel)}</td>
           <td>${sig.entry_price != null ? fmt.format(sig.entry_price) : '—'}</td>
           <td>${sig.stop_price  != null ? fmt.format(sig.stop_price)  : '—'}</td>
           <td>${sig.target_price!= null ? fmt.format(sig.target_price): '—'}</td>
           <td>${rr}</td>
-          <td>${_sigBadge(s.status)}</td>
+          <td>${_sigBadge(s.status, s.r)}</td>
           <td>${wouldCell}</td>
         </tr>`;
       }
