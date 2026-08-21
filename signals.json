@@ -1858,5 +1858,21 @@
     "killzone": null,
     "subject": "Bot started (startup ping)",
     "body": "SMT+IFVG bot just started on Railway.\nDRY_RUN=False\nAllowed: MNQ L=True/S=True, MES L=True/S=True\nIf you got this — email path from Railway works."
+  },
+  {
+    "timestamp": "2026-08-21T14:14:22Z",
+    "bot": "SMT",
+    "event": "startup",
+    "symbol": null,
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "Bot started (startup ping)",
+    "body": "SMT+IFVG bot just started on Railway.\nDRY_RUN=False\nAllowed: MNQ L=True/S=True, MES L=True/S=True\nIf you got this — email path from Railway works."
   }
 ]
