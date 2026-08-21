@@ -1583,6 +1583,7 @@
                 <button type="button" data-value="all"            class="active">הכל</button>
                 <button type="button" data-value="SMT-SIGNAL"    >SMT</button>
                 <button type="button" data-value="SMT-TV-SIGNAL" >SMT-TV</button>
+                <button type="button" data-value="QT"            >QT</button>
               </div>
             </div>
             <div class="filter-group">
@@ -1814,8 +1815,10 @@
   // SMT-TV: parallel Pine v12 signal source — shown in its own drawer.
   // SMT-SIGNAL / SMT-TV-SIGNAL (2026-08-20): pre-decision journal-only tags;
   // shown exclusively in the "Signals" tab so they don't pollute Live P&L.
-  const HIDDEN_BOTS = new Set(['SMT-TV', 'SMT-SIGNAL', 'SMT-TV-SIGNAL']);
-  const SIGNAL_BOTS = new Set(['SMT-SIGNAL', 'SMT-TV-SIGNAL']);
+  // QT (2026-08-21): paper-mode Quarterly Theory bot; runs 24/7 but never
+  // executes real orders — belongs in Signals tab, not Live tab.
+  const HIDDEN_BOTS = new Set(['SMT-TV', 'SMT-SIGNAL', 'SMT-TV-SIGNAL', 'QT']);
+  const SIGNAL_BOTS = new Set(['SMT-SIGNAL', 'SMT-TV-SIGNAL', 'QT']);
   const LIVE_BOTS   = new Set(['SMT', 'SMT-TV']);
 
   // ── COMPUTE OUTCOMES ────────────────────────────────────────
@@ -2816,24 +2819,34 @@
     const out = [];
     for (const t of all) {
       if (!t.signal || !SIGNAL_BOTS.has(t.signal.bot)) continue;
-      const k = _pairKey(t.signal);
-      const candidates = liveByKey.get(k) || [];
-      // Find matching live entry within ±SIG_MATCH_WINDOW_MS
-      let paired = null;
-      for (const live of candidates) {
-        if (Math.abs(live.ts - t.ts) <= SIG_MATCH_WINDOW_MS) { paired = live; break; }
-      }
+      const isPaperBot = t.signal.bot === 'QT';
       const hasOutcome = t.resolved && t.r != null;
       let status;
-      if (paired) status = 'taken';
-      else if (hasOutcome) status = 'blocked';
-      else status = 'pending';
+      let paired = null;
+      if (isPaperBot) {
+        // QT is a fully paper bot — its own signal IS the "taken" trade.
+        // No cross-family live counterpart; status is win/loss/pending
+        // straight from the outcome (never "blocked" — nothing to block).
+        status = hasOutcome ? 'taken' : 'pending';
+      } else {
+        // SMT / SMT-TV live bots: pair signal with a live entry within
+        // ±SIG_MATCH_WINDOW_MS. If paired → taken; outcome without pair
+        // means the strategy blocked entry (R:R, guards, etc.).
+        const k = _pairKey(t.signal);
+        const candidates = liveByKey.get(k) || [];
+        for (const live of candidates) {
+          if (Math.abs(live.ts - t.ts) <= SIG_MATCH_WINDOW_MS) { paired = live; break; }
+        }
+        if (paired) status = 'taken';
+        else if (hasOutcome) status = 'blocked';
+        else status = 'pending';
+      }
       out.push({
         ...t,
         status,
         paired,
         // Hypothetical P&L if the signal had been taken (using its planned
-        // risk_usd × the outcome R). This is what "would have happened".
+        // risk_usd × the outcome R). For QT this IS the paper P&L.
         wouldPl: hasOutcome && t.signal.risk_usd
           ? Math.round(t.signal.risk_usd * t.r)
           : null,
