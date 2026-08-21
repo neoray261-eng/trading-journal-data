@@ -3072,7 +3072,12 @@
     renderCalendar(trades);
     renderEquityCurve(trades);
     renderBotCard('bot-card-smt',    'SMT',    'smt',    trades);
-    renderBotCard('bot-card-qt',     'QT',     'qt',     trades);
+    // Bug #9 fix (2026-08-21): QT is in HIDDEN_BOTS (paper-only, filtered
+    // from computeTrades()) — so passing the LIVE trades array left the
+    // QT card permanently empty. Call computeTrades(true) which includes
+    // hidden bots so the QT card sees its own paper trades.
+    const tradesWithHidden = computeTrades(true);
+    renderBotCard('bot-card-qt',     'QT',     'qt',     tradesWithHidden);
     renderBotCard('bot-card-manual', 'MANUAL', 'manual', trades);
     renderHourChart(trades);
     renderKillzones(trades);
