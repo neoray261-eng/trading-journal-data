@@ -521,8 +521,48 @@ async function loadTakeProfit(){
       }
     }
 
+    // Merge Take Profit trades into the daily journal (only TODAY's)
+    var todayIL=new Date().toLocaleDateString('he-IL');
+    var todayISO=new Date().toISOString().slice(0,10);
+    var tpTrades=(d.trades||[]).filter(function(t){return t.outcome!=='OPEN' && t.date===todayISO;});
+    var existingIds=new Set(trades.map(function(t){return t.id;}));
+    var addedCount=0;
+    tpTrades.forEach(function(t){
+      if(existingIds.has(t.id))return;
+      // Fill match to renderJ's expected shape
+      var ptVal=2; // MNQ default; MES also uses TP micros but $/pt differs — leave $ estimate rough
+      var pnlUsd=(t.pts_diff||0)*ptVal*(t.contracts||1);
+      var pnlSign=pnlUsd>=0?'+':'';
+      trades.push({
+        id:        t.id,
+        ts:        new Date(t.entry_ts).getTime(),
+        date:      new Date(t.entry_ts).toLocaleDateString('he-IL'),
+        acc:       t.account||'TP',
+        sym:       'MNQ',
+        rr:        (pnlSign)+'$'+Math.abs(pnlUsd).toFixed(0),
+        status:    t.outcome==='WIN'?'Win':'Loss',
+        qty:       t.contracts||1,
+        reason:    '🟢 ידני מ-Take Profit',
+        accAfter:  '—',
+        entry:     t.entry_price,
+        stopPx:    null,
+        tgtPx:     t.exit_price,
+        dir:       t.direction,
+      });
+      addedCount++;
+    });
+    if(addedCount>0){
+      saveTrades();
+      renderJ();
+      console.log('[TP] added',addedCount,'manual trades from Take Profit');
+    }
+
     var noteEl=document.getElementById('tpNote');
-    if(noteEl)noteEl.textContent=d.note_hebrew||'';
+    if(noteEl){
+      var openPos=(d.accounts||[]).reduce(function(n,a){return n+((a.open_positions||[]).length);},0);
+      noteEl.innerHTML=(d.note_hebrew||'')+
+        (openPos>0?' <span style="color:#ffaa00;font-weight:bold">· '+openPos+' פוזיציות פתוחות עכשיו</span>':'');
+    }
   }catch(e){
     console.warn('[TP]',e);
     document.getElementById('tpStamp').textContent='שגיאה';
