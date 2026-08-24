@@ -2054,5 +2054,21 @@
     "slippage_pts": 3.75,
     "subject": "[AUTO] SMT-SIGNAL MNQ LONG STOP HIT @ 29201.0",
     "body": "resolved paper trade\nentry: 29222.5\nstop: 29201.0\ntarget: 29293.5\nhit: 29201.0 at 2026-08-24T10:44:00Z\nbar_extreme: 29197.25\nslippage_pts: 3.75\nsource signal: 2026-08-24T09:45:31Z"
+  },
+  {
+    "timestamp": "2026-08-24T13:44:12Z",
+    "bot": "QT",
+    "event": "signal",
+    "symbol": null,
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "QT ידלג — לימיט רחוק מדי (159 נק')",
+    "body": "סאטפ SHORT על MNQ\nמחיר עכשיו: 29034.00\nלימיט מתוכנן: 29193.00\nמרחק: 159 נקודות (מעל התקרה 150)\n\nתנועה כזאת נדירה — הבוט לא ישחית פקודה על סאטפ שכזה."
   }
 ]
