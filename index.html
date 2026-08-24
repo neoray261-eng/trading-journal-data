@@ -1678,7 +1678,10 @@
   'use strict';
 
   const DATA_URL = 'https://raw.githubusercontent.com/neoray261-eng/trading-journal-data/main/signals.json';
+  const TAKEPROFIT_URL = 'https://raw.githubusercontent.com/neoray261-eng/trading-journal-data/main/takeprofit_trades.json';
   const REFRESH_MS = 60_000;
+  // Point value ($/pt) per micro contract — used to convert TP pts_diff → $ P&L
+  const PT_VALUE_FALLBACK = { MNQ: 2, MES: 5, MGC: 10, MSI: 1 };
 
   const state = {
     signals: [],
@@ -1794,6 +1797,8 @@
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       state.signals = await r.json() || [];
       if (!Array.isArray(state.signals)) state.signals = [];
+      // Merge in Take Profit manual trades (bot: 'MANUAL')
+      await mergeTakeProfitTrades();
       state.error = null;
       state.lastFetch = new Date();
     } catch (e) {
@@ -1801,6 +1806,48 @@
     } finally {
       state.loading = false;
       render();
+    }
+  }
+
+  // Fetch takeprofit_trades.json (pushed every 5 min by the TP userscript) and
+  // inject each closed trade as a synthetic MANUAL signal so it appears in the
+  // dashboard's "ידני" card + tables + equity curve alongside the bots.
+  async function mergeTakeProfitTrades() {
+    try {
+      const r = await fetch(`${TAKEPROFIT_URL}?t=${Date.now()}`, { cache: 'no-store' });
+      if (!r.ok) return; // silently skip if file not there yet
+      const d = await r.json();
+      if (!d || !Array.isArray(d.trades)) return;
+      for (const t of d.trades) {
+        if (!t || t.outcome === 'OPEN' || !t.exit_ts) continue;
+        // Best-effort symbol: fills carry only contract_id. Default MNQ; refine
+        // if you later look up contract metadata in the userscript itself.
+        const sym    = t.symbol || 'MNQ';
+        const ptVal  = PT_VALUE_FALLBACK[sym] || 2;
+        const pnlUsd = Math.abs((t.pts_diff || 0) * (t.contracts || 1) * ptVal);
+        const isWin  = t.outcome === 'WIN';
+        state.signals.push({
+          timestamp:   t.exit_ts,
+          bot:         'MANUAL',
+          event:       'signal',
+          symbol:      sym,
+          direction:   t.direction,
+          entry_price: t.entry_price,
+          stop_price:  null,
+          target_price: t.exit_price,
+          contracts:   t.contracts,
+          // rr=1 for wins so equity chart shows +risk_usd; loss auto-gets r=-1
+          rr:          1,
+          risk_usd:    pnlUsd,
+          outcome:     isWin ? 'target' : 'stop',   // pre-resolved (no separate outcome event)
+          killzone:    null,
+          _tp_id:      t.id,   // for dedup / traceability
+          subject:     `[TP-MANUAL] ${t.direction} ${sym} @ ${t.entry_price} → ${t.exit_price}`,
+          body:        `עסקה ידנית מ-Take Profit\nחשבון: ${t.account||'?'}\nכניסה: ${t.entry_price}\nיציאה: ${t.exit_price}\nחוזים: ${t.contracts||1}\nרווח/הפסד: ${isWin ? '+' : '-'}$${pnlUsd.toFixed(2)}`,
+        });
+      }
+    } catch(e) {
+      console.warn('[TP-MERGE]', e);
     }
   }
 
