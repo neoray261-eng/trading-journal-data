@@ -2117,6 +2117,29 @@
     "risk_usd": 94.0,
     "killzone": "ASIA-KZ",
     "subject": "[TV] LONG MNQ @ 29149.00",
-    "body": "Direction: LONG\nEntry: 29149.00\nStop: 29102.00\nTarget: 29243.00\nContracts: 1\nR:R = 1:2.00\nRisk: $94\nReward: $188\nKillzone=ASIA-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+    "body": "Direction: LONG\nEntry: 29149.00\nStop: 29102.00\nTarget: 29243.00\nContracts: 1\nR:R = 1:2.00\nRisk: $94\nReward: $188\nKillzone=ASIA-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)",
+    "resolved": true,
+    "outcome": "stop",
+    "outcome_time": "2026-08-25T02:56:00Z",
+    "outcome_price": 29102.0,
+    "bar_extreme": 29093.5,
+    "slippage_pts": 8.5
+  },
+  {
+    "timestamp": "2026-08-25T02:56:00Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "stop_hit",
+    "symbol": "MNQ",
+    "direction": "LONG",
+    "entry_price": 29149.0,
+    "stop_price": 29102.0,
+    "target_price": 29243.0,
+    "contracts": 1,
+    "rr": 2.0,
+    "risk_usd": 94.0,
+    "bar_extreme": 29093.5,
+    "slippage_pts": 8.5,
+    "subject": "[AUTO] SMT-TV-SIGNAL MNQ LONG STOP HIT @ 29102.0",
+    "body": "resolved paper trade\nentry: 29149.0\nstop: 29102.0\ntarget: 29243.0\nhit: 29102.0 at 2026-08-25T02:56:00Z\nbar_extreme: 29093.5\nslippage_pts: 8.5\nsource signal: 2026-08-25T02:51:29Z"
   }
 ]
