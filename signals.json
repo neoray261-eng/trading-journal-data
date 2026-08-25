@@ -2183,5 +2183,21 @@
     "outcome_price": 7694.75,
     "bar_extreme": 7686.0,
     "slippage_pts": 8.75
+  },
+  {
+    "timestamp": "2026-08-25T19:45:13Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7681.75,
+    "stop_price": 7679.25,
+    "target_price": 7692.75,
+    "contracts": 8,
+    "rr": 4.4,
+    "risk_usd": 100.0,
+    "killzone": "RTH",
+    "subject": "[SIGNAL] LONG MES @ 7681.75",
+    "body": "Direction: LONG\nEntry (planned): 7681.75\nStop: 7679.25\nTarget: 7692.75\nContracts: 8\nR:R = 1:4.40\nRisk: $100\nReward: $440\nKillzone: RTH\nSource: SMT + IFVG@2m (pre-decision)"
   }
 ]
