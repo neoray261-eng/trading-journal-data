@@ -1,6 +1,6 @@
 {
   "source": "takeprofit_userscript",
-  "generated_at": "2026-08-24T20:54:27.251Z",
+  "generated_at": "2026-08-25T06:42:02.246Z",
   "accounts": [
     {
       "name": "TAKEPROFIT378959208",
@@ -8,10 +8,10 @@
       "type": "Customer",
       "active": true,
       "balance_current": 24462.75,
-      "balance_sod": 24436.75,
-      "realized_pnl_today": 26,
+      "balance_sod": 24462.75,
+      "realized_pnl_today": 0,
       "realized_pnl_week": 26,
-      "as_of": "2026-08-24T14:16:46.157Z",
+      "as_of": "2026-08-24T21:33:05.506Z",
       "fills_today": 0,
       "open_positions": []
     },
