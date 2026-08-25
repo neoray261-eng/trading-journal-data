@@ -2198,7 +2198,30 @@
     "risk_usd": 100.0,
     "killzone": "RTH",
     "subject": "[SIGNAL] LONG MES @ 7681.75",
-    "body": "Direction: LONG\nEntry (planned): 7681.75\nStop: 7679.25\nTarget: 7692.75\nContracts: 8\nR:R = 1:4.40\nRisk: $100\nReward: $440\nKillzone: RTH\nSource: SMT + IFVG@2m (pre-decision)"
+    "body": "Direction: LONG\nEntry (planned): 7681.75\nStop: 7679.25\nTarget: 7692.75\nContracts: 8\nR:R = 1:4.40\nRisk: $100\nReward: $440\nKillzone: RTH\nSource: SMT + IFVG@2m (pre-decision)",
+    "resolved": true,
+    "outcome": "target",
+    "outcome_time": "2026-08-25T19:53:00Z",
+    "outcome_price": 7692.75,
+    "bar_extreme": 7692.75,
+    "slippage_pts": 0.0
+  },
+  {
+    "timestamp": "2026-08-25T19:53:00Z",
+    "bot": "SMT-SIGNAL",
+    "event": "target_hit",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7681.75,
+    "stop_price": 7679.25,
+    "target_price": 7692.75,
+    "contracts": 8,
+    "rr": 4.4,
+    "risk_usd": 100.0,
+    "bar_extreme": 7692.75,
+    "slippage_pts": 0.0,
+    "subject": "[AUTO] SMT-SIGNAL MES LONG TARGET HIT @ 7692.75",
+    "body": "resolved paper trade\nentry: 7681.75\nstop: 7679.25\ntarget: 7692.75\nhit: 7692.75 at 2026-08-25T19:53:00Z\nbar_extreme: 7692.75\nslippage_pts: 0.0\nsource signal: 2026-08-25T19:45:13Z"
   },
   {
     "timestamp": "2026-08-25T19:57:17Z",
