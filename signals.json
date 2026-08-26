@@ -2446,5 +2446,21 @@
     "killzone": null,
     "subject": "Bot started (startup ping)",
     "body": "SMT+IFVG bot just started on Railway.\nDRY_RUN=False\nAllowed: MNQ L=True/S=True, MES L=True/S=True\nIf you got this — email path from Railway works."
+  },
+  {
+    "timestamp": "2026-08-26T16:14:18Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7683.75,
+    "stop_price": 7697.25,
+    "target_price": 7656.75,
+    "contracts": 1,
+    "rr": 2.0,
+    "risk_usd": 68.0,
+    "killzone": "RTH",
+    "subject": "[TV] SHORT MES @ 7683.75",
+    "body": "Direction: SHORT\nEntry: 7683.75\nStop: 7697.25\nTarget: 7656.75\nContracts: 1\nR:R = 1:2.00\nRisk: $68\nReward: $135\nKillzone=RTH\nWaited 3 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
   }
 ]
