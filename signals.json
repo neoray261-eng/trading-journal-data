@@ -2355,5 +2355,21 @@
     "slippage_pts": 0.5,
     "subject": "[AUTO] SMT-TV-SIGNAL MES SHORT STOP HIT @ 7689.75",
     "body": "resolved paper trade\nentry: 7684.5\nstop: 7689.75\ntarget: 7674.0\nhit: 7689.75 at 2026-08-26T06:45:00Z\nbar_extreme: 7690.25\nslippage_pts: 0.5\nsource signal: 2026-08-26T05:52:13Z"
+  },
+  {
+    "timestamp": "2026-08-26T13:29:12Z",
+    "bot": "QT",
+    "event": "signal",
+    "symbol": null,
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "QT ידלג — לימיט רחוק מדי (350 נק')",
+    "body": "סאטפ SHORT על MNQ\nמחיר עכשיו: 29164.50\nלימיט מתוכנן: 29514.25\nמרחק: 350 נקודות (מעל התקרה 150)\n\nתנועה כזאת נדירה — הבוט לא ישחית פקודה על סאטפ שכזה."
   }
 ]
