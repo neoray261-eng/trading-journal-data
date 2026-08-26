@@ -2462,5 +2462,21 @@
     "killzone": "RTH",
     "subject": "[TV] SHORT MES @ 7683.75",
     "body": "Direction: SHORT\nEntry: 7683.75\nStop: 7697.25\nTarget: 7656.75\nContracts: 1\nR:R = 1:2.00\nRisk: $68\nReward: $135\nKillzone=RTH\nWaited 3 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+  },
+  {
+    "timestamp": "2026-08-26T16:53:44Z",
+    "bot": "SMT",
+    "event": "startup",
+    "symbol": null,
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "Bot started (startup ping)",
+    "body": "SMT+IFVG bot just started on Railway.\nDRY_RUN=False\nAllowed: MNQ L=True/S=True, MES L=True/S=True\nIf you got this — email path from Railway works."
   }
 ]
