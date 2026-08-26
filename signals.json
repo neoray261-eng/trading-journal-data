@@ -2430,5 +2430,21 @@
     "slippage_pts": 9.5,
     "subject": "[AUTO] QT MNQ LONG STOP HIT @ 29210.25",
     "body": "resolved paper trade\nentry: 29240.25\nstop: 29210.25\ntarget: 29310.0\nhit: 29210.25 at 2026-08-26T14:22:00Z\nbar_extreme: 29200.75\nslippage_pts: 9.5\nsource signal: 2026-08-26T13:44:16Z"
+  },
+  {
+    "timestamp": "2026-08-26T15:04:09Z",
+    "bot": "SMT",
+    "event": "startup",
+    "symbol": null,
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "Bot started (startup ping)",
+    "body": "SMT+IFVG bot just started on Railway.\nDRY_RUN=False\nAllowed: MNQ L=True/S=True, MES L=True/S=True\nIf you got this — email path from Railway works."
   }
 ]
