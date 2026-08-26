@@ -2237,7 +2237,30 @@
     "risk_usd": 85.0,
     "killzone": "RTH",
     "subject": "[TV] LONG MES @ 7686.50",
-    "body": "Direction: LONG\nEntry: 7686.50\nStop: 7678.00\nTarget: 7703.50\nContracts: 2\nR:R = 1:2.00\nRisk: $85\nReward: $170\nKillzone=RTH\nWaited 2 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+    "body": "Direction: LONG\nEntry: 7686.50\nStop: 7678.00\nTarget: 7703.50\nContracts: 2\nR:R = 1:2.00\nRisk: $85\nReward: $170\nKillzone=RTH\nWaited 2 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)",
+    "resolved": true,
+    "outcome": "stop",
+    "outcome_time": "2026-08-26T00:35:00Z",
+    "outcome_price": 7678.0,
+    "bar_extreme": 7677.25,
+    "slippage_pts": 0.75
+  },
+  {
+    "timestamp": "2026-08-26T00:35:00Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "stop_hit",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7686.5,
+    "stop_price": 7678.0,
+    "target_price": 7703.5,
+    "contracts": 2,
+    "rr": 2.0,
+    "risk_usd": 85.0,
+    "bar_extreme": 7677.25,
+    "slippage_pts": 0.75,
+    "subject": "[AUTO] SMT-TV-SIGNAL MES LONG STOP HIT @ 7678.0",
+    "body": "resolved paper trade\nentry: 7686.5\nstop: 7678.0\ntarget: 7703.5\nhit: 7678.0 at 2026-08-26T00:35:00Z\nbar_extreme: 7677.25\nslippage_pts: 0.75\nsource signal: 2026-08-25T19:57:17Z"
   },
   {
     "timestamp": "2026-08-26T01:25:11Z",
