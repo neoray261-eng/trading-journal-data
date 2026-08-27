@@ -2613,6 +2613,23 @@
     "body": "סאטפ LONG על MNQ\nמחיר עכשיו: 29533.00\nלימיט מתוכנן: 29333.25\nמרחק: 200 נקודות (מעל התקרה 150)\n\nתנועה כזאת נדירה — הבוט לא ישחית פקודה על סאטפ שכזה."
   },
   {
+    "timestamp": "2026-08-27T13:58:19Z",
+    "bot": "QT",
+    "event": "stop_hit",
+    "symbol": "MNQ",
+    "direction": "LONG",
+    "entry_price": 29548.5,
+    "stop_price": 29518.5,
+    "target_price": 29661.25,
+    "contracts": 2,
+    "rr": 3.76,
+    "risk_usd": 120.0,
+    "bar_extreme": 29439.5,
+    "slippage_pts": 79.0,
+    "subject": "[AUTO] QT MNQ LONG STOP HIT @ 29518.5",
+    "body": "resolved paper trade\nentry: 29548.5\nstop: 29518.5\ntarget: 29661.25\nhit: 29518.5 at 2026-08-27T13:58:19Z\nbar_extreme: 29439.5\nslippage_pts: 79.0\nsource signal: 2026-08-27T13:59:14Z"
+  },
+  {
     "timestamp": "2026-08-27T13:59:14Z",
     "bot": "QT",
     "event": "dry_run_signal",
@@ -2626,6 +2643,12 @@
     "risk_usd": 120.0,
     "killzone": null,
     "subject": "[DRY-RUN] QT MNQ LONG @ 29548.5",
-    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 17:00\nנכס: MNQ\nכיוון: LONG\nכניסה: 29548.5\nסטופ: 29518.5\nיעד: 29661.25\nחוזים: 2\nR:R: 1:3.76\nסיכון: $120\nרווח פוטנציאלי: $451"
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 17:00\nנכס: MNQ\nכיוון: LONG\nכניסה: 29548.5\nסטופ: 29518.5\nיעד: 29661.25\nחוזים: 2\nR:R: 1:3.76\nסיכון: $120\nרווח פוטנציאלי: $451",
+    "resolved": true,
+    "outcome": "stop",
+    "outcome_time": "2026-08-27T13:58:19Z",
+    "outcome_price": 29518.5,
+    "bar_extreme": 29439.5,
+    "slippage_pts": 79.0
   }
 ]
