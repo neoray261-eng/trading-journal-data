@@ -2970,5 +2970,21 @@
     "killzone": null,
     "subject": "🚨 Monitor flatten MNQU6 @ MAIN",
     "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MNQU6\nContract ID: 4399654\nNet pos before flatten: +1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI."
+  },
+  {
+    "timestamp": "2026-08-27T14:27:04Z",
+    "bot": "MONITOR",
+    "event": "signal",
+    "symbol": "MNQ",
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "🚨 Monitor flatten MNQU6 @ MAIN",
+    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MNQU6\nContract ID: 4399654\nNet pos before flatten: +1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI."
   }
 ]
