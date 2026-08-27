@@ -2666,5 +2666,21 @@
     "killzone": "OFF-KZ",
     "subject": "[SIGNAL] LONG MNQ @ 29560.75",
     "body": "Direction: LONG\nEntry (planned): 29560.75\nStop: 29514.75\nTarget: 29662.00\nContracts: 1\nR:R = 1:2.20\nRisk: $92\nReward: $202\nKillzone: OFF-KZ\nSource: SMT + IFVG@1m (pre-decision)"
+  },
+  {
+    "timestamp": "2026-08-27T14:10:17Z",
+    "bot": "SMT",
+    "event": "signal",
+    "symbol": "MNQ",
+    "direction": "LONG",
+    "entry_price": 29534.5,
+    "stop_price": 29514.75,
+    "target_price": null,
+    "contracts": 1,
+    "rr": null,
+    "risk_usd": 40.0,
+    "killzone": null,
+    "subject": "SMT MNQ LONG @ 29534.50",
+    "body": "נכס: MNQ\nכיוון: LONG\nכניסה: 29534.50\nסטופ: 29514.75\nיעד swing: 29662.00\nחוזים: 1\nסיכון: ~$40"
   }
 ]
