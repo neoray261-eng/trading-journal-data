@@ -3031,6 +3031,29 @@
     "risk_usd": 98.0,
     "killzone": "RTH",
     "subject": "[SIGNAL] LONG MNQ @ 29575.75",
-    "body": "Direction: LONG\nEntry (planned): 29575.75\nStop: 29526.50\nTarget: 29678.50\nContracts: 1\nR:R = 1:2.09\nRisk: $98\nReward: $206\nKillzone: RTH\nSource: SMT + IFVG@1m (pre-decision)"
+    "body": "Direction: LONG\nEntry (planned): 29575.75\nStop: 29526.50\nTarget: 29678.50\nContracts: 1\nR:R = 1:2.09\nRisk: $98\nReward: $206\nKillzone: RTH\nSource: SMT + IFVG@1m (pre-decision)",
+    "resolved": true,
+    "outcome": "target",
+    "outcome_time": "2026-08-27T19:54:00Z",
+    "outcome_price": 29678.5,
+    "bar_extreme": 29685.25,
+    "slippage_pts": 6.75
+  },
+  {
+    "timestamp": "2026-08-27T19:54:00Z",
+    "bot": "SMT-SIGNAL",
+    "event": "target_hit",
+    "symbol": "MNQ",
+    "direction": "LONG",
+    "entry_price": 29575.75,
+    "stop_price": 29526.5,
+    "target_price": 29678.5,
+    "contracts": 1,
+    "rr": 2.09,
+    "risk_usd": 98.0,
+    "bar_extreme": 29685.25,
+    "slippage_pts": 6.75,
+    "subject": "[AUTO] SMT-SIGNAL MNQ LONG TARGET HIT @ 29678.5",
+    "body": "resolved paper trade\nentry: 29575.75\nstop: 29526.5\ntarget: 29678.5\nhit: 29678.5 at 2026-08-27T19:54:00Z\nbar_extreme: 29685.25\nslippage_pts: 6.75\nsource signal: 2026-08-27T19:20:17Z"
   }
 ]
