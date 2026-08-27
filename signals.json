@@ -2650,5 +2650,21 @@
     "outcome_price": 29518.5,
     "bar_extreme": 29439.5,
     "slippage_pts": 79.0
+  },
+  {
+    "timestamp": "2026-08-27T14:10:13Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MNQ",
+    "direction": "LONG",
+    "entry_price": 29560.75,
+    "stop_price": 29514.75,
+    "target_price": 29662.0,
+    "contracts": 1,
+    "rr": 2.2,
+    "risk_usd": 92.0,
+    "killzone": "OFF-KZ",
+    "subject": "[SIGNAL] LONG MNQ @ 29560.75",
+    "body": "Direction: LONG\nEntry (planned): 29560.75\nStop: 29514.75\nTarget: 29662.00\nContracts: 1\nR:R = 1:2.20\nRisk: $92\nReward: $202\nKillzone: OFF-KZ\nSource: SMT + IFVG@1m (pre-decision)"
   }
 ]
