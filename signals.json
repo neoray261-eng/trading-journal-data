@@ -2540,5 +2540,21 @@
     "slippage_pts": 0.75,
     "subject": "[AUTO] SMT-TV-SIGNAL MES SHORT STOP HIT @ 7697.25",
     "body": "resolved paper trade\nentry: 7678.75\nstop: 7697.25\ntarget: 7641.75\nhit: 7697.25 at 2026-08-26T18:53:00Z\nbar_extreme: 7698.0\nslippage_pts: 0.75\nsource signal: 2026-08-26T16:59:17Z"
+  },
+  {
+    "timestamp": "2026-08-27T09:48:50Z",
+    "bot": "SMT",
+    "event": "startup",
+    "symbol": null,
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "Bot started (startup ping)",
+    "body": "SMT+IFVG bot just started on Railway.\nDRY_RUN=False\nAllowed: MNQ L=True/S=True, MES L=True/S=True\nIf you got this — email path from Railway works."
   }
 ]
