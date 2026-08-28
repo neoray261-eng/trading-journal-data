@@ -3213,5 +3213,21 @@
     "slippage_pts": 13.0,
     "subject": "[AUTO] SMT-TV-SIGNAL MNQ LONG TARGET HIT @ 29665.75",
     "body": "resolved paper trade\nentry: 29619.25\nstop: 29596.0\ntarget: 29665.75\nhit: 29665.75 at 2026-08-28T13:01:00Z\nbar_extreme: 29678.75\nslippage_pts: 13.0\nsource signal: 2026-08-28T12:16:22Z"
+  },
+  {
+    "timestamp": "2026-08-28T13:44:13Z",
+    "bot": "QT",
+    "event": "dry_run_signal",
+    "symbol": "MNQ",
+    "direction": "LONG",
+    "entry_price": 29677.5,
+    "stop_price": 29647.5,
+    "target_price": 29737.5,
+    "contracts": 2,
+    "rr": 2.0,
+    "risk_usd": 120.0,
+    "killzone": null,
+    "subject": "[DRY-RUN] QT MNQ LONG @ 29677.5",
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 16:45\nנכס: MNQ\nכיוון: LONG\nכניסה: 29677.5\nסטופ: 29647.5\nיעד: 29737.5\nחוזים: 2\nR:R: 1:2.00\nסיכון: $120\nרווח פוטנציאלי: $240"
   }
 ]
