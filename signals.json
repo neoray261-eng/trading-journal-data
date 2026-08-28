@@ -2414,7 +2414,9 @@
     "risk_usd": null,
     "killzone": null,
     "subject": "QT ידלג — לימיט רחוק מדי (177 נק')",
-    "body": "סאטפ LONG על MNQ\nמחיר עכשיו: 29317.50\nלימיט מתוכנן: 29140.25\nמרחק: 177 נקודות (מעל התקרה 150)\n\nתנועה כזאת נדירה — הבוט לא ישחית פקודה על סאטפ שכזה."
+    "body": "סאטפ LONG על MNQ\nמחיר עכשיו: 29317.50\nלימיט מתוכנן: 29140.25\nמרחק: 177 נקודות (מעל התקרה 150)\n\nתנועה כזאת נדירה — הבוט לא ישחית פקודה על סאטפ שכזה.",
+    "resolved": true,
+    "outcome": "expired"
   },
   {
     "timestamp": "2026-08-26T14:22:00Z",
@@ -3228,7 +3230,13 @@
     "risk_usd": 120.0,
     "killzone": null,
     "subject": "[DRY-RUN] QT MNQ LONG @ 29677.5",
-    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 16:45\nנכס: MNQ\nכיוון: LONG\nכניסה: 29677.5\nסטופ: 29647.5\nיעד: 29737.5\nחוזים: 2\nR:R: 1:2.00\nסיכון: $120\nרווח פוטנציאלי: $240"
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 16:45\nנכס: MNQ\nכיוון: LONG\nכניסה: 29677.5\nסטופ: 29647.5\nיעד: 29737.5\nחוזים: 2\nR:R: 1:2.00\nסיכון: $120\nרווח פוטנציאלי: $240",
+    "resolved": true,
+    "outcome": "stop",
+    "outcome_time": "2026-08-28T13:51:00Z",
+    "outcome_price": 29647.5,
+    "bar_extreme": 29628.75,
+    "slippage_pts": 18.75
   },
   {
     "timestamp": "2026-08-28T13:50:44Z",
@@ -3245,6 +3253,23 @@
     "killzone": null,
     "subject": "Bot started (startup ping)",
     "body": "SMT+IFVG bot just started on Railway.\nDRY_RUN=False\nAllowed: MNQ L=True/S=True, MES L=True/S=True\nIf you got this — email path from Railway works."
+  },
+  {
+    "timestamp": "2026-08-28T13:51:00Z",
+    "bot": "QT",
+    "event": "stop_hit",
+    "symbol": "MNQ",
+    "direction": "LONG",
+    "entry_price": 29677.5,
+    "stop_price": 29647.5,
+    "target_price": 29737.5,
+    "contracts": 2,
+    "rr": 2.0,
+    "risk_usd": 120.0,
+    "bar_extreme": 29628.75,
+    "slippage_pts": 18.75,
+    "subject": "[AUTO] QT MNQ LONG STOP HIT @ 29647.5",
+    "body": "resolved paper trade\nentry: 29677.5\nstop: 29647.5\ntarget: 29737.5\nhit: 29647.5 at 2026-08-28T13:51:00Z\nbar_extreme: 29628.75\nslippage_pts: 18.75\nsource signal: 2026-08-28T13:44:13Z"
   },
   {
     "timestamp": "2026-08-28T13:59:19Z",
