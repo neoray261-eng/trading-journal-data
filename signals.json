@@ -3110,5 +3110,21 @@
     "killzone": "NY-KZ",
     "subject": "[TV] LONG MES @ 7738.50",
     "body": "Direction: LONG\nEntry: 7738.50\nStop: 7735.00\nTarget: 7745.50\nContracts: 5\nR:R = 1:2.00\nRisk: $88\nReward: $175\nKillzone=NY-KZ\nWaited 2 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+  },
+  {
+    "timestamp": "2026-08-28T12:05:28Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MNQ",
+    "direction": "LONG",
+    "entry_price": 29602.0,
+    "stop_price": 29593.25,
+    "target_price": 29653.5,
+    "contracts": 5,
+    "rr": 5.89,
+    "risk_usd": 88.0,
+    "killzone": "OFF-KZ",
+    "subject": "[SIGNAL] LONG MNQ @ 29602.00",
+    "body": "Direction: LONG\nEntry (planned): 29602.00\nStop: 29593.25\nTarget: 29653.50\nContracts: 5\nR:R = 1:5.89\nRisk: $88\nReward: $515\nKillzone: OFF-KZ\nSource: SMT + IFVG@1m (pre-decision)"
   }
 ]
