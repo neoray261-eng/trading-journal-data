@@ -1023,5 +1023,30 @@
     "rr_planned": 2.0,
     "contracts": 1,
     "risk_usd": 74.0
+  },
+  {
+    "signal_ts": "2026-08-28T11:22:13Z",
+    "outcome_ts": "2026-08-28T12:12:00Z",
+    "bot": "SMT-TV-SIGNAL",
+    "symbol": "MES",
+    "direction": "LONG",
+    "killzone": "NY-KZ",
+    "entry_price": 7738.5,
+    "stop_price": 7735.0,
+    "target_price": 7745.5,
+    "outcome": "target",
+    "outcome_price": 7745.5,
+    "bar_extreme": 7745.5,
+    "slippage_pts": 0.0,
+    "mfe_pts": 7.0,
+    "mae_pts": 0.0,
+    "mfe_r": 2.0,
+    "mae_r": 0.0,
+    "mfe_time_min": 49.8,
+    "mae_time_min": 21.8,
+    "duration_min": 49.8,
+    "rr_planned": 2.0,
+    "contracts": 5,
+    "risk_usd": 88.0
   }
 ]

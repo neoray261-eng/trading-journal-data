@@ -3109,7 +3109,13 @@
     "risk_usd": 88.0,
     "killzone": "NY-KZ",
     "subject": "[TV] LONG MES @ 7738.50",
-    "body": "Direction: LONG\nEntry: 7738.50\nStop: 7735.00\nTarget: 7745.50\nContracts: 5\nR:R = 1:2.00\nRisk: $88\nReward: $175\nKillzone=NY-KZ\nWaited 2 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+    "body": "Direction: LONG\nEntry: 7738.50\nStop: 7735.00\nTarget: 7745.50\nContracts: 5\nR:R = 1:2.00\nRisk: $88\nReward: $175\nKillzone=NY-KZ\nWaited 2 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)",
+    "resolved": true,
+    "outcome": "target",
+    "outcome_time": "2026-08-28T12:12:00Z",
+    "outcome_price": 7745.5,
+    "bar_extreme": 7745.5,
+    "slippage_pts": 0.0
   },
   {
     "timestamp": "2026-08-28T12:05:28Z",
@@ -3126,6 +3132,23 @@
     "killzone": "OFF-KZ",
     "subject": "[SIGNAL] LONG MNQ @ 29602.00",
     "body": "Direction: LONG\nEntry (planned): 29602.00\nStop: 29593.25\nTarget: 29653.50\nContracts: 5\nR:R = 1:5.89\nRisk: $88\nReward: $515\nKillzone: OFF-KZ\nSource: SMT + IFVG@1m (pre-decision)"
+  },
+  {
+    "timestamp": "2026-08-28T12:12:00Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "target_hit",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7738.5,
+    "stop_price": 7735.0,
+    "target_price": 7745.5,
+    "contracts": 5,
+    "rr": 2.0,
+    "risk_usd": 88.0,
+    "bar_extreme": 7745.5,
+    "slippage_pts": 0.0,
+    "subject": "[AUTO] SMT-TV-SIGNAL MES LONG TARGET HIT @ 7745.5",
+    "body": "resolved paper trade\nentry: 7738.5\nstop: 7735.0\ntarget: 7745.5\nhit: 7745.5 at 2026-08-28T12:12:00Z\nbar_extreme: 7745.5\nslippage_pts: 0.0\nsource signal: 2026-08-28T11:22:13Z"
   },
   {
     "timestamp": "2026-08-28T12:16:22Z",
