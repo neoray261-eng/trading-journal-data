@@ -2693,7 +2693,9 @@
     "risk_usd": 40.0,
     "killzone": null,
     "subject": "SMT MNQ LONG @ 29534.50",
-    "body": "נכס: MNQ\nכיוון: LONG\nכניסה: 29534.50\nסטופ: 29514.75\nיעד swing: 29662.00\nחוזים: 1\nסיכון: ~$40"
+    "body": "נכס: MNQ\nכיוון: LONG\nכניסה: 29534.50\nסטופ: 29514.75\nיעד swing: 29662.00\nחוזים: 1\nסיכון: ~$40",
+    "resolved": true,
+    "outcome": "expired"
   },
   {
     "timestamp": "2026-08-27T14:11:13Z",
@@ -2709,7 +2711,9 @@
     "risk_usd": null,
     "killzone": null,
     "subject": "🚨 Monitor flatten MNQU6 @ MAIN  (representative — 44 duplicate alerts pruned from journal)",
-    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MNQU6\nContract ID: 4399654\nNet pos before flatten: +1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI.\n\n[JOURNAL CLEANUP 2026-08-27] Bug caused Monitor Agent to re-alert every 50s for ~55 min on the same naked position (Lucid Canceled the follow-on Stop+Target after a Filled market Buy). User manually flattened at ~17:00 IL for +$150 gain. The 45 alerts were noise from the same underlying issue. This is the representative alert; 44 duplicates removed."
+    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MNQU6\nContract ID: 4399654\nNet pos before flatten: +1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI.\n\n[JOURNAL CLEANUP 2026-08-27] Bug caused Monitor Agent to re-alert every 50s for ~55 min on the same naked position (Lucid Canceled the follow-on Stop+Target after a Filled market Buy). User manually flattened at ~17:00 IL for +$150 gain. The 45 alerts were noise from the same underlying issue. This is the representative alert; 44 duplicates removed.",
+    "resolved": true,
+    "outcome": "expired"
   },
   {
     "timestamp": "2026-08-27T15:17:00Z",
