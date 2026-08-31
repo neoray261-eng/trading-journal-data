@@ -3514,5 +3514,21 @@
     "killzone": "NY-KZ",
     "subject": "[TV] SHORT MES @ 7693.75",
     "body": "Direction: SHORT\nEntry: 7693.75\nStop: 7711.25\nTarget: 7658.75\nContracts: 1\nR:R = 1:2.00\nRisk: $88\nReward: $175\nKillzone=NY-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+  },
+  {
+    "timestamp": "2026-08-31T13:59:20Z",
+    "bot": "QT",
+    "event": "dry_run_signal",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7674.0,
+    "stop_price": 7666.0,
+    "target_price": 7714.75,
+    "contracts": 3,
+    "rr": 5.09,
+    "risk_usd": 120.0,
+    "killzone": null,
+    "subject": "[DRY-RUN] QT MES LONG @ 7674.0",
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 17:00\nנכס: MES\nכיוון: LONG\nכניסה: 7674.0\nסטופ: 7666.0\nיעד: 7714.75\nחוזים: 3\nR:R: 1:5.09\nסיכון: $120\nרווח פוטנציאלי: $611"
   }
 ]
