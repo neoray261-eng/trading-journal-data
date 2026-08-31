@@ -3403,7 +3403,13 @@
     "risk_usd": 82.0,
     "killzone": "OFF-KZ",
     "subject": "[TV] LONG MES @ 7714.25",
-    "body": "Direction: LONG\nEntry: 7714.25\nStop: 7708.75\nTarget: 7725.25\nContracts: 3\nR:R = 1:2.00\nRisk: $82\nReward: $165\nKillzone=OFF-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+    "body": "Direction: LONG\nEntry: 7714.25\nStop: 7708.75\nTarget: 7725.25\nContracts: 3\nR:R = 1:2.00\nRisk: $82\nReward: $165\nKillzone=OFF-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)",
+    "resolved": true,
+    "outcome": "stop",
+    "outcome_time": "2026-08-31T09:47:00Z",
+    "outcome_price": 7708.75,
+    "bar_extreme": 7708.5,
+    "slippage_pts": 0.25
   },
   {
     "timestamp": "2026-08-31T09:36:34Z",
@@ -3420,5 +3426,22 @@
     "killzone": null,
     "subject": "SMT-TV MES — דלגתי (מחיר לא זמין)",
     "body": "לא הצלחתי לקבל מחיר עדכני לבדיקת R:R (גם WS וגם REST נכשלו). מדלגים לפי כלל הברזל."
+  },
+  {
+    "timestamp": "2026-08-31T09:47:00Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "stop_hit",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7714.25,
+    "stop_price": 7708.75,
+    "target_price": 7725.25,
+    "contracts": 3,
+    "rr": 2.0,
+    "risk_usd": 82.0,
+    "bar_extreme": 7708.5,
+    "slippage_pts": 0.25,
+    "subject": "[AUTO] SMT-TV-SIGNAL MES LONG STOP HIT @ 7708.75",
+    "body": "resolved paper trade\nentry: 7714.25\nstop: 7708.75\ntarget: 7725.25\nhit: 7708.75 at 2026-08-31T09:47:00Z\nbar_extreme: 7708.5\nslippage_pts: 0.25\nsource signal: 2026-08-31T09:36:32Z"
   }
 ]
