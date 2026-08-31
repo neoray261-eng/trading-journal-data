@@ -3349,5 +3349,21 @@
     "killzone": "LONDON-KZ",
     "subject": "[SIGNAL] SHORT MES @ 7708.50",
     "body": "Direction: SHORT\nEntry (planned): 7708.50\nStop: 7710.50\nTarget: 7683.75\nContracts: 10\nR:R = 1:12.38\nRisk: $100\nReward: $1238\nKillzone: LONDON-KZ\nSource: SMT + IFVG@2m (pre-decision)"
+  },
+  {
+    "timestamp": "2026-08-31T06:53:28Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "SMT MES — דלגתי (מחיר לא זמין לבדיקה)",
+    "body": "לא הצלחתי לקבל מחיר עדכני לבדיקת R:R (גם WS וגם REST נכשלו). מדלגים לפי כלל הברזל."
   }
 ]
