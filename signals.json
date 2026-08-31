@@ -3335,6 +3335,23 @@
     "body": "SMT+IFVG bot just started on Railway.\nDRY_RUN=False\nAllowed: MNQ L=True/S=True, MES L=True/S=True\nIf you got this — email path from Railway works."
   },
   {
+    "timestamp": "2026-08-31T06:53:00Z",
+    "bot": "SMT-SIGNAL",
+    "event": "stop_hit",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7708.5,
+    "stop_price": 7710.5,
+    "target_price": 7683.75,
+    "contracts": 10,
+    "rr": 12.38,
+    "risk_usd": 100.0,
+    "bar_extreme": 7710.75,
+    "slippage_pts": 0.25,
+    "subject": "[AUTO] SMT-SIGNAL MES SHORT STOP HIT @ 7710.5",
+    "body": "resolved paper trade\nentry: 7708.5\nstop: 7710.5\ntarget: 7683.75\nhit: 7710.5 at 2026-08-31T06:53:00Z\nbar_extreme: 7710.75\nslippage_pts: 0.25\nsource signal: 2026-08-31T06:53:24Z"
+  },
+  {
     "timestamp": "2026-08-31T06:53:24Z",
     "bot": "SMT-SIGNAL",
     "event": "signal",
@@ -3348,7 +3365,13 @@
     "risk_usd": 100.0,
     "killzone": "LONDON-KZ",
     "subject": "[SIGNAL] SHORT MES @ 7708.50",
-    "body": "Direction: SHORT\nEntry (planned): 7708.50\nStop: 7710.50\nTarget: 7683.75\nContracts: 10\nR:R = 1:12.38\nRisk: $100\nReward: $1238\nKillzone: LONDON-KZ\nSource: SMT + IFVG@2m (pre-decision)"
+    "body": "Direction: SHORT\nEntry (planned): 7708.50\nStop: 7710.50\nTarget: 7683.75\nContracts: 10\nR:R = 1:12.38\nRisk: $100\nReward: $1238\nKillzone: LONDON-KZ\nSource: SMT + IFVG@2m (pre-decision)",
+    "resolved": true,
+    "outcome": "stop",
+    "outcome_time": "2026-08-31T06:53:00Z",
+    "outcome_price": 7710.5,
+    "bar_extreme": 7710.75,
+    "slippage_pts": 0.25
   },
   {
     "timestamp": "2026-08-31T06:53:28Z",
