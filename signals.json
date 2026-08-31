@@ -3513,7 +3513,9 @@
     "risk_usd": 88.0,
     "killzone": "NY-KZ",
     "subject": "[TV] SHORT MES @ 7693.75",
-    "body": "Direction: SHORT\nEntry: 7693.75\nStop: 7711.25\nTarget: 7658.75\nContracts: 1\nR:R = 1:2.00\nRisk: $88\nReward: $175\nKillzone=NY-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+    "body": "Direction: SHORT\nEntry: 7693.75\nStop: 7711.25\nTarget: 7658.75\nContracts: 1\nR:R = 1:2.00\nRisk: $88\nReward: $175\nKillzone=NY-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)",
+    "resolved": true,
+    "outcome": "target"
   },
   {
     "timestamp": "2026-08-31T13:59:20Z",
