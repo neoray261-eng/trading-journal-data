@@ -3333,5 +3333,21 @@
     "killzone": null,
     "subject": "Bot started (startup ping)",
     "body": "SMT+IFVG bot just started on Railway.\nDRY_RUN=False\nAllowed: MNQ L=True/S=True, MES L=True/S=True\nIf you got this — email path from Railway works."
+  },
+  {
+    "timestamp": "2026-08-31T06:53:24Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7708.5,
+    "stop_price": 7710.5,
+    "target_price": 7683.75,
+    "contracts": 10,
+    "rr": 12.38,
+    "risk_usd": 100.0,
+    "killzone": "LONDON-KZ",
+    "subject": "[SIGNAL] SHORT MES @ 7708.50",
+    "body": "Direction: SHORT\nEntry (planned): 7708.50\nStop: 7710.50\nTarget: 7683.75\nContracts: 10\nR:R = 1:12.38\nRisk: $100\nReward: $1238\nKillzone: LONDON-KZ\nSource: SMT + IFVG@2m (pre-decision)"
   }
 ]
