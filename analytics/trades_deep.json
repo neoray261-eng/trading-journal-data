@@ -1398,5 +1398,30 @@
     "rr_planned": 2.0,
     "contracts": 2,
     "risk_usd": 90.0
+  },
+  {
+    "signal_ts": "2026-09-01T13:44:20Z",
+    "outcome_ts": "2026-09-01T14:47:00Z",
+    "bot": "QT",
+    "symbol": "MNQ",
+    "direction": "SHORT",
+    "killzone": null,
+    "entry_price": 29213.25,
+    "stop_price": 29243.25,
+    "target_price": 29040.0,
+    "outcome": "stop",
+    "outcome_price": 29243.25,
+    "bar_extreme": 29253.0,
+    "slippage_pts": 9.75,
+    "mfe_pts": 16.75,
+    "mae_pts": 39.75,
+    "mfe_r": 0.558,
+    "mae_r": 1.325,
+    "mfe_time_min": 54.7,
+    "mae_time_min": 62.7,
+    "duration_min": 62.7,
+    "rr_planned": 5.78,
+    "contracts": 2,
+    "risk_usd": 120.0
   }
 ]
