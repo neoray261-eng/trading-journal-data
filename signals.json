@@ -3810,5 +3810,21 @@
     "slippage_pts": 0.25,
     "subject": "[AUTO] SMT-TV-SIGNAL MES LONG STOP HIT @ 7694.5",
     "body": "resolved paper trade\nentry: 7703.5\nstop: 7694.5\ntarget: 7721.5\nhit: 7694.5 at 2026-09-01T07:37:00Z\nbar_extreme: 7694.25\nslippage_pts: 0.25\nsource signal: 2026-09-01T07:36:21Z"
+  },
+  {
+    "timestamp": "2026-09-01T11:30:27Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7654.5,
+    "stop_price": 7650.75,
+    "target_price": 7705.5,
+    "contracts": 5,
+    "rr": 13.6,
+    "risk_usd": 94.0,
+    "killzone": "NY-KZ",
+    "subject": "[SIGNAL] LONG MES @ 7654.50",
+    "body": "Direction: LONG\nEntry (planned): 7654.50\nStop: 7650.75\nTarget: 7705.50\nContracts: 5\nR:R = 1:13.60\nRisk: $94\nReward: $1275\nKillzone: NY-KZ\nSource: SMT + IFVG@1m (pre-decision)"
   }
 ]
