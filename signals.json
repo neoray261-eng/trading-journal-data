@@ -3858,5 +3858,21 @@
     "killzone": "NY-KZ",
     "subject": "[TV] LONG MES @ 7659.50",
     "body": "Direction: LONG\nEntry: 7659.50\nStop: 7650.50\nTarget: 7677.50\nContracts: 2\nR:R = 1:2.00\nRisk: $90\nReward: $180\nKillzone=NY-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+  },
+  {
+    "timestamp": "2026-09-01T11:41:25Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "SMT-TV MES — דלגתי (מחיר לא זמין)",
+    "body": "לא הצלחתי לקבל מחיר עדכני לבדיקת R:R (גם WS וגם REST נכשלו). מדלגים לפי כלל הברזל."
   }
 ]
