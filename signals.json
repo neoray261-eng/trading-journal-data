@@ -3645,5 +3645,21 @@
     "slippage_pts": 2.75,
     "subject": "[AUTO] SMT-TV-SIGNAL MNQ SHORT STOP HIT @ 29434.75",
     "body": "resolved paper trade\nentry: 29403.0\nstop: 29434.75\ntarget: 29339.5\nhit: 29434.75 at 2026-08-31T16:51:00Z\nbar_extreme: 29437.5\nslippage_pts: 2.75\nsource signal: 2026-08-31T16:26:37Z"
+  },
+  {
+    "timestamp": "2026-09-01T00:36:46Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7707.0,
+    "stop_price": 7698.5,
+    "target_price": 7724.0,
+    "contracts": 2,
+    "rr": 2.0,
+    "risk_usd": 85.0,
+    "killzone": "ASIA-KZ",
+    "subject": "[TV] LONG MES @ 7707.00",
+    "body": "Direction: LONG\nEntry: 7707.00\nStop: 7698.50\nTarget: 7724.00\nContracts: 2\nR:R = 1:2.00\nRisk: $85\nReward: $170\nKillzone=ASIA-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
   }
 ]
