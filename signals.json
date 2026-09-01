@@ -3825,7 +3825,13 @@
     "risk_usd": 94.0,
     "killzone": "NY-KZ",
     "subject": "[SIGNAL] LONG MES @ 7654.50",
-    "body": "Direction: LONG\nEntry (planned): 7654.50\nStop: 7650.75\nTarget: 7705.50\nContracts: 5\nR:R = 1:13.60\nRisk: $94\nReward: $1275\nKillzone: NY-KZ\nSource: SMT + IFVG@1m (pre-decision)"
+    "body": "Direction: LONG\nEntry (planned): 7654.50\nStop: 7650.75\nTarget: 7705.50\nContracts: 5\nR:R = 1:13.60\nRisk: $94\nReward: $1275\nKillzone: NY-KZ\nSource: SMT + IFVG@1m (pre-decision)",
+    "resolved": true,
+    "outcome": "stop",
+    "outcome_time": "2026-09-01T12:00:00Z",
+    "outcome_price": 7650.75,
+    "bar_extreme": 7650.25,
+    "slippage_pts": 0.5
   },
   {
     "timestamp": "2026-09-01T11:30:32Z",
@@ -3857,7 +3863,13 @@
     "risk_usd": 90.0,
     "killzone": "NY-KZ",
     "subject": "[TV] LONG MES @ 7659.50",
-    "body": "Direction: LONG\nEntry: 7659.50\nStop: 7650.50\nTarget: 7677.50\nContracts: 2\nR:R = 1:2.00\nRisk: $90\nReward: $180\nKillzone=NY-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+    "body": "Direction: LONG\nEntry: 7659.50\nStop: 7650.50\nTarget: 7677.50\nContracts: 2\nR:R = 1:2.00\nRisk: $90\nReward: $180\nKillzone=NY-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)",
+    "resolved": true,
+    "outcome": "stop",
+    "outcome_time": "2026-09-01T12:00:00Z",
+    "outcome_price": 7650.5,
+    "bar_extreme": 7650.25,
+    "slippage_pts": 0.25
   },
   {
     "timestamp": "2026-09-01T11:41:25Z",
@@ -3874,5 +3886,39 @@
     "killzone": null,
     "subject": "SMT-TV MES — דלגתי (מחיר לא זמין)",
     "body": "לא הצלחתי לקבל מחיר עדכני לבדיקת R:R (גם WS וגם REST נכשלו). מדלגים לפי כלל הברזל."
+  },
+  {
+    "timestamp": "2026-09-01T12:00:00Z",
+    "bot": "SMT-SIGNAL",
+    "event": "stop_hit",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7654.5,
+    "stop_price": 7650.75,
+    "target_price": 7705.5,
+    "contracts": 5,
+    "rr": 13.6,
+    "risk_usd": 94.0,
+    "bar_extreme": 7650.25,
+    "slippage_pts": 0.5,
+    "subject": "[AUTO] SMT-SIGNAL MES LONG STOP HIT @ 7650.75",
+    "body": "resolved paper trade\nentry: 7654.5\nstop: 7650.75\ntarget: 7705.5\nhit: 7650.75 at 2026-09-01T12:00:00Z\nbar_extreme: 7650.25\nslippage_pts: 0.5\nsource signal: 2026-09-01T11:30:27Z"
+  },
+  {
+    "timestamp": "2026-09-01T12:00:00Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "stop_hit",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7659.5,
+    "stop_price": 7650.5,
+    "target_price": 7677.5,
+    "contracts": 2,
+    "rr": 2.0,
+    "risk_usd": 90.0,
+    "bar_extreme": 7650.25,
+    "slippage_pts": 0.25,
+    "subject": "[AUTO] SMT-TV-SIGNAL MES LONG STOP HIT @ 7650.5",
+    "body": "resolved paper trade\nentry: 7659.5\nstop: 7650.5\ntarget: 7677.5\nhit: 7650.5 at 2026-09-01T12:00:00Z\nbar_extreme: 7650.25\nslippage_pts: 0.25\nsource signal: 2026-09-01T11:41:21Z"
   }
 ]
