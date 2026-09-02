@@ -4307,7 +4307,13 @@
     "risk_usd": 52.0,
     "killzone": "RTH",
     "subject": "[SIGNAL] SHORT MNQ @ 29185.50",
-    "body": "Direction: SHORT\nEntry (planned): 29185.50\nStop: 29211.75\nTarget: 29001.00\nContracts: 1\nR:R = 1:7.03\nRisk: $52\nReward: $369\nKillzone: RTH\nSource: SMT + IFVG@1m (pre-decision)"
+    "body": "Direction: SHORT\nEntry (planned): 29185.50\nStop: 29211.75\nTarget: 29001.00\nContracts: 1\nR:R = 1:7.03\nRisk: $52\nReward: $369\nKillzone: RTH\nSource: SMT + IFVG@1m (pre-decision)",
+    "resolved": true,
+    "outcome": "stop",
+    "outcome_time": "2026-09-02T20:07:00Z",
+    "outcome_price": 29211.75,
+    "bar_extreme": 29212.0,
+    "slippage_pts": 0.25
   },
   {
     "timestamp": "2026-09-02T15:50:23Z",
@@ -4324,5 +4330,22 @@
     "killzone": null,
     "subject": "SMT MNQ — דלגתי (סטופ רחב מדי בפועל)",
     "body": "במחיר 29148.75 חוזה 1 שווה $126 סיכון — מעל הכלל של $100.0. לא נכנסים."
+  },
+  {
+    "timestamp": "2026-09-02T20:07:00Z",
+    "bot": "SMT-SIGNAL",
+    "event": "stop_hit",
+    "symbol": "MNQ",
+    "direction": "SHORT",
+    "entry_price": 29185.5,
+    "stop_price": 29211.75,
+    "target_price": 29001.0,
+    "contracts": 1,
+    "rr": 7.03,
+    "risk_usd": 52.0,
+    "bar_extreme": 29212.0,
+    "slippage_pts": 0.25,
+    "subject": "[AUTO] SMT-SIGNAL MNQ SHORT STOP HIT @ 29211.75",
+    "body": "resolved paper trade\nentry: 29185.5\nstop: 29211.75\ntarget: 29001.0\nhit: 29211.75 at 2026-09-02T20:07:00Z\nbar_extreme: 29212.0\nslippage_pts: 0.25\nsource signal: 2026-09-02T15:50:22Z"
   }
 ]

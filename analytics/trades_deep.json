@@ -1548,5 +1548,30 @@
     "rr_planned": 4.13,
     "contracts": 2,
     "risk_usd": 120.0
+  },
+  {
+    "signal_ts": "2026-09-02T15:50:22Z",
+    "outcome_ts": "2026-09-02T20:07:00Z",
+    "bot": "SMT-SIGNAL",
+    "symbol": "MNQ",
+    "direction": "SHORT",
+    "killzone": "RTH",
+    "entry_price": 29185.5,
+    "stop_price": 29211.75,
+    "target_price": 29001.0,
+    "outcome": "stop",
+    "outcome_price": 29211.75,
+    "bar_extreme": 29212.0,
+    "slippage_pts": 0.25,
+    "mfe_pts": 60.25,
+    "mae_pts": 26.5,
+    "mfe_r": 2.295,
+    "mae_r": 1.01,
+    "mfe_time_min": 88.6,
+    "mae_time_min": 256.6,
+    "duration_min": 256.6,
+    "rr_planned": 7.03,
+    "contracts": 1,
+    "risk_usd": 52.0
   }
 ]
