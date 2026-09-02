@@ -4094,5 +4094,21 @@
     "killzone": "ASIA-KZ",
     "subject": "[TV] SHORT MNQ @ 29076.00",
     "body": "Direction: SHORT\nEntry: 29076.00\nStop: 29094.25\nTarget: 29039.50\nContracts: 2\nR:R = 1:2.00\nRisk: $73\nReward: $146\nKillzone=ASIA-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+  },
+  {
+    "timestamp": "2026-09-02T03:36:28Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "signal",
+    "symbol": "MNQ",
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "SMT-TV MNQ — דלגתי (מחיר לא זמין)",
+    "body": "לא הצלחתי לקבל מחיר עדכני לבדיקת R:R (גם WS וגם REST נכשלו). מדלגים לפי כלל הברזל."
   }
 ]
