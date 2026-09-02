@@ -4347,5 +4347,21 @@
     "slippage_pts": 0.25,
     "subject": "[AUTO] SMT-SIGNAL MNQ SHORT STOP HIT @ 29211.75",
     "body": "resolved paper trade\nentry: 29185.5\nstop: 29211.75\ntarget: 29001.0\nhit: 29211.75 at 2026-09-02T20:07:00Z\nbar_extreme: 29212.0\nslippage_pts: 0.25\nsource signal: 2026-09-02T15:50:22Z"
+  },
+  {
+    "timestamp": "2026-09-02T22:20:14Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7673.0,
+    "stop_price": 7667.5,
+    "target_price": 7687.75,
+    "contracts": 3,
+    "rr": 2.68,
+    "risk_usd": 82.0,
+    "killzone": "OFF-KZ",
+    "subject": "[SIGNAL] LONG MES @ 7673.00",
+    "body": "Direction: LONG\nEntry (planned): 7673.00\nStop: 7667.50\nTarget: 7687.75\nContracts: 3\nR:R = 1:2.68\nRisk: $82\nReward: $221\nKillzone: OFF-KZ\nSource: SMT + IFVG@1m (pre-decision)"
   }
 ]
