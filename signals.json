@@ -4022,6 +4022,29 @@
     "risk_usd": 79.0,
     "killzone": "ASIA-KZ",
     "subject": "[TV] SHORT MES @ 7644.00",
-    "body": "Direction: SHORT\nEntry: 7644.00\nStop: 7649.25\nTarget: 7633.50\nContracts: 3\nR:R = 1:2.00\nRisk: $79\nReward: $158\nKillzone=ASIA-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+    "body": "Direction: SHORT\nEntry: 7644.00\nStop: 7649.25\nTarget: 7633.50\nContracts: 3\nR:R = 1:2.00\nRisk: $79\nReward: $158\nKillzone=ASIA-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)",
+    "resolved": true,
+    "outcome": "stop",
+    "outcome_time": "2026-09-02T00:22:00Z",
+    "outcome_price": 7649.25,
+    "bar_extreme": 7651.5,
+    "slippage_pts": 2.25
+  },
+  {
+    "timestamp": "2026-09-02T00:22:00Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "stop_hit",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7644.0,
+    "stop_price": 7649.25,
+    "target_price": 7633.5,
+    "contracts": 3,
+    "rr": 2.0,
+    "risk_usd": 79.0,
+    "bar_extreme": 7651.5,
+    "slippage_pts": 2.25,
+    "subject": "[AUTO] SMT-TV-SIGNAL MES SHORT STOP HIT @ 7649.25",
+    "body": "resolved paper trade\nentry: 7644.0\nstop: 7649.25\ntarget: 7633.5\nhit: 7649.25 at 2026-09-02T00:22:00Z\nbar_extreme: 7651.5\nslippage_pts: 2.25\nsource signal: 2026-09-02T00:21:17Z"
   }
 ]
