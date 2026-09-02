@@ -4288,5 +4288,21 @@
     "slippage_pts": 0.25,
     "subject": "[AUTO] QT MNQ SHORT STOP HIT @ 29124.75",
     "body": "resolved paper trade\nentry: 29094.75\nstop: 29124.75\ntarget: 28940.75\nhit: 29124.75 at 2026-09-02T14:10:00Z\nbar_extreme: 29125.0\nslippage_pts: 0.25\nsource signal: 2026-09-02T13:29:20Z"
+  },
+  {
+    "timestamp": "2026-09-02T15:50:22Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MNQ",
+    "direction": "SHORT",
+    "entry_price": 29185.5,
+    "stop_price": 29211.75,
+    "target_price": 29001.0,
+    "contracts": 1,
+    "rr": 7.03,
+    "risk_usd": 52.0,
+    "killzone": "RTH",
+    "subject": "[SIGNAL] SHORT MNQ @ 29185.50",
+    "body": "Direction: SHORT\nEntry (planned): 29185.50\nStop: 29211.75\nTarget: 29001.00\nContracts: 1\nR:R = 1:7.03\nRisk: $52\nReward: $369\nKillzone: RTH\nSource: SMT + IFVG@1m (pre-decision)"
   }
 ]
