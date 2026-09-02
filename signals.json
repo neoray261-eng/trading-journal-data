@@ -4210,5 +4210,21 @@
     "killzone": null,
     "subject": "[DRY-RUN] QT MNQ SHORT @ 29051.25",
     "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 17:00\nנכס: MNQ\nכיוון: SHORT\nכניסה: 29051.25\nסטופ: 29081.25\nיעד: 28927.25\nחוזים: 2\nR:R: 1:4.13\nסיכון: $120\nרווח פוטנציאלי: $496"
+  },
+  {
+    "timestamp": "2026-09-02T14:04:34Z",
+    "bot": "SMT",
+    "event": "startup",
+    "symbol": null,
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "Bot started (startup ping)",
+    "body": "SMT+IFVG bot just started on Railway.\nDRY_RUN=False\nAllowed: MNQ L=True/S=True, MES L=True/S=True\nIf you got this — email path from Railway works."
   }
 ]
