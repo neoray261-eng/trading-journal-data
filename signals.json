@@ -3635,7 +3635,9 @@
     "risk_usd": null,
     "killzone": null,
     "subject": "SMT-TV MNQ — דלגתי (מחיר לא זמין)",
-    "body": "לא הצלחתי לקבל מחיר עדכני לבדיקת R:R (גם WS וגם REST נכשלו). מדלגים לפי כלל הברזל."
+    "body": "לא הצלחתי לקבל מחיר עדכני לבדיקת R:R (גם WS וגם REST נכשלו). מדלגים לפי כלל הברזל.",
+    "resolved": true,
+    "outcome": "expired"
   },
   {
     "timestamp": "2026-08-31T16:51:00Z",
