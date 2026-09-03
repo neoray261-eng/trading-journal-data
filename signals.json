@@ -4551,5 +4551,21 @@
     "killzone": null,
     "subject": "SMT MNQ — דלגתי (מחיר לא זמין לבדיקה)",
     "body": "לא הצלחתי לקבל מחיר עדכני לבדיקת R:R (גם WS וגם REST נכשלו). מדלגים לפי כלל הברזל."
+  },
+  {
+    "timestamp": "2026-09-03T17:16:29Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "signal",
+    "symbol": "MNQ",
+    "direction": "SHORT",
+    "entry_price": 29514.25,
+    "stop_price": 29541.75,
+    "target_price": 29459.25,
+    "contracts": 1,
+    "rr": 2.0,
+    "risk_usd": 55.0,
+    "killzone": "RTH",
+    "subject": "[TV] SHORT MNQ @ 29514.25",
+    "body": "Direction: SHORT\nEntry: 29514.25\nStop: 29541.75\nTarget: 29459.25\nContracts: 1\nR:R = 1:2.00\nRisk: $55\nReward: $110\nKillzone=RTH\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
   }
 ]
