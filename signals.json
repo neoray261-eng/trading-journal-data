@@ -4519,5 +4519,21 @@
     "killzone": null,
     "subject": "[DRY-RUN] QT MNQ LONG @ 29156.5",
     "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 17:00\nנכס: MNQ\nכיוון: LONG\nכניסה: 29156.5\nסטופ: 29126.5\nיעד: 29293.0\nחוזים: 2\nR:R: 1:4.55\nסיכון: $120\nרווח פוטנציאלי: $546"
+  },
+  {
+    "timestamp": "2026-09-03T17:05:18Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MNQ",
+    "direction": "SHORT",
+    "entry_price": 29507.25,
+    "stop_price": 29542.5,
+    "target_price": 29101.0,
+    "contracts": 1,
+    "rr": 11.52,
+    "risk_usd": 70.0,
+    "killzone": "RTH",
+    "subject": "[SIGNAL] SHORT MNQ @ 29507.25",
+    "body": "Direction: SHORT\nEntry (planned): 29507.25\nStop: 29542.50\nTarget: 29101.00\nContracts: 1\nR:R = 1:11.52\nRisk: $70\nReward: $812\nKillzone: RTH\nSource: SMT + IFVG@1m (pre-decision)"
   }
 ]
