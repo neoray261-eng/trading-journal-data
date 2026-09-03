@@ -3863,7 +3863,9 @@
     "risk_usd": null,
     "killzone": null,
     "subject": "SMT MES — דלגתי (מחיר לא זמין לבדיקה)",
-    "body": "לא הצלחתי לקבל מחיר עדכני לבדיקת R:R (גם WS וגם REST נכשלו). מדלגים לפי כלל הברזל."
+    "body": "לא הצלחתי לקבל מחיר עדכני לבדיקת R:R (גם WS וגם REST נכשלו). מדלגים לפי כלל הברזל.",
+    "resolved": true,
+    "outcome": "expired"
   },
   {
     "timestamp": "2026-09-01T11:41:21Z",
@@ -3901,7 +3903,9 @@
     "risk_usd": null,
     "killzone": null,
     "subject": "SMT-TV MES — דלגתי (מחיר לא זמין)",
-    "body": "לא הצלחתי לקבל מחיר עדכני לבדיקת R:R (גם WS וגם REST נכשלו). מדלגים לפי כלל הברזל."
+    "body": "לא הצלחתי לקבל מחיר עדכני לבדיקת R:R (גם WS וגם REST נכשלו). מדלגים לפי כלל הברזל.",
+    "resolved": true,
+    "outcome": "expired"
   },
   {
     "timestamp": "2026-09-01T12:00:00Z",
