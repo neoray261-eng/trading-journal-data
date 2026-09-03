@@ -4535,5 +4535,21 @@
     "killzone": "RTH",
     "subject": "[SIGNAL] SHORT MNQ @ 29507.25",
     "body": "Direction: SHORT\nEntry (planned): 29507.25\nStop: 29542.50\nTarget: 29101.00\nContracts: 1\nR:R = 1:11.52\nRisk: $70\nReward: $812\nKillzone: RTH\nSource: SMT + IFVG@1m (pre-decision)"
+  },
+  {
+    "timestamp": "2026-09-03T17:05:29Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MNQ",
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "SMT MNQ — דלגתי (מחיר לא זמין לבדיקה)",
+    "body": "לא הצלחתי לקבל מחיר עדכני לבדיקת R:R (גם WS וגם REST נכשלו). מדלגים לפי כלל הברזל."
   }
 ]
