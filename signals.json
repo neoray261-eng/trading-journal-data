@@ -4501,5 +4501,21 @@
     "killzone": null,
     "subject": "[DRY-RUN] QT MNQ LONG @ 29241.5",
     "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 16:45\nנכס: MNQ\nכיוון: LONG\nכניסה: 29241.5\nסטופ: 29211.5\nיעד: 29359.75\nחוזים: 2\nR:R: 1:3.94\nסיכון: $120\nרווח פוטנציאלי: $473"
+  },
+  {
+    "timestamp": "2026-09-03T13:59:15Z",
+    "bot": "QT",
+    "event": "dry_run_signal",
+    "symbol": "MNQ",
+    "direction": "LONG",
+    "entry_price": 29156.5,
+    "stop_price": 29126.5,
+    "target_price": 29293.0,
+    "contracts": 2,
+    "rr": 4.55,
+    "risk_usd": 120.0,
+    "killzone": null,
+    "subject": "[DRY-RUN] QT MNQ LONG @ 29156.5",
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 17:00\nנכס: MNQ\nכיוון: LONG\nכניסה: 29156.5\nסטופ: 29126.5\nיעד: 29293.0\nחוזים: 2\nR:R: 1:4.55\nסיכון: $120\nרווח פוטנציאלי: $546"
   }
 ]
