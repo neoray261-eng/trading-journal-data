@@ -4715,5 +4715,21 @@
     "killzone": null,
     "subject": "SMT-TV MES — דלגתי (מחיר לא זמין)",
     "body": "לא הצלחתי לקבל מחיר עדכני לבדיקת R:R (גם WS וגם REST נכשלו). מדלגים לפי כלל הברזל."
+  },
+  {
+    "timestamp": "2026-09-04T06:50:30Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7759.5,
+    "stop_price": 7765.75,
+    "target_price": 7747.0,
+    "contracts": 3,
+    "rr": 2.0,
+    "risk_usd": 94.0,
+    "killzone": "LONDON-KZ",
+    "subject": "[TV] SHORT MES @ 7759.50",
+    "body": "Direction: SHORT\nEntry: 7759.50\nStop: 7765.75\nTarget: 7747.00\nContracts: 3\nR:R = 1:2.00\nRisk: $94\nReward: $188\nKillzone=LONDON-KZ\nWaited 5 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
   }
 ]
