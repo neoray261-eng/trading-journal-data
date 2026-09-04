@@ -4746,7 +4746,13 @@
     "risk_usd": 79.0,
     "killzone": "OFF-KZ",
     "subject": "[SIGNAL] SHORT MNQ @ 29653.25",
-    "body": "Direction: SHORT\nEntry (planned): 29653.25\nStop: 29673.00\nTarget: 29574.00\nContracts: 2\nR:R = 1:4.01\nRisk: $79\nReward: $317\nKillzone: OFF-KZ\nSource: SMT + IFVG@2m (pre-decision)"
+    "body": "Direction: SHORT\nEntry (planned): 29653.25\nStop: 29673.00\nTarget: 29574.00\nContracts: 2\nR:R = 1:4.01\nRisk: $79\nReward: $317\nKillzone: OFF-KZ\nSource: SMT + IFVG@2m (pre-decision)",
+    "resolved": true,
+    "outcome": "stop",
+    "outcome_time": "2026-09-04T10:25:00Z",
+    "outcome_price": 29673.0,
+    "bar_extreme": 29686.0,
+    "slippage_pts": 13.0
   },
   {
     "timestamp": "2026-09-04T09:20:29Z",
@@ -4818,5 +4824,22 @@
     "slippage_pts": 2.0,
     "subject": "[AUTO] SMT-TV-SIGNAL MNQ SHORT STOP HIT @ 29666.75",
     "body": "resolved paper trade\nentry: 29629.0\nstop: 29666.75\ntarget: 29553.5\nhit: 29666.75 at 2026-09-04T10:01:00Z\nbar_extreme: 29668.75\nslippage_pts: 2.0\nsource signal: 2026-09-04T09:31:34Z"
+  },
+  {
+    "timestamp": "2026-09-04T10:25:00Z",
+    "bot": "SMT-SIGNAL",
+    "event": "stop_hit",
+    "symbol": "MNQ",
+    "direction": "SHORT",
+    "entry_price": 29653.25,
+    "stop_price": 29673.0,
+    "target_price": 29574.0,
+    "contracts": 2,
+    "rr": 4.01,
+    "risk_usd": 79.0,
+    "bar_extreme": 29686.0,
+    "slippage_pts": 13.0,
+    "subject": "[AUTO] SMT-SIGNAL MNQ SHORT STOP HIT @ 29673.0",
+    "body": "resolved paper trade\nentry: 29653.25\nstop: 29673.0\ntarget: 29574.0\nhit: 29673.0 at 2026-09-04T10:25:00Z\nbar_extreme: 29686.0\nslippage_pts: 13.0\nsource signal: 2026-09-04T09:20:26Z"
   }
 ]
