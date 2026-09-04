@@ -4903,5 +4903,21 @@
     "outcome_price": 29607.25,
     "bar_extreme": 29574.0,
     "slippage_pts": 33.25
+  },
+  {
+    "timestamp": "2026-09-04T13:59:12Z",
+    "bot": "QT",
+    "event": "dry_run_signal",
+    "symbol": "MNQ",
+    "direction": "LONG",
+    "entry_price": 29686.25,
+    "stop_price": 29656.25,
+    "target_price": 29746.25,
+    "contracts": 2,
+    "rr": 2.0,
+    "risk_usd": 120.0,
+    "killzone": null,
+    "subject": "[DRY-RUN] QT MNQ LONG @ 29686.25",
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 17:00\nנכס: MNQ\nכיוון: LONG\nכניסה: 29686.25\nסטופ: 29656.25\nיעד: 29746.25\nחוזים: 2\nR:R: 1:2.00\nסיכון: $120\nרווח פוטנציאלי: $240"
   }
 ]
