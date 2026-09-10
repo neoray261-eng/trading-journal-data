@@ -5232,5 +5232,21 @@
     "killzone": null,
     "subject": "SMT-TV MES — דלגתי (מחיר לא זמין)",
     "body": "לא הצלחתי לקבל מחיר עדכני לבדיקת R:R (גם WS וגם REST נכשלו). מדלגים לפי כלל הברזל."
+  },
+  {
+    "timestamp": "2026-09-10T19:40:16Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7594.5,
+    "stop_price": 7591.75,
+    "target_price": 7619.25,
+    "contracts": 7,
+    "rr": 9.0,
+    "risk_usd": 96.0,
+    "killzone": "RTH",
+    "subject": "[SIGNAL] LONG MES @ 7594.50",
+    "body": "Direction: LONG\nEntry (planned): 7594.50\nStop: 7591.75\nTarget: 7619.25\nContracts: 7\nR:R = 1:9.00\nRisk: $96\nReward: $866\nKillzone: RTH\nSource: SMT + IFVG@1m (pre-decision)"
   }
 ]
