@@ -5248,5 +5248,21 @@
     "killzone": "RTH",
     "subject": "[SIGNAL] LONG MES @ 7594.50",
     "body": "Direction: LONG\nEntry (planned): 7594.50\nStop: 7591.75\nTarget: 7619.25\nContracts: 7\nR:R = 1:9.00\nRisk: $96\nReward: $866\nKillzone: RTH\nSource: SMT + IFVG@1m (pre-decision)"
+  },
+  {
+    "timestamp": "2026-09-10T19:40:21Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "SMT MES — דלגתי (מחיר לא זמין לבדיקה)",
+    "body": "לא הצלחתי לקבל מחיר עדכני לבדיקת R:R (גם WS וגם REST נכשלו). מדלגים לפי כלל הברזל."
   }
 ]
