@@ -5168,5 +5168,21 @@
     "killzone": null,
     "subject": "QT ידלג — לימיט רחוק מדי (177 נק')",
     "body": "סאטפ SHORT על MNQ\nמחיר עכשיו: 29172.00\nלימיט מתוכנן: 29349.00\nמרחק: 177 נקודות (מעל התקרה 150)\n\nתנועה כזאת נדירה — הבוט לא ישחית פקודה על סאטפ שכזה."
+  },
+  {
+    "timestamp": "2026-09-10T15:45:20Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7612.5,
+    "stop_price": 7603.75,
+    "target_price": 7648.5,
+    "contracts": 2,
+    "rr": 4.11,
+    "risk_usd": 88.0,
+    "killzone": "RTH",
+    "subject": "[SIGNAL] LONG MES @ 7612.50",
+    "body": "Direction: LONG\nEntry (planned): 7612.50\nStop: 7603.75\nTarget: 7648.50\nContracts: 2\nR:R = 1:4.11\nRisk: $88\nReward: $360\nKillzone: RTH\nSource: SMT + IFVG@1m (pre-decision)"
   }
 ]
