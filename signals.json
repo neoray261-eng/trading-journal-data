@@ -5376,5 +5376,21 @@
     "killzone": null,
     "subject": "SMT MES — דלגתי (מחיר לא זמין לבדיקה)",
     "body": "לא הצלחתי לקבל מחיר עדכני לבדיקת R:R (גם WS וגם REST נכשלו). מדלגים לפי כלל הברזל."
+  },
+  {
+    "timestamp": "2026-09-11T08:25:29Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7626.0,
+    "stop_price": 7633.0,
+    "target_price": 7599.25,
+    "contracts": 2,
+    "rr": 3.82,
+    "risk_usd": 70.0,
+    "killzone": "LONDON-KZ",
+    "subject": "[SIGNAL] SHORT MES @ 7626.00",
+    "body": "Direction: SHORT\nEntry (planned): 7626.00\nStop: 7633.00\nTarget: 7599.25\nContracts: 2\nR:R = 1:3.82\nRisk: $70\nReward: $268\nKillzone: LONDON-KZ\nSource: SMT + IFVG@1m (pre-decision)"
   }
 ]
