@@ -5456,5 +5456,21 @@
     "killzone": null,
     "subject": "SMT-TV MES — דלגתי (מחיר לא זמין)",
     "body": "לא הצלחתי לקבל מחיר עדכני לבדיקת R:R (גם WS וגם REST נכשלו). מדלגים לפי כלל הברזל."
+  },
+  {
+    "timestamp": "2026-09-11T13:29:18Z",
+    "bot": "QT",
+    "event": "dry_run_signal",
+    "symbol": "MNQ",
+    "direction": "LONG",
+    "entry_price": 29329.0,
+    "stop_price": 29299.0,
+    "target_price": 29500.75,
+    "contracts": 2,
+    "rr": 5.72,
+    "risk_usd": 120.0,
+    "killzone": null,
+    "subject": "[DRY-RUN] QT MNQ LONG @ 29329.0",
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 16:30\nנכס: MNQ\nכיוון: LONG\nכניסה: 29329.0\nסטופ: 29299.0\nיעד: 29500.75\nחוזים: 2\nR:R: 1:5.72\nסיכון: $120\nרווח פוטנציאלי: $687"
   }
 ]
