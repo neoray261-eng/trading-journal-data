@@ -5967,7 +5967,13 @@
     "risk_usd": 120.0,
     "killzone": null,
     "subject": "[DRY-RUN] QT MES SHORT @ 7609.0",
-    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 16:30\nנכס: MES\nכיוון: SHORT\nכניסה: 7609.0\nסטופ: 7617.0\nיעד: 7593.0\nחוזים: 3\nR:R: 1:2.00\nסיכון: $120\nרווח פוטנציאלי: $240"
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 16:30\nנכס: MES\nכיוון: SHORT\nכניסה: 7609.0\nסטופ: 7617.0\nיעד: 7593.0\nחוזים: 3\nR:R: 1:2.00\nסיכון: $120\nרווח פוטנציאלי: $240",
+    "resolved": true,
+    "outcome": "stop",
+    "outcome_time": "2026-09-14T13:48:00Z",
+    "outcome_price": 7617.0,
+    "bar_extreme": 7618.0,
+    "slippage_pts": 1.0
   },
   {
     "timestamp": "2026-09-14T13:44:12Z",
@@ -5999,7 +6005,47 @@
     "risk_usd": 120.0,
     "killzone": null,
     "subject": "[DRY-RUN] QT MES SHORT @ 7612.75",
-    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 16:45\nנכס: MES\nכיוון: SHORT\nכניסה: 7612.75\nסטופ: 7620.75\nיעד: 7593.75\nחוזים: 3\nR:R: 1:2.38\nסיכון: $120\nרווח פוטנציאלי: $285"
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 16:45\nנכס: MES\nכיוון: SHORT\nכניסה: 7612.75\nסטופ: 7620.75\nיעד: 7593.75\nחוזים: 3\nR:R: 1:2.38\nסיכון: $120\nרווח פוטנציאלי: $285",
+    "resolved": true,
+    "outcome": "stop",
+    "outcome_time": "2026-09-14T13:49:00Z",
+    "outcome_price": 7620.75,
+    "bar_extreme": 7622.25,
+    "slippage_pts": 1.5
+  },
+  {
+    "timestamp": "2026-09-14T13:48:00Z",
+    "bot": "QT",
+    "event": "stop_hit",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7609.0,
+    "stop_price": 7617.0,
+    "target_price": 7593.0,
+    "contracts": 3,
+    "rr": 2.0,
+    "risk_usd": 120.0,
+    "bar_extreme": 7618.0,
+    "slippage_pts": 1.0,
+    "subject": "[AUTO] QT MES SHORT STOP HIT @ 7617.0",
+    "body": "resolved paper trade\nentry: 7609.0\nstop: 7617.0\ntarget: 7593.0\nhit: 7617.0 at 2026-09-14T13:48:00Z\nbar_extreme: 7618.0\nslippage_pts: 1.0\nsource signal: 2026-09-14T13:29:16Z"
+  },
+  {
+    "timestamp": "2026-09-14T13:49:00Z",
+    "bot": "QT",
+    "event": "stop_hit",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7612.75,
+    "stop_price": 7620.75,
+    "target_price": 7593.75,
+    "contracts": 3,
+    "rr": 2.38,
+    "risk_usd": 120.0,
+    "bar_extreme": 7622.25,
+    "slippage_pts": 1.5,
+    "subject": "[AUTO] QT MES SHORT STOP HIT @ 7620.75",
+    "body": "resolved paper trade\nentry: 7612.75\nstop: 7620.75\ntarget: 7593.75\nhit: 7620.75 at 2026-09-14T13:49:00Z\nbar_extreme: 7622.25\nslippage_pts: 1.5\nsource signal: 2026-09-14T13:44:13Z"
   },
   {
     "timestamp": "2026-09-14T13:59:21Z",
