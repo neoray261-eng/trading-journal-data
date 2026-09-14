@@ -5751,7 +5751,13 @@
     "risk_usd": 51.0,
     "killzone": "ASIA-KZ",
     "subject": "[TV] SHORT MNQ @ 29012.75",
-    "body": "Direction: SHORT\nEntry: 29012.75\nStop: 29038.25\nTarget: 28961.75\nContracts: 1\nR:R = 1:2.00\nRisk: $51\nReward: $102\nKillzone=ASIA-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+    "body": "Direction: SHORT\nEntry: 29012.75\nStop: 29038.25\nTarget: 28961.75\nContracts: 1\nR:R = 1:2.00\nRisk: $51\nReward: $102\nKillzone=ASIA-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)",
+    "resolved": true,
+    "outcome": "target",
+    "outcome_time": "2026-09-14T07:00:00Z",
+    "outcome_price": 28961.75,
+    "bar_extreme": 28937.5,
+    "slippage_pts": 24.25
   },
   {
     "timestamp": "2026-09-14T04:41:45Z",
@@ -5929,5 +5935,22 @@
     "slippage_pts": 0.25,
     "subject": "[AUTO] SMT-TV-SIGNAL MES LONG STOP HIT @ 7615.75",
     "body": "resolved paper trade\nentry: 7623.25\nstop: 7615.75\ntarget: 7638.25\nhit: 7615.75 at 2026-09-14T05:42:00Z\nbar_extreme: 7615.5\nslippage_pts: 0.25\nsource signal: 2026-09-14T01:01:24Z"
+  },
+  {
+    "timestamp": "2026-09-14T07:00:00Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "target_hit",
+    "symbol": "MNQ",
+    "direction": "SHORT",
+    "entry_price": 29012.75,
+    "stop_price": 29038.25,
+    "target_price": 28961.75,
+    "contracts": 1,
+    "rr": 2.0,
+    "risk_usd": 51.0,
+    "bar_extreme": 28937.5,
+    "slippage_pts": 24.25,
+    "subject": "[AUTO] SMT-TV-SIGNAL MNQ SHORT TARGET HIT @ 28961.75",
+    "body": "resolved paper trade\nentry: 29012.75\nstop: 29038.25\ntarget: 28961.75\nhit: 28961.75 at 2026-09-14T07:00:00Z\nbar_extreme: 28937.5\nslippage_pts: 24.25\nsource signal: 2026-09-14T04:41:44Z"
   }
 ]
