@@ -5603,7 +5603,9 @@
     "risk_usd": 70.0,
     "killzone": "ASIA-KZ",
     "subject": "[SIGNAL] LONG MES @ 7621.50",
-    "body": "Direction: LONG\nEntry (planned): 7621.50\nStop: 7614.50\nTarget: 7670.50\nContracts: 2\nR:R = 1:7.00\nRisk: $70\nReward: $490\nKillzone: ASIA-KZ\nSource: SMT + IFVG@2m (pre-decision)"
+    "body": "Direction: LONG\nEntry (planned): 7621.50\nStop: 7614.50\nTarget: 7670.50\nContracts: 2\nR:R = 1:7.00\nRisk: $70\nReward: $490\nKillzone: ASIA-KZ\nSource: SMT + IFVG@2m (pre-decision)",
+    "resolved": true,
+    "outcome": "stop"
   },
   {
     "timestamp": "2026-09-14T00:50:20Z",
