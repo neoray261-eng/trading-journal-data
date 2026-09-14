@@ -5952,5 +5952,21 @@
     "slippage_pts": 24.25,
     "subject": "[AUTO] SMT-TV-SIGNAL MNQ SHORT TARGET HIT @ 28961.75",
     "body": "resolved paper trade\nentry: 29012.75\nstop: 29038.25\ntarget: 28961.75\nhit: 28961.75 at 2026-09-14T07:00:00Z\nbar_extreme: 28937.5\nslippage_pts: 24.25\nsource signal: 2026-09-14T04:41:44Z"
+  },
+  {
+    "timestamp": "2026-09-14T13:29:16Z",
+    "bot": "QT",
+    "event": "dry_run_signal",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7609.0,
+    "stop_price": 7617.0,
+    "target_price": 7593.0,
+    "contracts": 3,
+    "rr": 2.0,
+    "risk_usd": 120.0,
+    "killzone": null,
+    "subject": "[DRY-RUN] QT MES SHORT @ 7609.0",
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 16:30\nנכס: MES\nכיוון: SHORT\nכניסה: 7609.0\nסטופ: 7617.0\nיעד: 7593.0\nחוזים: 3\nR:R: 1:2.00\nסיכון: $120\nרווח פוטנציאלי: $240"
   }
 ]
