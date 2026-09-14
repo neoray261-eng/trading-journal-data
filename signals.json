@@ -6016,5 +6016,21 @@
     "killzone": null,
     "subject": "[DRY-RUN] QT MES SHORT @ 7631.5",
     "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 17:00\nנכס: MES\nכיוון: SHORT\nכניסה: 7631.5\nסטופ: 7639.5\nיעד: 7593.75\nחוזים: 3\nR:R: 1:4.72\nסיכון: $120\nרווח פוטנציאלי: $566"
+  },
+  {
+    "timestamp": "2026-09-14T13:59:25Z",
+    "bot": "QT",
+    "event": "signal",
+    "symbol": null,
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "QT ידלג — לימיט רחוק מדי (588 נק')",
+    "body": "סאטפ LONG על MNQ\nמחיר עכשיו: 28998.75\nלימיט מתוכנן: 29586.50\nמרחק: 588 נקודות (מעל התקרה 150)\n\nתנועה כזאת נדירה — הבוט לא ישחית פקודה על סאטפ שכזה."
   }
 ]
