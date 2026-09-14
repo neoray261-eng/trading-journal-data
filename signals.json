@@ -6061,7 +6061,13 @@
     "risk_usd": 120.0,
     "killzone": null,
     "subject": "[DRY-RUN] QT MES SHORT @ 7631.5",
-    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 17:00\nנכס: MES\nכיוון: SHORT\nכניסה: 7631.5\nסטופ: 7639.5\nיעד: 7593.75\nחוזים: 3\nR:R: 1:4.72\nסיכון: $120\nרווח פוטנציאלי: $566"
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nזמן: 17:00\nנכס: MES\nכיוון: SHORT\nכניסה: 7631.5\nסטופ: 7639.5\nיעד: 7593.75\nחוזים: 3\nR:R: 1:4.72\nסיכון: $120\nרווח פוטנציאלי: $566",
+    "resolved": true,
+    "outcome": "stop",
+    "outcome_time": "2026-09-14T15:30:00Z",
+    "outcome_price": 7639.5,
+    "bar_extreme": 7681.25,
+    "slippage_pts": 41.75
   },
   {
     "timestamp": "2026-09-14T13:59:25Z",
@@ -6078,5 +6084,22 @@
     "killzone": null,
     "subject": "QT ידלג — לימיט רחוק מדי (588 נק')",
     "body": "סאטפ LONG על MNQ\nמחיר עכשיו: 28998.75\nלימיט מתוכנן: 29586.50\nמרחק: 588 נקודות (מעל התקרה 150)\n\nתנועה כזאת נדירה — הבוט לא ישחית פקודה על סאטפ שכזה."
+  },
+  {
+    "timestamp": "2026-09-14T15:30:00Z",
+    "bot": "QT",
+    "event": "stop_hit",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7631.5,
+    "stop_price": 7639.5,
+    "target_price": 7593.75,
+    "contracts": 3,
+    "rr": 4.72,
+    "risk_usd": 120.0,
+    "bar_extreme": 7681.25,
+    "slippage_pts": 41.75,
+    "subject": "[AUTO] QT MES SHORT STOP HIT @ 7639.5",
+    "body": "resolved paper trade\nentry: 7631.5\nstop: 7639.5\ntarget: 7593.75\nhit: 7639.5 at 2026-09-14T15:30:00Z\nbar_extreme: 7681.25\nslippage_pts: 41.75\nsource signal: 2026-09-14T13:59:21Z"
   }
 ]

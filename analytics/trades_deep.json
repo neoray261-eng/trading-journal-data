@@ -2023,5 +2023,30 @@
     "rr_planned": 2.38,
     "contracts": 3,
     "risk_usd": 120.0
+  },
+  {
+    "signal_ts": "2026-09-14T13:59:21Z",
+    "outcome_ts": "2026-09-14T15:30:00Z",
+    "bot": "QT",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "killzone": null,
+    "entry_price": 7631.5,
+    "stop_price": 7639.5,
+    "target_price": 7593.75,
+    "outcome": "stop",
+    "outcome_price": 7639.5,
+    "bar_extreme": 7681.25,
+    "slippage_pts": 41.75,
+    "mfe_pts": 20.0,
+    "mae_pts": 49.75,
+    "mfe_r": 2.5,
+    "mae_r": 6.219,
+    "mfe_time_min": 90.7,
+    "mae_time_min": 90.7,
+    "duration_min": 90.7,
+    "rr_planned": 4.72,
+    "contracts": 3,
+    "risk_usd": 120.0
   }
 ]
