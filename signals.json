@@ -6101,5 +6101,21 @@
     "slippage_pts": 41.75,
     "subject": "[AUTO] QT MES SHORT STOP HIT @ 7639.5",
     "body": "resolved paper trade\nentry: 7631.5\nstop: 7639.5\ntarget: 7593.75\nhit: 7639.5 at 2026-09-14T15:30:00Z\nbar_extreme: 7681.25\nslippage_pts: 41.75\nsource signal: 2026-09-14T13:59:21Z"
+  },
+  {
+    "timestamp": "2026-09-14T22:45:26Z",
+    "bot": "SMT",
+    "event": "startup",
+    "symbol": null,
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "Bot started (startup ping)",
+    "body": "SMT+IFVG bot just started on Railway.\nDRY_RUN=False\nAllowed: MNQ L=True/S=True, MES L=True/S=True\nIf you got this — email path from Railway works."
   }
 ]
