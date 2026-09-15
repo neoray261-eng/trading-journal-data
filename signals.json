@@ -6362,5 +6362,21 @@
     "killzone": "RTH",
     "subject": "[TV] LONG MES @ 7656.00",
     "body": "Direction: LONG\nEntry: 7656.00\nStop: 7647.50\nTarget: 7673.00\nContracts: 2\nR:R = 1:2.00\nRisk: $85\nReward: $170\nKillzone=RTH\nWaited 2 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+  },
+  {
+    "timestamp": "2026-09-15T19:08:34Z",
+    "bot": "MONITOR",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "🚨 Monitor flatten MESZ6 @ TV",
+    "body": "Reason: NO STOP after 50s\nAccount: TV\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: +2\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI."
   }
 ]
