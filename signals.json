@@ -6378,5 +6378,21 @@
     "killzone": null,
     "subject": "🚨 Monitor flatten MESZ6 @ TV",
     "body": "Reason: NO STOP after 50s\nAccount: TV\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: +2\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI."
+  },
+  {
+    "timestamp": "2026-09-15T20:01:21Z",
+    "bot": "ORB-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": null,
+    "entry_price": 7660.0,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "[רווח] ORB MES @ 7660.00 (סגירת יום (EOD))",
+    "body": "תוצאה: רווח\nבוט: ORB-SIGNAL (Opening Range Breakout)\nסיבת יציאה: סגירת יום (EOD)\nמחיר יציאה: 7660.00\nנקודות: +9.50\nרווח/הפסד: $+48\nסימולציה בלבד — לא בוצע מסחר אמיתי"
   }
 ]
