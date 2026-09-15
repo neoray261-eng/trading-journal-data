@@ -6394,5 +6394,21 @@
     "killzone": null,
     "subject": "[רווח] ORB MES @ 7660.00 (סגירת יום (EOD))",
     "body": "תוצאה: רווח\nבוט: ORB-SIGNAL (Opening Range Breakout)\nסיבת יציאה: סגירת יום (EOD)\nמחיר יציאה: 7660.00\nנקודות: +9.50\nרווח/הפסד: $+48\nסימולציה בלבד — לא בוצע מסחר אמיתי"
+  },
+  {
+    "timestamp": "2026-09-15T20:08:35Z",
+    "bot": "MONITOR",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": null,
+    "entry_price": 7659.38,
+    "stop_price": 7647.25,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "🚨🚨 Monitor cut ROLLBACK — full flatten MESZ6 @ MAIN",
+    "body": "Cut failed mid-way — flattening as rollback.\nReason: RISK $242 > cap $105  (net=-4, entry=7659.38, stop=7647.25, pts=12.12, pt_val=$5) · post-close qty mismatch (expected 1, got 0)\nPosition (approx before flatten): 0 contracts\n\nVerify in broker UI. There may be leftover working orders."
   }
 ]
