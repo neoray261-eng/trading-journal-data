@@ -1,19 +1,40 @@
 {
   "source": "takeprofit_userscript",
-  "generated_at": "2026-09-15T05:24:37.252Z",
+  "generated_at": "2026-09-15T05:29:17.248Z",
   "accounts": [
     {
       "name": "TAKEPROFIT852355841",
       "id": 64953497,
       "type": "Customer",
       "active": true,
-      "balance_current": 24968.5,
+      "balance_current": 24966.25,
       "balance_sod": 24968.5,
-      "realized_pnl_today": 0,
-      "realized_pnl_week": 0,
-      "as_of": "2026-09-11T21:34:43.008Z",
+      "realized_pnl_today": -2.25,
+      "realized_pnl_week": -2.25,
+      "as_of": "2026-09-15T05:24:48.097Z",
       "fills_today": 0,
-      "open_positions": []
+      "open_positions": [
+        {
+          "id": 651771830057,
+          "accountId": 64953497,
+          "contractId": 4470324,
+          "timestamp": "2026-09-15T05:24:48.095Z",
+          "tradeDate": {
+            "year": 2026,
+            "month": 9,
+            "day": 15
+          },
+          "netPos": 3,
+          "netPrice": 29319.5,
+          "bought": 3,
+          "boughtValue": 87958.5,
+          "sold": 0,
+          "soldValue": 0,
+          "archived": false,
+          "prevPos": 0,
+          "isActiveOrPendingSettlement": true
+        }
+      ]
     }
   ],
   "trades": [],
