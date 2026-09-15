@@ -6410,5 +6410,21 @@
     "killzone": null,
     "subject": "🚨🚨 Monitor cut ROLLBACK — full flatten MESZ6 @ MAIN",
     "body": "Cut failed mid-way — flattening as rollback.\nReason: RISK $242 > cap $105  (net=-4, entry=7659.38, stop=7647.25, pts=12.12, pt_val=$5) · post-close qty mismatch (expected 1, got 0)\nPosition (approx before flatten): 0 contracts\n\nVerify in broker UI. There may be leftover working orders."
+  },
+  {
+    "timestamp": "2026-09-15T20:09:31Z",
+    "bot": "MONITOR",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "🚨 Monitor flatten MESZ6 @ MAIN",
+    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI."
   }
 ]
