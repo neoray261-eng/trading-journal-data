@@ -1,21 +1,7 @@
 {
   "source": "takeprofit_userscript",
-  "generated_at": "2026-09-15T12:13:49.403Z",
-  "accounts": [
-    {
-      "name": "TAKEPROFIT852355841",
-      "id": 64953497,
-      "type": "Customer",
-      "active": true,
-      "balance_current": 25228,
-      "balance_sod": 24968.5,
-      "realized_pnl_today": 259.5,
-      "realized_pnl_week": 259.5,
-      "as_of": "2026-09-15T12:01:05.730Z",
-      "fills_today": 0,
-      "open_positions": []
-    }
-  ],
+  "generated_at": "2026-09-15T20:41:06.062Z",
+  "accounts": [],
   "trades": [],
   "note_hebrew": "סונכרן אוטומטית מ-Tradovate דרך Take Profit userscript. עסקאות של היום בלבד."
 }
