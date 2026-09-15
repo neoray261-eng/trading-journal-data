@@ -6297,7 +6297,13 @@
     "risk_usd": 90.0,
     "killzone": "RTH",
     "subject": "[SIGNAL] LONG MES @ 7651.75",
-    "body": "Direction: LONG\nEntry (planned): 7651.75\nStop: 7647.25\nTarget: 7662.75\nContracts: 4\nR:R = 1:2.44\nRisk: $90\nReward: $220\nKillzone: RTH\nSource: SMT + IFVG@1m (pre-decision)"
+    "body": "Direction: LONG\nEntry (planned): 7651.75\nStop: 7647.25\nTarget: 7662.75\nContracts: 4\nR:R = 1:2.44\nRisk: $90\nReward: $220\nKillzone: RTH\nSource: SMT + IFVG@1m (pre-decision)",
+    "resolved": true,
+    "outcome": "target",
+    "outcome_time": "2026-09-15T20:08:00Z",
+    "outcome_price": 7662.75,
+    "bar_extreme": 7662.75,
+    "slippage_pts": 0.0
   },
   {
     "timestamp": "2026-09-15T19:05:24Z",
@@ -6394,6 +6400,23 @@
     "killzone": null,
     "subject": "[רווח] ORB MES @ 7660.00 (סגירת יום (EOD))",
     "body": "תוצאה: רווח\nבוט: ORB-SIGNAL (Opening Range Breakout)\nסיבת יציאה: סגירת יום (EOD)\nמחיר יציאה: 7660.00\nנקודות: +9.50\nרווח/הפסד: $+48\nסימולציה בלבד — לא בוצע מסחר אמיתי"
+  },
+  {
+    "timestamp": "2026-09-15T20:08:00Z",
+    "bot": "SMT-SIGNAL",
+    "event": "target_hit",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7651.75,
+    "stop_price": 7647.25,
+    "target_price": 7662.75,
+    "contracts": 4,
+    "rr": 2.44,
+    "risk_usd": 90.0,
+    "bar_extreme": 7662.75,
+    "slippage_pts": 0.0,
+    "subject": "[AUTO] SMT-SIGNAL MES LONG TARGET HIT @ 7662.75",
+    "body": "resolved paper trade\nentry: 7651.75\nstop: 7647.25\ntarget: 7662.75\nhit: 7662.75 at 2026-09-15T20:08:00Z\nbar_extreme: 7662.75\nslippage_pts: 0.0\nsource signal: 2026-09-15T19:05:18Z"
   },
   {
     "timestamp": "2026-09-15T20:08:35Z",
