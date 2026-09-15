@@ -6314,5 +6314,21 @@
     "killzone": null,
     "subject": "SMT MES סטופ נדחה — סגרתי מיד",
     "body": "Tradovate דחה את הסטופ (Canceled). סגירת פוזיציה להגנת התיק."
+  },
+  {
+    "timestamp": "2026-09-15T19:05:26Z",
+    "bot": "MONITOR",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": null,
+    "entry_price": 7656.25,
+    "stop_price": 7647.25,
+    "target_price": 7662.75,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": 90.0,
+    "killzone": null,
+    "subject": "✂️ Monitor smart-cut MESZ6 @ MAIN",
+    "body": "Reason: RISK $180 > cap $105  (net=4, entry=7656.25, stop=7647.25, pts=9.00, pt_val=$5)\nAccount: MAIN\nSymbol: MESZ6\nCut: 4 → 2 contracts (removed 2)\nStop: 7647.25 (qty=2)\nTarget: 7662.75 (qty=2)\nNew risk: $90 (under $100)\n\nThe trade continues with reduced exposure. Iron rule preserved."
   }
 ]
