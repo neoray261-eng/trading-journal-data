@@ -6330,5 +6330,21 @@
     "killzone": null,
     "subject": "✂️ Monitor smart-cut MESZ6 @ MAIN",
     "body": "Reason: RISK $180 > cap $105  (net=4, entry=7656.25, stop=7647.25, pts=9.00, pt_val=$5)\nAccount: MAIN\nSymbol: MESZ6\nCut: 4 → 2 contracts (removed 2)\nStop: 7647.25 (qty=2)\nTarget: 7662.75 (qty=2)\nNew risk: $90 (under $100)\n\nThe trade continues with reduced exposure. Iron rule preserved."
+  },
+  {
+    "timestamp": "2026-09-15T19:07:39Z",
+    "bot": "SMT",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "TV MES — פוזיציה יתומה בלי סטופ נסגרה",
+    "body": "הבוט לא ידע על פוזיציה של -2 ב-MES וגם אין סטופ פעיל. סגירה אוטומטית להגנה מפני חשיפה לא מוגבלת."
   }
 ]
