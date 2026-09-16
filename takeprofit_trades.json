@@ -1,7 +1,42 @@
 {
   "source": "takeprofit_userscript",
-  "generated_at": "2026-09-16T07:39:06.808Z",
-  "accounts": [],
+  "generated_at": "2026-09-16T07:39:34.819Z",
+  "accounts": [
+    {
+      "name": "TAKEPROFIT852355841",
+      "id": 64953497,
+      "type": "Customer",
+      "active": true,
+      "balance_current": 25225.75,
+      "balance_sod": 25228,
+      "realized_pnl_today": -2.25,
+      "realized_pnl_week": 257.25,
+      "as_of": "2026-09-16T07:37:25.056Z",
+      "fills_today": 0,
+      "open_positions": [
+        {
+          "id": 651771830163,
+          "accountId": 64953497,
+          "contractId": 4470324,
+          "timestamp": "2026-09-16T07:37:25.051Z",
+          "tradeDate": {
+            "year": 2026,
+            "month": 9,
+            "day": 16
+          },
+          "netPos": -3,
+          "netPrice": 29381,
+          "bought": 0,
+          "boughtValue": 0,
+          "sold": 3,
+          "soldValue": 88143,
+          "archived": false,
+          "prevPos": 0,
+          "isActiveOrPendingSettlement": true
+        }
+      ]
+    }
+  ],
   "trades": [],
   "note_hebrew": "סונכרן אוטומטית מ-Tradovate דרך Take Profit userscript. עסקאות של היום בלבד."
 }
