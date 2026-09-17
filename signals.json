@@ -6299,7 +6299,9 @@
     "risk_usd": 88.0,
     "killzone": null,
     "subject": "[ORB] SHORT MES @ 7669.50",
-    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nבוט: ORB-SIGNAL (Opening Range Breakout)\nכיוון: SHORT\nסימבול: MES\nכניסה: 7669.50\nסטופ: 7687.00\nטווח פתיחה: 7670.25 - 7687.00\nחוזים: 1\nסיכון: $88\nיעד: אין יעד קבוע — פלאט בסגירת ה-RTH (16:00 ET) או בסטופ, המוקדם מביניהם\nמקור: Opening Range Breakout 5 דקות (אסטרטגיה נפרדת מ-SMT)"
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nבוט: ORB-SIGNAL (Opening Range Breakout)\nכיוון: SHORT\nסימבול: MES\nכניסה: 7669.50\nסטופ: 7687.00\nטווח פתיחה: 7670.25 - 7687.00\nחוזים: 1\nסיכון: $88\nיעד: אין יעד קבוע — פלאט בסגירת ה-RTH (16:00 ET) או בסטופ, המוקדם מביניהם\nמקור: Opening Range Breakout 5 דקות (אסטרטגיה נפרדת מ-SMT)",
+    "resolved": true,
+    "outcome": "expired"
   },
   {
     "timestamp": "2026-09-15T19:05:18Z",
