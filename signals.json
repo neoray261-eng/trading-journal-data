@@ -6932,7 +6932,9 @@
     "risk_usd": null,
     "killzone": null,
     "subject": "🚨 Monitor flatten MESZ6 @ MAIN",
-    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI."
+    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI.",
+    "resolved": true,
+    "outcome": "expired"
   },
   {
     "timestamp": "2026-09-15T20:33:45Z",
@@ -6948,7 +6950,9 @@
     "risk_usd": null,
     "killzone": null,
     "subject": "🚨 Monitor flatten MESZ6 @ MAIN",
-    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI."
+    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI.",
+    "resolved": true,
+    "outcome": "expired"
   },
   {
     "timestamp": "2026-09-15T20:34:39Z",
@@ -6964,7 +6968,9 @@
     "risk_usd": null,
     "killzone": null,
     "subject": "🚨 Monitor flatten MESZ6 @ MAIN",
-    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI."
+    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI.",
+    "resolved": true,
+    "outcome": "expired"
   },
   {
     "timestamp": "2026-09-15T20:35:33Z",
@@ -6980,7 +6986,9 @@
     "risk_usd": null,
     "killzone": null,
     "subject": "🚨 Monitor flatten MESZ6 @ MAIN",
-    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI."
+    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI.",
+    "resolved": true,
+    "outcome": "expired"
   },
   {
     "timestamp": "2026-09-15T20:36:30Z",
@@ -6996,7 +7004,9 @@
     "risk_usd": null,
     "killzone": null,
     "subject": "🚨 Monitor flatten MESZ6 @ MAIN",
-    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI."
+    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI.",
+    "resolved": true,
+    "outcome": "expired"
   },
   {
     "timestamp": "2026-09-15T20:37:24Z",
@@ -7012,7 +7022,9 @@
     "risk_usd": null,
     "killzone": null,
     "subject": "🚨 Monitor flatten MESZ6 @ MAIN",
-    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI."
+    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI.",
+    "resolved": true,
+    "outcome": "expired"
   },
   {
     "timestamp": "2026-09-15T20:38:23Z",
@@ -7028,7 +7040,9 @@
     "risk_usd": null,
     "killzone": null,
     "subject": "🚨 Monitor flatten MESZ6 @ MAIN",
-    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI."
+    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI.",
+    "resolved": true,
+    "outcome": "expired"
   },
   {
     "timestamp": "2026-09-15T20:39:17Z",
@@ -7044,7 +7058,9 @@
     "risk_usd": null,
     "killzone": null,
     "subject": "🚨 Monitor flatten MESZ6 @ MAIN",
-    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI."
+    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI.",
+    "resolved": true,
+    "outcome": "expired"
   },
   {
     "timestamp": "2026-09-15T20:40:13Z",
@@ -7060,7 +7076,9 @@
     "risk_usd": null,
     "killzone": null,
     "subject": "🚨 Monitor flatten MESZ6 @ MAIN",
-    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI."
+    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI.",
+    "resolved": true,
+    "outcome": "expired"
   },
   {
     "timestamp": "2026-09-15T20:41:09Z",
@@ -7076,7 +7094,9 @@
     "risk_usd": null,
     "killzone": null,
     "subject": "🚨 Monitor flatten MESZ6 @ MAIN",
-    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI."
+    "body": "Reason: NO STOP after 50s\nAccount: MAIN\nSymbol: MESZ6\nContract ID: 4470322\nNet pos before flatten: -1\n\nThe monitor detected an unprotected or over-risked position and closed it immediately. Verify in the broker's UI.",
+    "resolved": true,
+    "outcome": "expired"
   },
   {
     "timestamp": "2026-09-15T20:45:42Z",
