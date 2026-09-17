@@ -7430,7 +7430,13 @@
     "risk_usd": 80.0,
     "killzone": "RTH",
     "subject": "[TV] LONG MES @ 7708.75",
-    "body": "Direction: LONG\nEntry: 7708.75\nStop: 7700.75\nTarget: 7724.75\nContracts: 2\nR:R = 1:2.00\nRisk: $80\nReward: $160\nKillzone=RTH\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+    "body": "Direction: LONG\nEntry: 7708.75\nStop: 7700.75\nTarget: 7724.75\nContracts: 2\nR:R = 1:2.00\nRisk: $80\nReward: $160\nKillzone=RTH\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)",
+    "resolved": true,
+    "outcome": "stop",
+    "outcome_time": "2026-09-17T22:05:00Z",
+    "outcome_price": 7700.75,
+    "bar_extreme": 7700.75,
+    "slippage_pts": 0.0
   },
   {
     "timestamp": "2026-09-17T19:31:46Z",
@@ -7447,5 +7453,22 @@
     "killzone": null,
     "subject": "MAIN MNQ — פוזיציה יתומה בלי סטופ נסגרה",
     "body": "הבוט לא ידע על פוזיציה של -2 ב-MNQ וגם אין סטופ פעיל. סגירה אוטומטית להגנה מפני חשיפה לא מוגבלת."
+  },
+  {
+    "timestamp": "2026-09-17T22:05:00Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "stop_hit",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7708.75,
+    "stop_price": 7700.75,
+    "target_price": 7724.75,
+    "contracts": 2,
+    "rr": 2.0,
+    "risk_usd": 80.0,
+    "bar_extreme": 7700.75,
+    "slippage_pts": 0.0,
+    "subject": "[AUTO] SMT-TV-SIGNAL MES LONG STOP HIT @ 7700.75",
+    "body": "resolved paper trade\nentry: 7708.75\nstop: 7700.75\ntarget: 7724.75\nhit: 7700.75 at 2026-09-17T22:05:00Z\nbar_extreme: 7700.75\nslippage_pts: 0.0\nsource signal: 2026-09-17T19:02:07Z"
   }
 ]
