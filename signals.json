@@ -7251,5 +7251,21 @@
     "killzone": null,
     "subject": "✂️ Monitor smart-cut MNQZ6 @ MAIN",
     "body": "Reason: RISK $135 > cap $105  (net=4, entry=29733.38, stop=29716.50, pts=16.88, pt_val=$2)\nAccount: MAIN\nSymbol: MNQZ6\nCut: 4 → 2 contracts (removed 2)\nStop: 29716.50 (qty=2)\nTarget: 29753.25 (qty=2)\nNew risk: $68 (under $100)\n\nThe trade continues with reduced exposure. Iron rule preserved."
+  },
+  {
+    "timestamp": "2026-09-17T17:17:21Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "signal",
+    "symbol": "MNQ",
+    "direction": "LONG",
+    "entry_price": 29736.25,
+    "stop_price": 29715.0,
+    "target_price": 29778.75,
+    "contracts": 2,
+    "rr": 2.0,
+    "risk_usd": 85.0,
+    "killzone": "RTH",
+    "subject": "[TV] LONG MNQ @ 29736.25",
+    "body": "Direction: LONG\nEntry: 29736.25\nStop: 29715.00\nTarget: 29778.75\nContracts: 2\nR:R = 1:2.00\nRisk: $85\nReward: $170\nKillzone=RTH\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
   }
 ]
