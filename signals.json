@@ -7614,5 +7614,21 @@
     "slippage_pts": 1.0,
     "subject": "[AUTO] SMT-TV-SIGNAL MES LONG STOP HIT @ 7723.25",
     "body": "resolved paper trade\nentry: 7724.25\nstop: 7723.25\ntarget: 7726.25\nhit: 7723.25 at 2026-09-18T09:30:00Z\nbar_extreme: 7722.25\nslippage_pts: 1.0\nsource signal: 2026-09-18T09:29:08Z"
+  },
+  {
+    "timestamp": "2026-09-18T13:36:12Z",
+    "bot": "ORB-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7703.25,
+    "stop_price": 7714.5,
+    "target_price": null,
+    "contracts": 1,
+    "rr": null,
+    "risk_usd": 56.0,
+    "killzone": null,
+    "subject": "[ORB] SHORT MES @ 7703.25",
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nבוט: ORB-SIGNAL (Opening Range Breakout)\nכיוון: SHORT\nסימבול: MES\nכניסה: 7703.25\nסטופ: 7714.50\nטווח פתיחה: 7706.25 - 7714.50\nחוזים: 1\nסיכון: $56\nיעד: אין יעד קבוע — פלאט בסגירת ה-RTH (16:00 ET) או בסטופ, המוקדם מביניהם\nמקור: Opening Range Breakout 5 דקות (אסטרטגיה נפרדת מ-SMT)"
   }
 ]
