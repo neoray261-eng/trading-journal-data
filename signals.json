@@ -7720,6 +7720,29 @@
     "risk_usd": 56.0,
     "killzone": "RTH",
     "subject": "[TV] SHORT MNQ @ 29729.75",
-    "body": "Direction: SHORT\nEntry: 29729.75\nStop: 29758.00\nTarget: 29673.25\nContracts: 1\nR:R = 1:2.00\nRisk: $56\nReward: $113\nKillzone=RTH\nWaited 2 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+    "body": "Direction: SHORT\nEntry: 29729.75\nStop: 29758.00\nTarget: 29673.25\nContracts: 1\nR:R = 1:2.00\nRisk: $56\nReward: $113\nKillzone=RTH\nWaited 2 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)",
+    "resolved": true,
+    "outcome": "stop",
+    "outcome_time": "2026-09-18T17:44:00Z",
+    "outcome_price": 29758.0,
+    "bar_extreme": 29762.5,
+    "slippage_pts": 4.5
+  },
+  {
+    "timestamp": "2026-09-18T17:44:00Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "stop_hit",
+    "symbol": "MNQ",
+    "direction": "SHORT",
+    "entry_price": 29729.75,
+    "stop_price": 29758.0,
+    "target_price": 29673.25,
+    "contracts": 1,
+    "rr": 2.0,
+    "risk_usd": 56.0,
+    "bar_extreme": 29762.5,
+    "slippage_pts": 4.5,
+    "subject": "[AUTO] SMT-TV-SIGNAL MNQ SHORT STOP HIT @ 29758.0",
+    "body": "resolved paper trade\nentry: 29729.75\nstop: 29758.0\ntarget: 29673.25\nhit: 29758.0 at 2026-09-18T17:44:00Z\nbar_extreme: 29762.5\nslippage_pts: 4.5\nsource signal: 2026-09-18T17:13:19Z"
   }
 ]
