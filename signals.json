@@ -7550,5 +7550,21 @@
     "killzone": null,
     "subject": "SMT MES — פוזיציה נסגרה בברוקר",
     "body": "הבוט זיהה שהפוזיציה כבר לא קיימת בברוקר (סגירה מבחוץ / liquidation / manual).\nמבטל stop/target שנשארו ומאפס. בדוק ב-Tradovate."
+  },
+  {
+    "timestamp": "2026-09-18T09:29:08Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7724.25,
+    "stop_price": 7723.25,
+    "target_price": 7726.25,
+    "contracts": 20,
+    "rr": 2.0,
+    "risk_usd": 100.0,
+    "killzone": "OFF-KZ",
+    "subject": "[TV] LONG MES @ 7724.25",
+    "body": "Direction: LONG\nEntry: 7724.25\nStop: 7723.25\nTarget: 7726.25\nContracts: 20\nR:R = 1:2.00\nRisk: $100\nReward: $200\nKillzone=OFF-KZ\nWaited 8 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
   }
 ]
