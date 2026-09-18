@@ -7744,5 +7744,21 @@
     "slippage_pts": 4.5,
     "subject": "[AUTO] SMT-TV-SIGNAL MNQ SHORT STOP HIT @ 29758.0",
     "body": "resolved paper trade\nentry: 29729.75\nstop: 29758.0\ntarget: 29673.25\nhit: 29758.0 at 2026-09-18T17:44:00Z\nbar_extreme: 29762.5\nslippage_pts: 4.5\nsource signal: 2026-09-18T17:13:19Z"
+  },
+  {
+    "timestamp": "2026-09-18T18:54:10Z",
+    "bot": "ORB-SIGNAL",
+    "event": "stop_hit",
+    "symbol": "MES",
+    "direction": null,
+    "entry_price": 7714.5,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "[הפסד] ORB MES @ 7714.50 (סטופ נפגע)",
+    "body": "תוצאה: הפסד\nבוט: ORB-SIGNAL (Opening Range Breakout)\nסיבת יציאה: סטופ נפגע\nמחיר יציאה: 7714.50\nנקודות: -11.25\nרווח/הפסד: $-56\nסימולציה בלבד — לא בוצע מסחר אמיתי"
   }
 ]
