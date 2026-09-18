@@ -7666,5 +7666,21 @@
     "killzone": "OFF-KZ",
     "subject": "[SIGNAL] LONG MES @ 7700.50",
     "body": "Direction: LONG\nEntry (planned): 7700.50\nStop: 7697.25\nTarget: 7729.50\nContracts: 6\nR:R = 1:8.92\nRisk: $98\nReward: $870\nKillzone: OFF-KZ\nSource: SMT + IFVG@1m (pre-decision)"
+  },
+  {
+    "timestamp": "2026-09-18T14:10:19Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": null,
+    "entry_price": null,
+    "stop_price": 7697.25,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "SMT MES — דלגתי (סטופ כבר נחצה)",
+    "body": "תוכנן: LONG @ 7700.50 stop 7697.25\nמחיר עכשיו: 7692.00 — כבר מתחת לסטופ.\nהסטאפ לא רלוונטי יותר. לא נכנסים."
   }
 ]
