@@ -7634,5 +7634,21 @@
     "killzone": null,
     "subject": "[ORB] SHORT MES @ 7703.25",
     "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nבוט: ORB-SIGNAL (Opening Range Breakout)\nכיוון: SHORT\nסימבול: MES\nכניסה: 7703.25\nסטופ: 7714.50\nטווח פתיחה: 7706.25 - 7714.50\nחוזים: 1\nסיכון: $56\nיעד: אין יעד קבוע — פלאט בסגירת ה-RTH (16:00 ET) או בסטופ, המוקדם מביניהם\nמקור: Opening Range Breakout 5 דקות (אסטרטגיה נפרדת מ-SMT)"
+  },
+  {
+    "timestamp": "2026-09-18T13:59:19Z",
+    "bot": "QT",
+    "event": "signal",
+    "symbol": null,
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "QT ידלג — לימיט רחוק מדי (226 נק')",
+    "body": "סאטפ SHORT על MNQ\nמחיר עכשיו: 29809.00\nלימיט מתוכנן: 29582.50\nמרחק: 226 נקודות (מעל התקרה 150)\n\nתנועה כזאת נדירה — הבוט לא ישחית פקודה על סאטפ שכזה."
   }
 ]
