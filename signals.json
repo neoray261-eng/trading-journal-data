@@ -7502,5 +7502,21 @@
     "killzone": null,
     "subject": "SMT MES LONG @ 7728.50 — חתכתי חוזים",
     "body": "סליפאג' העלה את הסיכון ל-$106\nחתכתי מ-5 ל-4 חוזים\nסיכון עכשיו: ~$85\nרווח אפשרי: ~$210\n(היחס בדולרים ירד עם החוזים — יחסי)"
+  },
+  {
+    "timestamp": "2026-09-18T09:20:27Z",
+    "bot": "MONITOR",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": null,
+    "entry_price": 7728.5,
+    "stop_price": 7724.25,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "🚨🚨 Monitor cut ROLLBACK — full flatten MESZ6 @ MAIN",
+    "body": "Cut failed mid-way — flattening as rollback.\nReason: RISK $212 > cap $105  (net=10, entry=7728.50, stop=7724.25, pts=4.25, pt_val=$5) · post-close qty mismatch (expected 4, got 3)\nPosition (approx before flatten): 3 contracts\n\nVerify in broker UI. There may be leftover working orders."
   }
 ]
