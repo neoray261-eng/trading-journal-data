@@ -7870,5 +7870,21 @@
     "killzone": null,
     "subject": "[רווח] ORB MES @ 7832.25 (סגירת יום (EOD))",
     "body": "תוצאה: רווח\nבוט: ORB-SIGNAL (Opening Range Breakout)\nסיבת יציאה: סגירת יום (EOD)\nמחיר יציאה: 7832.25\nנקודות: +66.00\nרווח/הפסד: $+660\nסימולציה בלבד — לא בוצע מסחר אמיתי"
+  },
+  {
+    "timestamp": "2026-09-22T07:28:13Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7835.25,
+    "stop_price": 7832.0,
+    "target_price": 7841.75,
+    "contracts": 6,
+    "rr": 2.0,
+    "risk_usd": 98.0,
+    "killzone": "LONDON-KZ",
+    "subject": "[TV] LONG MES @ 7835.25",
+    "body": "Direction: LONG\nEntry: 7835.25\nStop: 7832.00\nTarget: 7841.75\nContracts: 6\nR:R = 1:2.00\nRisk: $98\nReward: $195\nKillzone=LONDON-KZ\nWaited 2 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
   }
 ]
