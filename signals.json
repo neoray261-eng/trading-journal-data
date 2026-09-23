@@ -8060,5 +8060,21 @@
     "killzone": "NY-KZ",
     "subject": "[TV] LONG MNQ @ 30957.00",
     "body": "Direction: LONG\nEntry: 30957.00\nStop: 30917.25\nTarget: 31036.50\nContracts: 1\nR:R = 1:2.00\nRisk: $80\nReward: $159\nKillzone=NY-KZ\nWaited 3 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+  },
+  {
+    "timestamp": "2026-09-23T13:32:30Z",
+    "bot": "SMT",
+    "event": "signal",
+    "symbol": "MNQ",
+    "direction": null,
+    "entry_price": null,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "SMT MNQ — פוזיציה נסגרה בברוקר",
+    "body": "הבוט זיהה שהפוזיציה כבר לא קיימת בברוקר (סגירה מבחוץ / liquidation / manual).\nמבטל stop/target שנשארו ומאפס. בדוק ב-Tradovate."
   }
 ]
