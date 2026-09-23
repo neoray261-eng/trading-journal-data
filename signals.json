@@ -7980,5 +7980,21 @@
     "slippage_pts": 0.0,
     "subject": "[AUTO] SMT-TV-SIGNAL MES LONG STOP HIT @ 7829.25",
     "body": "resolved paper trade\nentry: 7831.75\nstop: 7829.25\ntarget: 7836.75\nhit: 7829.25 at 2026-09-23T02:13:00Z\nbar_extreme: 7829.25\nslippage_pts: 0.0\nsource signal: 2026-09-23T02:05:16Z"
+  },
+  {
+    "timestamp": "2026-09-23T10:38:11Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7835.75,
+    "stop_price": 7841.25,
+    "target_price": 7824.75,
+    "contracts": 3,
+    "rr": 2.0,
+    "risk_usd": 82.0,
+    "killzone": "OFF-KZ",
+    "subject": "[TV] SHORT MES @ 7835.75",
+    "body": "Direction: SHORT\nEntry: 7835.75\nStop: 7841.25\nTarget: 7824.75\nContracts: 3\nR:R = 1:2.00\nRisk: $82\nReward: $165\nKillzone=OFF-KZ\nWaited 2 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
   }
 ]
