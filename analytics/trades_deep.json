@@ -2373,5 +2373,30 @@
     "rr_planned": 2.0,
     "contracts": 6,
     "risk_usd": 98.0
+  },
+  {
+    "signal_ts": "2026-09-23T02:05:16Z",
+    "outcome_ts": "2026-09-23T02:13:00Z",
+    "bot": "SMT-TV-SIGNAL",
+    "symbol": "MES",
+    "direction": "LONG",
+    "killzone": "ASIA-KZ",
+    "entry_price": 7831.75,
+    "stop_price": 7829.25,
+    "target_price": 7836.75,
+    "outcome": "stop",
+    "outcome_price": 7829.25,
+    "bar_extreme": 7829.25,
+    "slippage_pts": 0.0,
+    "mfe_pts": 0.0,
+    "mae_pts": 2.5,
+    "mfe_r": 0.0,
+    "mae_r": 1.0,
+    "mfe_time_min": 0.7,
+    "mae_time_min": 7.7,
+    "duration_min": 7.7,
+    "rr_planned": 2.0,
+    "contracts": 8,
+    "risk_usd": 100.0
   }
 ]
