@@ -8076,5 +8076,21 @@
     "killzone": null,
     "subject": "SMT MNQ — פוזיציה נסגרה בברוקר",
     "body": "הבוט זיהה שהפוזיציה כבר לא קיימת בברוקר (סגירה מבחוץ / liquidation / manual).\nמבטל stop/target שנשארו ומאפס. בדוק ב-Tradovate."
+  },
+  {
+    "timestamp": "2026-09-23T13:36:15Z",
+    "bot": "ORB-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7817.5,
+    "stop_price": 7826.5,
+    "target_price": null,
+    "contracts": 2,
+    "rr": null,
+    "risk_usd": 90.0,
+    "killzone": null,
+    "subject": "[ORB] SHORT MES @ 7817.50",
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nבוט: ORB-SIGNAL (Opening Range Breakout)\nכיוון: SHORT\nסימבול: MES\nכניסה: 7817.50\nסטופ: 7826.50\nטווח פתיחה: 7819.75 - 7826.50\nחוזים: 2\nסיכון: $90\nיעד: אין יעד קבוע — פלאט בסגירת ה-RTH (16:00 ET) או בסטופ, המוקדם מביניהם\nמקור: Opening Range Breakout 5 דקות (אסטרטגיה נפרדת מ-SMT)"
   }
 ]
