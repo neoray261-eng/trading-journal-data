@@ -8140,5 +8140,21 @@
     "killzone": "RTH",
     "subject": "[SIGNAL] SHORT MES @ 7777.00",
     "body": "Direction: SHORT\nEntry (planned): 7777.00\nStop: 7785.75\nTarget: 7759.00\nContracts: 2\nR:R = 1:2.06\nRisk: $88\nReward: $180\nKillzone: RTH\nSource: SMT + IFVG@1m (pre-decision)"
+  },
+  {
+    "timestamp": "2026-09-23T20:01:14Z",
+    "bot": "ORB-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": null,
+    "entry_price": 7772.25,
+    "stop_price": null,
+    "target_price": null,
+    "contracts": null,
+    "rr": null,
+    "risk_usd": null,
+    "killzone": null,
+    "subject": "[רווח] ORB MES @ 7772.25 (סגירת יום (EOD))",
+    "body": "תוצאה: רווח\nבוט: ORB-SIGNAL (Opening Range Breakout)\nסיבת יציאה: סגירת יום (EOD)\nמחיר יציאה: 7772.25\nנקודות: +45.25\nרווח/הפסד: $+452\nסימולציה בלבד — לא בוצע מסחר אמיתי"
   }
 ]
