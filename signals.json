@@ -8332,5 +8332,21 @@
     "killzone": null,
     "subject": "Bot started (startup ping)",
     "body": "SMT+IFVG bot just started on Railway.\nDRY_RUN=False\nAllowed: MNQ L=True/S=True, MES L=True/S=True\nIf you got this — email path from Railway works."
+  },
+  {
+    "timestamp": "2026-10-26T13:46:39Z",
+    "bot": "ORB-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7691.5,
+    "stop_price": 7677.0,
+    "target_price": null,
+    "contracts": 1,
+    "rr": null,
+    "risk_usd": 72.0,
+    "killzone": null,
+    "subject": "[ORB] LONG MES @ 7691.50",
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nבוט: ORB-SIGNAL (Opening Range Breakout)\nכיוון: LONG\nסימבול: MES\nכניסה: 7691.50\nסטופ: 7677.00\nטווח פתיחה: 7677.00 - 7691.25\nחוזים: 1\nסיכון: $72\nיעד: אין יעד קבוע — פלאט בסגירת ה-RTH (16:00 ET) או בסטופ, המוקדם מביניהם\nמקור: Opening Range Breakout 5 דקות (אסטרטגיה נפרדת מ-SMT)"
   }
 ]
