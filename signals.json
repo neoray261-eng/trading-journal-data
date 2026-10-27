@@ -8428,5 +8428,21 @@
     "killzone": "LONDON-KZ",
     "subject": "[SIGNAL] LONG MNQ @ 29332.75",
     "body": "Direction: LONG\nEntry (planned): 29332.75\nStop: 29287.50\nTarget: 29459.75\nContracts: 1\nR:R = 1:2.81\nRisk: $90\nReward: $254\nKillzone: LONDON-KZ\nSource: SMT + IFVG@1m (pre-decision)"
+  },
+  {
+    "timestamp": "2026-10-27T13:47:51Z",
+    "bot": "ORB-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7739.25,
+    "stop_price": 7732.0,
+    "target_price": null,
+    "contracts": 2,
+    "rr": null,
+    "risk_usd": 72.0,
+    "killzone": null,
+    "subject": "[ORB] LONG MES @ 7739.25",
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nבוט: ORB-SIGNAL (Opening Range Breakout)\nכיוון: LONG\nסימבול: MES\nכניסה: 7739.25\nסטופ: 7732.00\nטווח פתיחה: 7732.00 - 7739.00\nחוזים: 2\nסיכון: $72\nיעד: אין יעד קבוע — פלאט בסגירת ה-RTH (16:00 ET) או בסטופ, המוקדם מביניהם\nמקור: Opening Range Breakout 5 דקות (אסטרטגיה נפרדת מ-SMT)"
   }
 ]
