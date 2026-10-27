@@ -8396,5 +8396,21 @@
     "killzone": "ASIA-KZ",
     "subject": "[SIGNAL] LONG MES @ 7722.50",
     "body": "Direction: LONG\nEntry (planned): 7722.50\nStop: 7718.75\nTarget: 7731.00\nContracts: 5\nR:R = 1:2.27\nRisk: $94\nReward: $212\nKillzone: ASIA-KZ\nSource: SMT + IFVG@1m (pre-decision)"
+  },
+  {
+    "timestamp": "2026-10-27T03:11:13Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "LONG",
+    "entry_price": 7722.75,
+    "stop_price": 7720.25,
+    "target_price": 7727.75,
+    "contracts": 8,
+    "rr": 2.0,
+    "risk_usd": 100.0,
+    "killzone": "ASIA-KZ",
+    "subject": "[TV] LONG MES @ 7722.75",
+    "body": "Direction: LONG\nEntry: 7722.75\nStop: 7720.25\nTarget: 7727.75\nContracts: 8\nR:R = 1:2.00\nRisk: $100\nReward: $200\nKillzone=ASIA-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
   }
 ]
