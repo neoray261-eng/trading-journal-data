@@ -8588,5 +8588,21 @@
     "killzone": null,
     "subject": "[ORB] SHORT MES @ 7768.75",
     "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nבוט: ORB-SIGNAL (Opening Range Breakout)\nכיוון: SHORT\nסימבול: MES\nכניסה: 7768.75\nסטופ: 7777.25\nטווח פתיחה: 7769.50 - 7777.25\nחוזים: 2\nסיכון: $85\nיעד: אין יעד קבוע — פלאט בסגירת ה-RTH (16:00 ET) או בסטופ, המוקדם מביניהם\nמקור: Opening Range Breakout 5 דקות (אסטרטגיה נפרדת מ-SMT)"
+  },
+  {
+    "timestamp": "2026-10-28T13:55:24Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7772.75,
+    "stop_price": 7778.25,
+    "target_price": 7759.25,
+    "contracts": 3,
+    "rr": 2.45,
+    "risk_usd": 82.0,
+    "killzone": "RTH",
+    "subject": "[SIGNAL] SHORT MES @ 7772.75",
+    "body": "Direction: SHORT\nEntry (planned): 7772.75\nStop: 7778.25\nTarget: 7759.25\nContracts: 3\nR:R = 1:2.45\nRisk: $82\nReward: $202\nKillzone: RTH\nSource: SMT + IFVG@1m (pre-decision)"
   }
 ]
