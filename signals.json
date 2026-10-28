@@ -8524,5 +8524,21 @@
     "killzone": "LONDON-KZ",
     "subject": "[TV] LONG MNQ @ 29949.75",
     "body": "Direction: LONG\nEntry: 29949.75\nStop: 29926.50\nTarget: 29996.25\nContracts: 2\nR:R = 1:2.00\nRisk: $93\nReward: $186\nKillzone=LONDON-KZ\nWaited 3 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+  },
+  {
+    "timestamp": "2026-10-28T07:35:20Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7760.5,
+    "stop_price": 7762.5,
+    "target_price": 7752.25,
+    "contracts": 10,
+    "rr": 4.12,
+    "risk_usd": 100.0,
+    "killzone": "LONDON-KZ",
+    "subject": "[SIGNAL] SHORT MES @ 7760.50",
+    "body": "Direction: SHORT\nEntry (planned): 7760.50\nStop: 7762.50\nTarget: 7752.25\nContracts: 10\nR:R = 1:4.12\nRisk: $100\nReward: $412\nKillzone: LONDON-KZ\nSource: SMT + IFVG@1m (pre-decision)"
   }
 ]
