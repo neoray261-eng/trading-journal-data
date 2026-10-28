@@ -8620,5 +8620,21 @@
     "killzone": "RTH",
     "subject": "[TV] SHORT MES @ 7763.50",
     "body": "Direction: SHORT\nEntry: 7763.50\nStop: 7779.25\nTarget: 7732.00\nContracts: 1\nR:R = 1:2.00\nRisk: $79\nReward: $158\nKillzone=RTH\nWaited 2 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+  },
+  {
+    "timestamp": "2026-10-28T15:45:24Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MNQ",
+    "direction": "SHORT",
+    "entry_price": 29846.5,
+    "stop_price": 29864.5,
+    "target_price": 29767.25,
+    "contracts": 2,
+    "rr": 4.4,
+    "risk_usd": 72.0,
+    "killzone": "RTH",
+    "subject": "[SIGNAL] SHORT MNQ @ 29846.50",
+    "body": "Direction: SHORT\nEntry (planned): 29846.50\nStop: 29864.50\nTarget: 29767.25\nContracts: 2\nR:R = 1:4.40\nRisk: $72\nReward: $317\nKillzone: RTH\nSource: SMT + IFVG@1m (pre-decision)"
   }
 ]
