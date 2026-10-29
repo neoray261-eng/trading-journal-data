@@ -8748,5 +8748,21 @@
     "killzone": null,
     "subject": "[הפסד] ORB MES @ 7751.50 (סטופ נפגע)",
     "body": "תוצאה: הפסד\nבוט: ORB-SIGNAL (Opening Range Breakout)\nסיבת יציאה: סטופ נפגע\nמחיר יציאה: 7751.50\nנקודות: -16.25\nרווח/הפסד: $-81\nסימולציה בלבד — לא בוצע מסחר אמיתי"
+  },
+  {
+    "timestamp": "2026-10-29T15:10:23Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MNQ",
+    "direction": "SHORT",
+    "entry_price": 29587.25,
+    "stop_price": 29630.25,
+    "target_price": 29405.0,
+    "contracts": 1,
+    "rr": 4.24,
+    "risk_usd": 86.0,
+    "killzone": "RTH",
+    "subject": "[SIGNAL] SHORT MNQ @ 29587.25",
+    "body": "Direction: SHORT\nEntry (planned): 29587.25\nStop: 29630.25\nTarget: 29405.00\nContracts: 1\nR:R = 1:4.24\nRisk: $86\nReward: $364\nKillzone: RTH\nSource: SMT + IFVG@1m (pre-decision)"
   }
 ]
