@@ -8700,5 +8700,21 @@
     "killzone": "RTH",
     "subject": "[TV] LONG MNQ @ 29854.75",
     "body": "Direction: LONG\nEntry: 29854.75\nStop: 29825.50\nTarget: 29913.25\nContracts: 1\nR:R = 1:2.00\nRisk: $58\nReward: $117\nKillzone=RTH\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+  },
+  {
+    "timestamp": "2026-10-29T11:17:19Z",
+    "bot": "SMT-TV-SIGNAL",
+    "event": "signal",
+    "symbol": "MNQ",
+    "direction": "LONG",
+    "entry_price": 29694.0,
+    "stop_price": 29644.0,
+    "target_price": 29794.0,
+    "contracts": 1,
+    "rr": 2.0,
+    "risk_usd": 100.0,
+    "killzone": "NY-KZ",
+    "subject": "[TV] LONG MNQ @ 29694.00",
+    "body": "Direction: LONG\nEntry: 29694.00\nStop: 29644.00\nTarget: 29794.00\nContracts: 1\nR:R = 1:2.00\nRisk: $100\nReward: $200\nKillzone=NY-KZ\nWaited 2 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
   }
 ]
