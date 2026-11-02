@@ -9020,5 +9020,21 @@
     "killzone": "OFF-KZ",
     "subject": "[TV] LONG MES @ 7652.75",
     "body": "Direction: LONG\nEntry: 7652.75\nStop: 7636.50\nTarget: 7685.25\nContracts: 1\nR:R = 1:2.00\nRisk: $81\nReward: $162\nKillzone=OFF-KZ\nWaited 1 1m bars for reversal\nSource: Pine v12 (reversal-candle entry, 2.0R target)"
+  },
+  {
+    "timestamp": "2026-11-02T14:48:23Z",
+    "bot": "ORB-SIGNAL",
+    "event": "signal",
+    "symbol": "MES",
+    "direction": "SHORT",
+    "entry_price": 7642.25,
+    "stop_price": 7651.75,
+    "target_price": null,
+    "contracts": 2,
+    "rr": null,
+    "risk_usd": 95.0,
+    "killzone": null,
+    "subject": "[ORB] SHORT MES @ 7642.25",
+    "body": "⚠️ סימולציה בלבד — לא בוצע מסחר אמיתי\n\nבוט: ORB-SIGNAL (Opening Range Breakout)\nכיוון: SHORT\nסימבול: MES\nכניסה: 7642.25\nסטופ: 7651.75\nטווח פתיחה: 7645.75 - 7651.75\nחוזים: 2\nסיכון: $95\nיעד: אין יעד קבוע — פלאט בסגירת ה-RTH (16:00 ET) או בסטופ, המוקדם מביניהם\nמקור: Opening Range Breakout 5 דקות (אסטרטגיה נפרדת מ-SMT)"
   }
 ]
