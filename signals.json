@@ -9324,5 +9324,21 @@
     "killzone": "ASIA-KZ",
     "subject": "[SIGNAL] LONG MNQ @ 28279.25",
     "body": "Direction: LONG\nEntry (planned): 28279.25\nStop: 28256.75\nTarget: 28582.25\nContracts: 2\nR:R = 1:13.47\nRisk: $90\nReward: $1212\nKillzone: ASIA-KZ\nSource: SMT + IFVG@1m (pre-decision)"
+  },
+  {
+    "timestamp": "2026-11-16T07:56:22Z",
+    "bot": "SMT-SIGNAL",
+    "event": "signal",
+    "symbol": "MNQ",
+    "direction": "SHORT",
+    "entry_price": 27755.5,
+    "stop_price": 27802.75,
+    "target_price": 27658.0,
+    "contracts": 1,
+    "rr": 2.06,
+    "risk_usd": 94.0,
+    "killzone": "LONDON-KZ",
+    "subject": "[SIGNAL] SHORT MNQ @ 27755.50",
+    "body": "Direction: SHORT\nEntry (planned): 27755.50\nStop: 27802.75\nTarget: 27658.00\nContracts: 1\nR:R = 1:2.06\nRisk: $94\nReward: $195\nKillzone: LONDON-KZ\nSource: SMT + IFVG@1m (pre-decision)"
   }
 ]
